@@ -2,15 +2,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { defaultLocale, locales } from "@/i18n/config";
 
-function detectLocale(request: NextRequest): string {
-  const header = request.headers.get("accept-language") ?? "";
-  const preferred = header
-    .split(",")
-    .map((part) => part.split(";")[0].trim().slice(0, 2).toLowerCase())
-    .find((code) => (locales as readonly string[]).includes(code));
-  return preferred ?? defaultLocale;
-}
-
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -28,9 +19,11 @@ export default function proxy(request: NextRequest) {
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
 
+  // Arabic is the site's primary language, so every visitor starts there and
+  // switches to English deliberately from the header.
   if (!hasLocale && pathname === "/") {
     const url = request.nextUrl.clone();
-    url.pathname = `/${detectLocale(request)}`;
+    url.pathname = `/${defaultLocale}`;
     return NextResponse.redirect(url);
   }
 
