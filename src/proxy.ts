@@ -14,6 +14,16 @@ function detectLocale(request: NextRequest): string {
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // The dashboard is not localised, so send every guessable spelling to it.
+  if (/^(?:\/(?:ar|en))?\/(?:dashboard|admin)(\/.*)?$/i.test(pathname)) {
+    const target = pathname.replace(/^\/(?:ar|en)/i, "").replace(/^\/dashboard/i, "/admin");
+    if (target !== pathname) {
+      const url = request.nextUrl.clone();
+      url.pathname = target;
+      return NextResponse.redirect(url);
+    }
+  }
+
   const hasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
