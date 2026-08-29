@@ -1,10 +1,15 @@
 import { promises as fs } from "fs";
+import os from "os";
 import path from "path";
 import type { Reservation, ReservationStatus } from "@/lib/types";
 import type { NewReservation, ReservationStore } from "./types";
 import { makeRef, newId } from "./ids";
 
-const DATA_DIR = process.env.SAHRA_DATA_DIR ?? path.join(process.cwd(), "data");
+// On serverless hosts the deployment directory is read-only, so fall back to the
+// writable temp directory. Data there is ephemeral — set DATABASE_URL to persist.
+const defaultDir = process.env.VERCEL ? path.join(os.tmpdir(), "sahra") : path.join(process.cwd(), "data");
+
+const DATA_DIR = process.env.SAHRA_DATA_DIR ?? defaultDir;
 const DATA_FILE = path.join(DATA_DIR, "reservations.json");
 
 // Writes are serialised through this promise chain so concurrent requests

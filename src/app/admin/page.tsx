@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
-import { listReservations } from "@/lib/store";
+import { listReservations, storeKind } from "@/lib/store";
 import Dashboard from "./Dashboard";
 
 export const metadata = { title: "Sahra · Reservations dashboard" };
@@ -12,5 +12,11 @@ export default async function AdminPage() {
 
   const reservations = await listReservations();
 
-  return <Dashboard username={session.username} initialReservations={reservations} />;
+  return (
+    <Dashboard
+      username={session.username}
+      initialReservations={reservations}
+      ephemeralStorage={storeKind === "file" && Boolean(process.env.VERCEL)}
+    />
+  );
 }

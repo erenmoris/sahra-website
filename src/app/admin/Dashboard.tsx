@@ -40,9 +40,11 @@ function waLink(phone: string, name: string) {
 export default function Dashboard({
   username,
   initialReservations,
+  ephemeralStorage = false,
 }: {
   username: string;
   initialReservations: Reservation[];
+  ephemeralStorage?: boolean;
 }) {
   const router = useRouter();
   const [reservations, setReservations] = useState(initialReservations);
@@ -182,6 +184,14 @@ export default function Dashboard({
       </header>
 
       <main className="mx-auto max-w-[1280px] px-6 py-8">
+        {ephemeralStorage ? (
+          <div className="mb-6 border border-[#c9646f]/40 bg-[#c9646f]/10 px-5 py-4 text-[0.85rem] leading-[1.7] text-[#e2857f]">
+            No database is connected, so reservations are stored temporarily and will be lost when
+            the server restarts. Add a Postgres database and set <code>DATABASE_URL</code> to keep
+            them permanently.
+          </div>
+        ) : null}
+
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { label: "Total requests", value: stats.total },
