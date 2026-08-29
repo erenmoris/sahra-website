@@ -3,11 +3,29 @@ import type { Reservation, ReservationStatus, WhatsAppClick } from "@/lib/types"
 import type { NewReservation, NewWhatsAppClick, ReservationStore } from "./types";
 import { makeRef, newId } from "./ids";
 
-export const DATABASE_URL =
-  process.env.DATABASE_URL ??
-  process.env.POSTGRES_URL ??
-  process.env.SAHRA_DATABASE_URL ??
-  "";
+// Hosting providers name the connection string differently (and Vercel storage
+// integrations can add a prefix), so fall back to any Postgres URL in the env.
+function findDatabaseUrl(): string {
+  const preferred = [
+    process.env.DATABASE_URL,
+    process.env.POSTGRES_URL,
+    process.env.SAHRA_DATABASE_URL,
+  ].find((value) => value && value.startsWith("post"));
+
+  if (preferred) return preferred;
+
+  const discovered = Object.entries(process.env).find(
+    ([key, value]) =>
+      /(?:DATABASE|POSTGRES)/i.test(key) &&
+      !/PRISMA|NON_?POOL|UNPOOLED/i.test(key) &&
+      typeof value === "string" &&
+      /^postgres(?:ql)?:\/\//.test(value),
+  );
+
+  return discovered?.[1] ?? "";
+}
+
+export const DATABASE_URL = findDatabaseUrl();
 
 const sql = DATABASE_URL ? neon(DATABASE_URL) : null;
 
