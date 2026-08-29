@@ -3,10 +3,11 @@ import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import { HowItWorks, Testimonials, Trust, Venues } from "@/components/Sections";
+import { Coverage, HowItWorks, Testimonials, Trust, Venues } from "@/components/Sections";
 import ReservationForm from "@/components/ReservationForm";
 import IntroModal from "@/components/IntroModal";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
+import StructuredData from "@/components/StructuredData";
 import Reveal from "@/components/Reveal";
 import { Accent, Divider, SectionHeading, Wrap } from "@/components/ui";
 
@@ -22,9 +23,10 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
 
   return (
     <>
+      <StructuredData locale={locale} t={t} />
       <Header locale={locale} t={t} />
       <main>
-        <Hero t={t} />
+        <Hero t={t} locale={locale} />
 
         <Wrap>
           <Divider />
@@ -48,6 +50,12 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           <Divider />
         </Wrap>
 
+        <Coverage t={t} />
+
+        <Wrap>
+          <Divider />
+        </Wrap>
+
         <Testimonials t={t} />
 
         <section id="reserve" className="scroll-mt-24 py-24">
@@ -65,7 +73,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       </main>
 
       <Footer locale={locale} t={t} />
-      <WhatsAppFloat t={t} />
+      <WhatsAppFloat t={t} locale={locale} />
       <IntroModal t={t} locale={locale} />
     </>
   );

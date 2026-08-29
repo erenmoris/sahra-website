@@ -6,6 +6,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
 import { buttonClass } from "./ui";
 import { WhatsAppIcon } from "./Icons";
+import WhatsAppLink from "./WhatsAppLink";
 
 const fieldClass =
   "w-full rounded-sm border border-gold/25 bg-ink px-3.5 py-3 text-[0.94rem] text-sand transition-colors placeholder:text-sand-dim/60 focus:border-gold focus:outline-none";
@@ -56,14 +57,14 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
           </p>
         ) : null}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <a
+          <WhatsAppLink
             href={whatsappLink(t.whatsappMessage)}
-            target="_blank"
-            rel="noopener noreferrer"
+            placement="form-success"
+            locale={locale}
             className={buttonClass("whatsapp")}
           >
             <WhatsAppIcon /> {t.form.whatsappDirect}
-          </a>
+          </WhatsAppLink>
           <button
             type="button"
             onClick={() => setStatus("idle")}
@@ -198,14 +199,14 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
         <span className="relative bg-ink-2 px-3.5 text-[0.78rem] text-sand-dim">{t.form.or}</span>
       </div>
 
-      <a
+      <WhatsAppLink
         href={whatsappLink(t.whatsappMessage)}
-        target="_blank"
-        rel="noopener noreferrer"
+        placement="form-direct"
+        locale={locale}
         className={buttonClass("whatsapp", "mx-auto max-w-[720px] w-full")}
       >
         <WhatsAppIcon /> {t.form.whatsappDirect}
-      </a>
+      </WhatsAppLink>
     </div>
   );
 }

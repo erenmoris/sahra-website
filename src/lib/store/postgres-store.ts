@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
-import type { Reservation, ReservationStatus } from "@/lib/types";
-import type { NewReservation, ReservationStore } from "./types";
+import type { Reservation, ReservationStatus, WhatsAppClick } from "@/lib/types";
+import type { NewReservation, NewWhatsAppClick, ReservationStore } from "./types";
 import { makeRef, newId } from "./ids";
 
 export const DATABASE_URL =
@@ -42,6 +42,20 @@ async function ensureSchema(): Promise<void> {
     await client()`
       CREATE INDEX IF NOT EXISTS reservations_created_at_idx
       ON reservations (created_at DESC)
+    `;
+    await client()`
+      CREATE TABLE IF NOT EXISTS whatsapp_clicks (
+        id          TEXT PRIMARY KEY,
+        placement   TEXT NOT NULL,
+        locale      TEXT NOT NULL DEFAULT 'ar',
+        page        TEXT NOT NULL DEFAULT '/',
+        country     TEXT,
+        created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+      )
+    `;
+    await client()`
+      CREATE INDEX IF NOT EXISTS whatsapp_clicks_created_at_idx
+      ON whatsapp_clicks (created_at DESC)
     `;
   })();
 
@@ -129,5 +143,36 @@ export const postgresStore: ReservationStore = {
       DELETE FROM reservations WHERE id = ${id} RETURNING id
     `) as { id: string }[];
     return rows.length > 0;
+  },
+
+  async logClick(input: NewWhatsAppClick): Promise<void> {
+    await ensureSchema();
+    await client()`
+      INSERT INTO whatsapp_clicks (id, placement, locale, page, country)
+      VALUES (${newId()}, ${input.placement}, ${input.locale}, ${input.page}, ${input.country ?? null})
+    `;
+  },
+
+  async listClicks(limit = 100): Promise<WhatsAppClick[]> {
+    await ensureSchema();
+    const rows = (await client()`
+      SELECT * FROM whatsapp_clicks ORDER BY created_at DESC LIMIT ${limit}
+    `) as {
+      id: string;
+      placement: string;
+      locale: string;
+      page: string;
+      country: string | null;
+      created_at: string | Date;
+    }[];
+
+    return rows.map((row) => ({
+      id: row.id,
+      placement: row.placement,
+      locale: row.locale,
+      page: row.page,
+      country: row.country ?? undefined,
+      createdAt: new Date(row.created_at).toISOString(),
+    }));
   },
 };

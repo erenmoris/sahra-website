@@ -2,6 +2,15 @@ export const RESERVATION_STATUSES = ["new", "contacted", "confirmed", "cancelled
 
 export type ReservationStatus = (typeof RESERVATION_STATUSES)[number];
 
+export type WhatsAppClick = {
+  id: string;
+  placement: string;
+  locale: string;
+  page: string;
+  country?: string;
+  createdAt: string;
+};
+
 export type Reservation = {
   id: string;
   ref: string;

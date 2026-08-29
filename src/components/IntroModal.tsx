@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
 import { buttonClass } from "./ui";
+import WhatsAppLink from "./WhatsAppLink";
 
 const STORAGE_KEY = "sahra:intro-dismissed";
 const fieldClass =
@@ -137,14 +138,14 @@ export default function IntroModal({ t, locale }: { t: Dictionary; locale: Local
           <span className="relative bg-ink-2 px-3.5 text-[0.78rem] text-sand-dim">{t.modal.or}</span>
         </div>
 
-        <a
+        <WhatsAppLink
           href={whatsappLink(t.whatsappMessage)}
-          target="_blank"
-          rel="noopener noreferrer"
+          placement="intro-popup"
+          locale={locale}
           className="block border border-gold/25 p-3 text-center text-[0.88rem] text-gold-soft transition-colors hover:border-gold"
         >
           {t.modal.whatsappDirect}
-        </a>
+        </WhatsAppLink>
       </div>
     </div>
   );

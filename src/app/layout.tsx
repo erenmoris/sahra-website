@@ -38,6 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title: t.meta.title,
     description: t.meta.description,
+    keywords: [...t.meta.keywords],
+    robots: { index: true, follow: true },
     alternates: {
       canonical: `/${locale}`,
       languages: { ar: "/ar", en: "/en" },

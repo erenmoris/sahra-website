@@ -1,8 +1,10 @@
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
-import { ButtonLink, Eyebrow, Wrap } from "./ui";
+import { ButtonLink, Eyebrow, Wrap, buttonClass } from "./ui";
+import WhatsAppLink from "./WhatsAppLink";
 
-export default function Hero({ t }: { t: Dictionary }) {
+export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
   const { hero } = t;
 
   return (
@@ -39,9 +41,14 @@ export default function Hero({ t }: { t: Dictionary }) {
           <p className="mt-6 max-w-[48ch] text-[1.12rem] leading-[1.85] text-sand-dim">{hero.lede}</p>
 
           <div className="mt-9 flex flex-wrap gap-4">
-            <ButtonLink href={whatsappLink(t.whatsappMessage)} external>
+            <WhatsAppLink
+              href={whatsappLink(t.whatsappMessage)}
+              placement="hero-cta"
+              locale={locale}
+              className={buttonClass("primary")}
+            >
               {hero.ctaPrimary}
-            </ButtonLink>
+            </WhatsAppLink>
             <ButtonLink href="#reserve" variant="ghost">
               {hero.ctaSecondary}
             </ButtonLink>

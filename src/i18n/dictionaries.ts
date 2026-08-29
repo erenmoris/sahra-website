@@ -1,12 +1,30 @@
 import type { Locale } from "./config";
 
-export const WHATSAPP_NUMBER = "201001055112";
+export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "201027059930";
 
 const ar = {
   meta: {
-    title: "سهرة · كونسييرج السهر في مصر",
+    title: "سهرات في مصر · حجز سهرات الساحل الشمالي والقاهرة | سهرة كونسييرج",
     description:
-      "خدمة كونسييرج خاصة لحجز الروفتوبات، حفلات المراكب، البيتش كلوبز وترابيزات VIP في القاهرة، الجونة، الساحل وشرم الشيخ.",
+      "حجز سهرات في مصر خلال ساعات: سهرات الساحل الشمالي، بيتش كلوبز الجونة، روفتوبات وحفلات مراكب النيل في القاهرة، وترابيزات VIP في شرم الشيخ. احجز ترابيزتك على الواتساب بدون رسوم وبخصوصية تامة.",
+    keywords: [
+      "سهرات في مصر",
+      "الساحل الشمالي",
+      "سهرات الساحل الشمالي",
+      "حجز سهرات",
+      "حجز ترابيزة",
+      "بيتش كلوب الساحل الشمالي",
+      "سهرات الجونة",
+      "نايت كلوب القاهرة",
+      "روفتوب القاهرة",
+      "حفلات مراكب النيل",
+      "ترابيزة VIP",
+      "سهرات شرم الشيخ",
+      "كونسييرج سهر مصر",
+      "حجز نايت كلوب مصر",
+    ],
+    areaServed: ["الساحل الشمالي", "القاهرة", "الجونة", "شرم الشيخ", "الغردقة"],
+    businessName: "سهرة — كونسييرج السهر في مصر",
   },
   nav: {
     how: "إزاي بيشتغل",
@@ -188,15 +206,40 @@ const ar = {
       "سهرة خدمة كونسييرج مستقلة للسهر في مصر، وغير تابعة للأماكن اللي بتحجز فيها. الحجز بيتأكد بعد التواصل على الواتساب.",
     rights: "كل الحقوق محفوظة",
   },
+  seo: {
+    eyebrow: "أماكن نغطيها",
+    title: "سهرات في مصر —",
+    titleAccent: "من الساحل الشمالي للقاهرة.",
+    paragraphs: [
+      "لو بتدوّر على سهرات الساحل الشمالي في الصيف، إحنا بنحجز في البيتش كلوبز والحفلات على طول الساحل ومارينا وسيدي عبد الرحمن — ترابيزة باسمك ودخول بدون طابور، من غير رسوم على الطلب.",
+      "وفي القاهرة بنظبط روفتوبات على النيل، حفلات مراكب، وترابيزات VIP مع بوتل سيرفيس في أشهر الأماكن. وفي الجونة وشرم الشيخ والغردقة بنكمل نفس الخدمة طول السنة.",
+      "كل الحجوزات بتتأكد على الواتساب في ساعتين لثلاثة، وبنتكلم عربي وإنجليزي، وبياناتك ما بتتشارك مع حد.",
+    ],
+  },
   whatsappMessage: "مرحبا، عاوز احجز طاولة",
   langSwitch: "English",
 } as const;
 
 const en = {
   meta: {
-    title: "Sahra · Nightlife Concierge in Egypt",
+    title: "Nightlife in Egypt · North Coast & Cairo Party Booking | Sahra Concierge",
     description:
-      "A private concierge service for rooftops, Nile boat parties, beach clubs and VIP tables in Cairo, El Gouna, the North Coast and Sharm El Sheikh.",
+      "Book nightlife in Egypt within hours: North Coast beach clubs, El Gouna parties, Cairo rooftops and Nile boat parties, plus VIP tables in Sharm El Sheikh. Reserve your table on WhatsApp — no fees, full privacy.",
+    keywords: [
+      "nightlife in Egypt",
+      "North Coast Egypt nightlife",
+      "Sahel beach club booking",
+      "El Gouna party",
+      "Cairo nightclub table",
+      "Cairo rooftop bar",
+      "Nile boat party",
+      "VIP table Egypt",
+      "Sharm El Sheikh nightlife",
+      "Egypt nightlife concierge",
+      "book a table Cairo",
+    ],
+    areaServed: ["North Coast", "Cairo", "El Gouna", "Sharm El Sheikh", "Hurghada"],
+    businessName: "Sahra — Nightlife Concierge in Egypt",
   },
   nav: {
     how: "How it works",
@@ -377,6 +420,16 @@ const en = {
     note:
       "Sahra is an independent nightlife concierge service in Egypt and is not affiliated with the venues it books. Reservations are confirmed after contact on WhatsApp.",
     rights: "All rights reserved",
+  },
+  seo: {
+    eyebrow: "Where we operate",
+    title: "Nightlife in Egypt —",
+    titleAccent: "from the North Coast to Cairo.",
+    paragraphs: [
+      "If you are looking for North Coast nightlife in the summer, we book beach clubs and parties along Sahel, Marina and Sidi Abdel Rahman — a table under your name and entry without queueing, with no fee on the request.",
+      "In Cairo we arrange Nile-facing rooftops, boat parties, and VIP tables with bottle service at the busiest venues. In El Gouna, Sharm El Sheikh and Hurghada the same service runs all year.",
+      "Every booking is confirmed on WhatsApp within two to three hours, in Arabic or English, and your details are never shared.",
+    ],
   },
   whatsappMessage: "Hi, I would like to book a table",
   langSwitch: "العربية",

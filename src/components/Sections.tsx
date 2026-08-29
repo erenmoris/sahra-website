@@ -90,6 +90,29 @@ export function Venues({ t }: { t: Dictionary }) {
   );
 }
 
+export function Coverage({ t }: { t: Dictionary }) {
+  return (
+    <section id="coverage" className="py-24">
+      <Wrap>
+        <Reveal>
+          <SectionHeading eyebrow={t.seo.eyebrow}>
+            {t.seo.title} <Accent>{t.seo.titleAccent}</Accent>
+          </SectionHeading>
+        </Reveal>
+        <Reveal>
+          <div className="grid gap-6 md:grid-cols-3">
+            {t.seo.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="text-[0.96rem] leading-[1.9] text-sand-dim">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </Reveal>
+      </Wrap>
+    </section>
+  );
+}
+
 export function Testimonials({ t }: { t: Dictionary }) {
   return (
     <section className="py-24">

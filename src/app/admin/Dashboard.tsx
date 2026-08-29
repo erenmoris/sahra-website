@@ -4,7 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { WHATSAPP_NUMBER } from "@/i18n/dictionaries";
-import { RESERVATION_STATUSES, type Reservation, type ReservationStatus } from "@/lib/types";
+import {
+  RESERVATION_STATUSES,
+  type Reservation,
+  type ReservationStatus,
+  type WhatsAppClick,
+} from "@/lib/types";
 import { buttonClass } from "@/components/ui";
 import { WhatsAppIcon } from "@/components/Icons";
 
@@ -40,24 +45,38 @@ function waLink(phone: string, name: string) {
 export default function Dashboard({
   username,
   initialReservations,
+  initialClicks,
   ephemeralStorage = false,
 }: {
   username: string;
   initialReservations: Reservation[];
+  initialClicks: WhatsAppClick[];
   ephemeralStorage?: boolean;
 }) {
   const router = useRouter();
   const [reservations, setReservations] = useState(initialReservations);
+  const [clicks, setClicks] = useState(initialClicks);
+  const [tab, setTab] = useState<"requests" | "clicks">("requests");
   const [filter, setFilter] = useState<ReservationStatus | "all">("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Reservation | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
   async function refresh() {
-    const response = await fetch("/api/reservations", { cache: "no-store" });
-    if (!response.ok) return;
-    const data = (await response.json()) as { reservations: Reservation[] };
-    setReservations(data.reservations);
+    const [reservationsResponse, clicksResponse] = await Promise.all([
+      fetch("/api/reservations", { cache: "no-store" }),
+      fetch("/api/whatsapp-click", { cache: "no-store" }),
+    ]);
+
+    if (reservationsResponse.ok) {
+      const data = (await reservationsResponse.json()) as { reservations: Reservation[] };
+      setReservations(data.reservations);
+    }
+
+    if (clicksResponse.ok) {
+      const data = (await clicksResponse.json()) as { clicks: WhatsAppClick[] };
+      setClicks(data.clicks);
+    }
   }
 
   useEffect(() => {
@@ -72,8 +91,10 @@ export default function Dashboard({
       today: reservations.filter((item) => new Date(item.createdAt).toDateString() === today).length,
       new: reservations.filter((item) => item.status === "new").length,
       confirmed: reservations.filter((item) => item.status === "confirmed").length,
+      clicksToday: clicks.filter((item) => new Date(item.createdAt).toDateString() === today).length,
+      clicksTotal: clicks.length,
     };
-  }, [reservations]);
+  }, [reservations, clicks]);
 
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -192,12 +213,13 @@ export default function Dashboard({
           </div>
         ) : null}
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[
             { label: "Total requests", value: stats.total },
-            { label: "Today", value: stats.today },
+            { label: "Requests today", value: stats.today },
             { label: "Awaiting reply", value: stats.new },
             { label: "Confirmed", value: stats.confirmed },
+            { label: "WhatsApp clicks today", value: stats.clicksToday },
           ].map((card) => (
             <div key={card.label} className="border border-gold/20 bg-ink-2 px-6 py-5">
               <div className="text-[0.78rem] tracking-[0.04em] text-sand-dim">{card.label}</div>
@@ -208,7 +230,74 @@ export default function Dashboard({
           ))}
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center gap-3">
+        <div className="mt-8 flex gap-2 border-b border-gold/20">
+          {(
+            [
+              ["requests", `Reservation requests (${reservations.length})`],
+              ["clicks", `WhatsApp clicks (${stats.clicksTotal})`],
+            ] as const
+          ).map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setTab(value)}
+              className={`-mb-px cursor-pointer border-b-2 px-4 py-3 text-[0.85rem] transition-colors ${
+                tab === value
+                  ? "border-gold text-gold-soft"
+                  : "border-transparent text-sand-dim hover:text-sand"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {tab === "clicks" ? (
+          <>
+            <p className="mt-5 text-[0.85rem] leading-[1.7] text-sand-dim">
+              Every time a visitor taps a WhatsApp button on the site it is recorded here — even if
+              they never fill in the form — so you can see interest as it happens.
+            </p>
+            <div className="mt-4 overflow-x-auto border border-gold/20">
+              <table className="w-full min-w-[640px] border-collapse text-[0.88rem]">
+                <thead>
+                  <tr className="bg-ink-2 text-left text-[0.76rem] tracking-[0.04em] text-sand-dim">
+                    <th className="px-4 py-3 font-medium">When</th>
+                    <th className="px-4 py-3 font-medium">Button</th>
+                    <th className="px-4 py-3 font-medium">Page</th>
+                    <th className="px-4 py-3 font-medium">Language</th>
+                    <th className="px-4 py-3 font-medium">Country</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clicks.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="px-4 py-14 text-center text-sand-dim">
+                        No WhatsApp clicks recorded yet.
+                      </td>
+                    </tr>
+                  ) : (
+                    clicks.map((click) => (
+                      <tr key={click.id} className="border-t border-gold/15 hover:bg-ink-2/60">
+                        <td className="px-4 py-3 whitespace-nowrap text-sand-dim">
+                          {formatDateTime(click.createdAt)}
+                        </td>
+                        <td className="px-4 py-3 text-sand">{click.placement}</td>
+                        <td className="px-4 py-3 font-mono text-[0.8rem] text-sand-dim">
+                          {click.page}
+                        </td>
+                        <td className="px-4 py-3 text-sand-dim uppercase">{click.locale}</td>
+                        <td className="px-4 py-3 text-sand-dim">{click.country ?? "—"}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+        <>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <div className="flex flex-wrap gap-2">
             {(["all", ...RESERVATION_STATUSES] as const).map((value) => (
               <button
@@ -331,6 +420,8 @@ export default function Dashboard({
             </tbody>
           </table>
         </div>
+        </>
+        )}
       </main>
 
       {selected ? (

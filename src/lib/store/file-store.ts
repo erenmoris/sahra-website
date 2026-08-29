@@ -1,8 +1,8 @@
 import { promises as fs } from "fs";
 import os from "os";
 import path from "path";
-import type { Reservation, ReservationStatus } from "@/lib/types";
-import type { NewReservation, ReservationStore } from "./types";
+import type { Reservation, ReservationStatus, WhatsAppClick } from "@/lib/types";
+import type { NewReservation, NewWhatsAppClick, ReservationStore } from "./types";
 import { makeRef, newId } from "./ids";
 
 // On serverless hosts the deployment directory is read-only, so fall back to the
@@ -11,6 +11,8 @@ const defaultDir = process.env.VERCEL ? path.join(os.tmpdir(), "sahra") : path.j
 
 const DATA_DIR = process.env.SAHRA_DATA_DIR ?? defaultDir;
 const DATA_FILE = path.join(DATA_DIR, "reservations.json");
+const CLICKS_FILE = path.join(DATA_DIR, "whatsapp-clicks.json");
+const MAX_CLICKS = 500;
 
 // Writes are serialised through this promise chain so concurrent requests
 // cannot clobber each other's changes to the JSON file.
@@ -83,4 +85,32 @@ export const fileStore: ReservationStore = {
       return true;
     });
   },
+
+  async logClick(input: NewWhatsAppClick): Promise<void> {
+    await enqueue(async () => {
+      const clicks = await readClicks();
+      clicks.unshift({ ...input, id: newId(), createdAt: new Date().toISOString() });
+      await fs.mkdir(DATA_DIR, { recursive: true });
+      await fs.writeFile(
+        CLICKS_FILE,
+        JSON.stringify(clicks.slice(0, MAX_CLICKS), null, 2),
+        "utf8",
+      );
+    });
+  },
+
+  async listClicks(limit = 100): Promise<WhatsAppClick[]> {
+    const clicks = await readClicks();
+    return clicks.slice(0, limit);
+  },
 };
+
+async function readClicks(): Promise<WhatsAppClick[]> {
+  try {
+    const raw = await fs.readFile(CLICKS_FILE, "utf8");
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as WhatsAppClick[]) : [];
+  } catch {
+    return [];
+  }
+}
