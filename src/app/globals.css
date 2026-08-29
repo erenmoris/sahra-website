@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0f1a;
+  --color-ink-2: #131a29;
+  --color-ink-3: #1c2438;
+  --color-gold: #c9a24b;
+  --color-gold-soft: #e4c878;
+  --color-ruby: #8a2a3b;
+  --color-sand: #efe6d0;
+  --color-sand-dim: #b9b0a0;
+  --color-teal: #123638;
+  --color-line: rgba(201, 162, 75, 0.22);
+
+  --font-display: var(--font-el-messiri), serif;
+  --font-body: var(--font-cairo), sans-serif;
+  --font-mono: var(--font-plex-mono), monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-sand);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-soft);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+}
+
+@utility lattice {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23C9A24B' stroke-width='0.6' opacity='0.35'%3E%3Cpath d='M42 0 L84 42 L42 84 L0 42 Z'/%3E%3Ccircle cx='42' cy='42' r='16'/%3E%3Cpath d='M42 26 L58 42 L42 58 L26 42 Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+@keyframes sahra-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-bubble {
+  opacity: 0;
+  animation: sahra-pop 0.5s ease forwards;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-bubble,
+  .reveal {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Dark form controls keep native pickers legible */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8) sepia(1) saturate(3) hue-rotate(5deg);
+  cursor: pointer;
+}
