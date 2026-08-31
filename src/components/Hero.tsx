@@ -3,6 +3,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
 import { ButtonLink, Eyebrow, Wrap, buttonClass } from "./ui";
 import TrackedLink from "./TrackedLink";
+import Spotlight from "./Spotlight";
 
 export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
   const { hero } = t;
@@ -10,6 +11,23 @@ export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
   return (
     <section className="relative overflow-hidden pt-[168px] pb-24">
       <div className="lattice pointer-events-none absolute inset-x-0 top-0 h-[600px] opacity-50" />
+
+      <div
+        aria-hidden="true"
+        className="orb start-[-8%] top-[-12%] h-[420px] w-[420px] bg-gold/25"
+      />
+      <div
+        aria-hidden="true"
+        className="orb end-[-6%] top-[18%] h-[360px] w-[360px] bg-ruby/35"
+        style={{ animationDelay: "-6s", animationDuration: "24s" }}
+      />
+      <div
+        aria-hidden="true"
+        className="orb start-[35%] bottom-[-18%] h-[320px] w-[320px] bg-teal/60"
+        style={{ animationDelay: "-12s", animationDuration: "30s" }}
+      />
+
+      <Spotlight />
 
       <svg
         viewBox="0 0 1200 500"
@@ -34,7 +52,7 @@ export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
         <div>
           <Eyebrow>{hero.eyebrow}</Eyebrow>
           <h1 className="font-display text-[clamp(2.4rem,5vw,3.9rem)] leading-[1.22] font-semibold text-sand">
-            {hero.titleTop} <span className="font-medium text-gold-soft">{hero.titleAccent}</span>
+            {hero.titleTop} <span className="shimmer font-medium">{hero.titleAccent}</span>
             <br />
             {hero.titleBottom}
           </h1>
@@ -45,7 +63,7 @@ export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
               href={whatsappLink(t.whatsappMessage)}
               placement="hero-cta"
               locale={locale}
-              className={buttonClass("primary")}
+              className={buttonClass("primary", "shine")}
             >
               {hero.ctaPrimary}
             </TrackedLink>
@@ -66,7 +84,7 @@ export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
           </dl>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[380px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-[18px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
+        <div className="bob relative mx-auto w-full max-w-[380px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-[18px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
           <div className="absolute -top-px left-1/2 h-[22px] w-[120px] -translate-x-1/2 rounded-b-[14px] bg-ink" />
 
           <div className="flex items-center gap-2.5 border-b border-gold/20 px-2 pt-3.5 pb-4">
@@ -75,7 +93,10 @@ export default function Hero({ t, locale }: { t: Dictionary; locale: Locale }) {
             </div>
             <div>
               <div className="text-[0.92rem] font-bold text-sand">{hero.chat.name}</div>
-              <div className="text-[0.72rem] text-[#7fbf9e]">{hero.chat.status}</div>
+              <div className="flex items-center gap-1.5 text-[0.72rem] text-[#7fbf9e]">
+                <span className="live-dot" />
+                {hero.chat.status.replace(/^●\s*/, "")}
+              </div>
             </div>
           </div>
 

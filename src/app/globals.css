@@ -63,21 +63,224 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(34px) scale(0.97);
+  filter: blur(6px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.7s ease;
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Slow drifting colour blooms behind the hero — the "club lights" feel. */
+@keyframes sahra-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(6%, -8%, 0) scale(1.12);
+  }
+  66% {
+    transform: translate3d(-7%, 5%, 0) scale(0.94);
+  }
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  animation: sahra-drift 18s ease-in-out infinite;
+}
+
+@keyframes sahra-shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Gold sweep across the headline accent. */
+.shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold) 20%,
+    #fff3cf 40%,
+    var(--color-gold-soft) 55%,
+    var(--color-gold) 75%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sahra-shimmer 5s linear infinite;
+}
+
+@keyframes sahra-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(127, 191, 158, 0.55);
+  }
+  50% {
+    opacity: 0.65;
+    box-shadow: 0 0 0 6px rgba(127, 191, 158, 0);
+  }
+}
+
+.live-dot {
+  display: inline-block;
+  height: 7px;
+  width: 7px;
+  border-radius: 9999px;
+  background: #7fbf9e;
+  animation: sahra-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes sahra-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.bob {
+  animation: sahra-bob 6s ease-in-out infinite;
+}
+
+@keyframes sahra-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: sahra-marquee 38s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes sahra-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  display: inline-block;
+  animation: sahra-spin 9s linear infinite;
+}
+
+/* Light sweeping across the primary button on hover. */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 80%
+  );
+}
+
+.shine:hover::after {
+  transition: transform 0.7s ease;
+  transform: translateX(120%);
+}
+
+/* Expanding ring around the floating WhatsApp button. */
+@keyframes sahra-halo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 147, 95, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 18px rgba(34, 147, 95, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 147, 95, 0);
+  }
+}
+
+.halo {
+  animation: sahra-halo 2.6s ease-out infinite;
+}
+
+/* Underline that draws itself once its Reveal wrapper enters the viewport. */
+.grow-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+[dir="rtl"] .grow-line {
+  transform-origin: right center;
+}
+
+.is-visible .grow-line {
+  transform: scaleX(1);
+}
+
+.lift {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px -30px rgba(201, 162, 75, 0.7);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .chat-bubble,
-  .reveal {
+  .reveal,
+  .orb,
+  .shimmer,
+  .live-dot,
+  .bob,
+  .halo,
+  .spin-slow,
+  .marquee-track {
     animation: none;
     opacity: 1;
     transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .shimmer {
+    color: var(--color-gold-soft);
+  }
+
+  .lift:hover {
+    transform: none;
+  }
+
+  .grow-line {
+    transform: scaleX(1);
     transition: none;
   }
 }

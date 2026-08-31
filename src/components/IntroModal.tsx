@@ -127,7 +127,7 @@ export default function IntroModal({ t, locale }: { t: Dictionary; locale: Local
                 className={fieldClass}
               />
             </div>
-            <button type="submit" disabled={sending} className={buttonClass("primary", "w-full")}>
+            <button type="submit" disabled={sending} className={buttonClass("primary", "shine w-full")}>
               {sending ? t.form.submitting : t.modal.submit}
             </button>
           </form>

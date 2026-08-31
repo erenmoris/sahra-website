@@ -34,6 +34,7 @@ export function SectionHeading({
       <h2 className="font-display text-[clamp(1.9rem,3.4vw,2.7rem)] leading-[1.3] font-semibold text-sand">
         {children}
       </h2>
+      <span className="grow-line mt-4 block h-px w-24 bg-gradient-to-r from-gold to-transparent" />
       {lede ? <p className="mt-4 text-[1.02rem] leading-[1.8] text-sand-dim">{lede}</p> : null}
     </div>
   );

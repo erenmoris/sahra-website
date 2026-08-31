@@ -1,7 +1,7 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { venueName, venues } from "@/content/venues";
 import Reveal from "./Reveal";
+import VenueTicker from "./VenueTicker";
 import { TrustIcon, VenueIcon } from "./Icons";
 import { Accent, SectionHeading, Wrap } from "./ui";
 
@@ -18,8 +18,10 @@ export function HowItWorks({ t }: { t: Dictionary }) {
         <div className="grid gap-px border border-gold/20 bg-gold/20 md:grid-cols-3">
           {t.how.steps.map((step, index) => (
             <Reveal key={step.title} delay={index * 90}>
-              <div className="h-full bg-ink px-8 py-10">
-                <span className="mb-5 block font-mono text-[0.8rem] text-gold">{step.num}</span>
+              <div className="group h-full bg-ink px-8 py-10 transition-colors duration-300 hover:bg-ink-2">
+                <span className="mb-5 block font-mono text-[0.8rem] text-gold transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:text-gold-soft">
+                  {step.num}
+                </span>
                 <h3 className="mb-3 font-display text-[1.4rem] font-semibold text-sand">
                   {step.title}
                 </h3>
@@ -46,8 +48,11 @@ export function Trust({ t }: { t: Dictionary }) {
         <div className="grid gap-px border border-gold/20 bg-gold/20 md:grid-cols-3">
           {t.trust.items.map((item, index) => (
             <Reveal key={item.title} delay={index * 90}>
-              <div className="h-full bg-ink px-8 py-10">
-                <TrustIcon name={item.icon} className="mb-4 h-9 w-9" />
+              <div className="group h-full bg-ink px-8 py-10 transition-colors duration-300 hover:bg-ink-2">
+                <TrustIcon
+                  name={item.icon}
+                  className="mb-4 h-9 w-9 transition-transform duration-300 group-hover:scale-110"
+                />
                 <h3 className="mb-3 font-display text-[1.4rem] font-semibold text-sand">
                   {item.title}
                 </h3>
@@ -74,8 +79,11 @@ export function Venues({ t, locale }: { t: Dictionary; locale: Locale }) {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {t.venues.items.map((item, index) => (
             <Reveal key={item.title} delay={(index % 3) * 90}>
-              <article className="group h-full border border-gold/20 bg-gradient-to-br from-ink-2 to-ink px-7 py-8 transition-all duration-200 hover:-translate-y-1 hover:border-gold">
-                <VenueIcon index={index} className="mb-4 h-9 w-9" />
+              <article className="lift shine group h-full border border-gold/20 bg-gradient-to-br from-ink-2 to-ink px-7 py-8 hover:border-gold">
+                <VenueIcon
+                  index={index}
+                  className="mb-4 h-9 w-9 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                />
                 <span className="mb-3 block text-[0.72rem] tracking-[0.04em] text-gold-soft">
                   {item.tag}
                 </span>
@@ -90,22 +98,10 @@ export function Venues({ t, locale }: { t: Dictionary; locale: Locale }) {
 
         <Reveal>
           <div className="mt-12 border-t border-gold/15 pt-8">
-            <h3 className="mb-4 text-[0.95rem] font-semibold text-gold-soft">
+            <h3 className="mb-5 text-[0.95rem] font-semibold text-gold-soft">
               {t.venues.namesTitle}
             </h3>
-            <ul className="flex flex-wrap gap-2.5">
-              {venues.map((venue) => (
-                <li
-                  key={venue.name}
-                  className="border border-gold/20 px-4 py-2 text-[0.84rem] text-sand-dim"
-                >
-                  {venueName(venue, locale)}
-                  <span className="ms-2 font-mono text-[0.72rem] text-[#6b6455]" dir="ltr">
-                    {locale === "ar" ? venue.name : venue.nameAr}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <VenueTicker locale={locale} rows={2} />
             <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-[#6b6455]">
               {t.venues.namesNote}
             </p>

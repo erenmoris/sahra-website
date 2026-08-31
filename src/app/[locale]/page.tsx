@@ -3,6 +3,8 @@ import { isLocale, locales } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import PromoTicker from "@/components/PromoTicker";
+import ScrollProgress from "@/components/ScrollProgress";
 import { Coverage, HowItWorks, Testimonials, Trust, Venues } from "@/components/Sections";
 import ReservationForm from "@/components/ReservationForm";
 import IntroModal from "@/components/IntroModal";
@@ -28,13 +30,12 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   return (
     <>
       <StructuredData locale={locale} t={t} />
+      <ScrollProgress />
       <Header locale={locale} t={t} />
       <main>
         <Hero t={t} locale={locale} />
 
-        <Wrap>
-          <Divider />
-        </Wrap>
+        <PromoTicker t={t} locale={locale} />
 
         <HowItWorks t={t} />
 

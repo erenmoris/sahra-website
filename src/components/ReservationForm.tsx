@@ -182,7 +182,7 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
         <button
           type="submit"
           disabled={status === "sending"}
-          className={buttonClass("primary", "mt-7 w-full")}
+          className={buttonClass("primary", "shine mt-7 w-full")}
         >
           {status === "sending" ? t.form.submitting : t.form.submit}
         </button>

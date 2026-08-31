@@ -61,7 +61,7 @@ export function WhatsAppFloat({ t, locale }: { t: Dictionary; locale: Locale }) 
       placement="floating-button"
       locale={locale}
       ariaLabel={t.footer.links.whatsapp}
-      className="fixed bottom-6 end-6 z-60 flex h-14 w-14 items-center justify-center rounded-full bg-[#1d7a52] text-white shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)] transition-transform hover:scale-105 hover:bg-[#22935f]"
+      className="halo fixed bottom-6 end-6 z-60 flex h-14 w-14 items-center justify-center rounded-full bg-[#1d7a52] text-white shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)] transition-transform hover:scale-110 hover:bg-[#22935f]"
     >
       <WhatsAppIcon className="h-7 w-7" />
     </TrackedLink>

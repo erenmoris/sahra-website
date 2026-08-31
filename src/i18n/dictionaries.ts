@@ -9,7 +9,7 @@ const ar = {
   meta: {
     title: "سهرات في مصر · حجز سهرات الساحل الشمالي والقاهرة | سهرة كونسييرج",
     description:
-      "حجز سهرات في مصر خلال ساعات: سهرات الساحل الشمالي، بيتش كلوبز الجونة، روفتوبات وحفلات مراكب النيل في القاهرة، وترابيزات VIP في شرم الشيخ. احجز ترابيزتك على الواتساب بدون رسوم وبخصوصية تامة.",
+      "حجز سهرات في مصر خلال ساعات: سهرات الساحل الشمالي، بيتش كلوبز الجونة، روفتوبات وحفلات مراكب النيل في القاهرة، وترابيزات VIP في شرم الشيخ. احجز ترابيزتك على الواتساب في دقايق وبخصوصية تامة.",
     keywords: [
       "سهرات في مصر",
       "الساحل الشمالي",
@@ -49,7 +49,7 @@ const ar = {
       { value: "خصوصية تامة", label: "بياناتك ما بتتشاركش" },
       { value: "٢–٣ ساعات", label: "متوسط وقت التأكيد" },
       { value: "عربي / إنجليزي", label: "خدمة بلغتك" },
-      { value: "بدون رسوم", label: "على طلب الحجز" },
+      { value: "٧ أيام", label: "متاحين طول الأسبوع" },
     ],
     chat: {
       name: "سهرة كونسييرج",
@@ -114,6 +114,16 @@ const ar = {
       },
     ],
   },
+  ticker: [
+    "ترابيزتك جاهزة قبل ما توصل",
+    "تأكيد في ٢–٣ ساعات",
+    "دخول من غير وقفة على الباب",
+    "أحلى ليالي الساحل الشمالي",
+    "روفتوبات على النيل",
+    "حفلات مراكب وسهرات لحد الفجر",
+    "ترابيزات VIP وقدام الـ DJ",
+    "احجز دلوقتي على الواتساب",
+  ],
   venues: {
     eyebrow: "أنواع السهرات",
     title: "أي جو",
@@ -289,7 +299,7 @@ const ar = {
     title: "سهرات في مصر —",
     titleAccent: "من الساحل الشمالي للقاهرة.",
     paragraphs: [
-      "لو بتدوّر على سهرات الساحل الشمالي في الصيف، بنحجزلك في البيتش كلوبز والحفلات على طول الساحل ومارينا وسيدي عبد الرحمن — ترابيزة باسمك ودخول مباشر، وبدون أي رسوم على الطلب.",
+      "لو بتدوّر على سهرات الساحل الشمالي في الصيف، بنحجزلك في البيتش كلوبز والحفلات على طول الساحل ومارينا وسيدي عبد الرحمن — ترابيزة باسمك ودخول مباشر من غير وقفة على الباب.",
       "وفي القاهرة بننسّق روفتوبات على النيل، حفلات مراكب، وترابيزات VIP مع بوتل سيرفيس في أهم الأماكن. وفي الجونة وشرم الشيخ والغردقة نفس الخدمة متاحة طول السنة.",
       "كل الحجوزات بتتأكد على الواتساب في ساعتين لتلاتة، بنخدمك بالعربي والإنجليزي، وبياناتك تفضل عندنا وما بتتشاركش مع أي جهة.",
     ],
@@ -302,7 +312,7 @@ const en = {
   meta: {
     title: "Nightlife in Egypt · North Coast & Cairo Party Booking | Sahra Concierge",
     description:
-      "Book nightlife in Egypt within hours: North Coast beach clubs, El Gouna parties, Cairo rooftops and Nile boat parties, plus VIP tables in Sharm El Sheikh. Reserve your table on WhatsApp — no fees, full privacy.",
+      "Book nightlife in Egypt within hours: North Coast beach clubs, El Gouna parties, Cairo rooftops and Nile boat parties, plus VIP tables in Sharm El Sheikh. Reserve your table on WhatsApp in minutes, with full privacy.",
     keywords: [
       "nightlife in Egypt",
       "North Coast Egypt nightlife",
@@ -339,7 +349,7 @@ const en = {
       { value: "Full privacy", label: "Your data stays with me" },
       { value: "2–3 hours", label: "Average confirmation time" },
       { value: "Arabic / English", label: "Served in your language" },
-      { value: "No fees", label: "On requests" },
+      { value: "7 days", label: "Available all week" },
     ],
     chat: {
       name: "Sahra Concierge",
@@ -399,6 +409,16 @@ const en = {
       },
     ],
   },
+  ticker: [
+    "Your table is ready before you arrive",
+    "Confirmed in 2–3 hours",
+    "Straight in, no queue at the door",
+    "The best North Coast nights",
+    "Rooftops over the Nile",
+    "Boat parties until sunrise",
+    "VIP tables right by the DJ",
+    "Book now on WhatsApp",
+  ],
   venues: {
     eyebrow: "Experiences",
     title: "Whatever the mood,",
@@ -574,7 +594,7 @@ const en = {
     title: "Nightlife in Egypt —",
     titleAccent: "from the North Coast to Cairo.",
     paragraphs: [
-      "If you are looking for North Coast nightlife in the summer, we book beach clubs and parties along Sahel, Marina and Sidi Abdel Rahman — a table under your name and entry without queueing, with no fee on the request.",
+      "If you are looking for North Coast nightlife in the summer, we book beach clubs and parties along Sahel, Marina and Sidi Abdel Rahman — a table under your name and straight entry without queueing at the door.",
       "In Cairo we arrange Nile-facing rooftops, boat parties, and VIP tables with bottle service at the busiest venues. In El Gouna, Sharm El Sheikh and Hurghada the same service runs all year.",
       "Every booking is confirmed on WhatsApp within two to three hours, in Arabic or English, and your details are never shared.",
     ],
