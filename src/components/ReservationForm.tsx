@@ -3,9 +3,9 @@
 import { useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { whatsappLink } from "@/i18n/dictionaries";
+import { SNAPCHAT_URL, whatsappLink } from "@/i18n/dictionaries";
 import { buttonClass } from "./ui";
-import { WhatsAppIcon } from "./Icons";
+import { SnapchatIcon, WhatsAppIcon } from "./Icons";
 import TrackedLink from "./TrackedLink";
 
 const fieldClass =
@@ -199,14 +199,25 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
         <span className="relative bg-ink-2 px-3.5 text-[0.78rem] text-sand-dim">{t.form.or}</span>
       </div>
 
-      <TrackedLink
-        href={whatsappLink(t.whatsappMessage)}
-        placement="form-direct"
-        locale={locale}
-        className={buttonClass("whatsapp", "mx-auto max-w-[720px] w-full")}
-      >
-        <WhatsAppIcon /> {t.form.whatsappDirect}
-      </TrackedLink>
+      <div className="mx-auto grid max-w-[720px] gap-3 sm:grid-cols-2">
+        <TrackedLink
+          href={whatsappLink(t.whatsappMessage)}
+          placement="form-direct"
+          locale={locale}
+          className={buttonClass("whatsapp", "w-full")}
+        >
+          <WhatsAppIcon /> {t.form.whatsappDirect}
+        </TrackedLink>
+
+        <TrackedLink
+          href={SNAPCHAT_URL}
+          placement="form-snapchat"
+          locale={locale}
+          className={buttonClass("snapchat", "w-full")}
+        >
+          <SnapchatIcon /> {t.form.snapchatDirect}
+        </TrackedLink>
+      </div>
     </div>
   );
 }

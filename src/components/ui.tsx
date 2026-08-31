@@ -55,6 +55,7 @@ const variants = {
   primary: "border-transparent bg-gold font-bold text-ink hover:-translate-y-px hover:bg-gold-soft",
   ghost: "border-gold/25 text-sand hover:border-gold hover:text-gold-soft",
   whatsapp: "border-transparent bg-[#1d7a52] font-bold text-white hover:bg-[#22935f]",
+  snapchat: "border-transparent bg-[#f5f000] font-bold text-ink hover:bg-[#fffc00]",
 } as const;
 
 type Variant = keyof typeof variants;
