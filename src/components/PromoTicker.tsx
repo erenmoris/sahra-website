@@ -10,6 +10,9 @@ export default function PromoTicker({ t, locale }: { t: Dictionary; locale: Loca
       placement="promo-ticker"
       locale={locale}
       ariaLabel={t.hero.ctaPrimary}
+      // The track is laid out left-to-right in both locales; RTL would push it
+      // out of the visible band.
+      dir="ltr"
       className="marquee relative block overflow-hidden border-y border-gold/25 bg-gradient-to-r from-gold/10 via-gold/20 to-gold/10 py-3.5"
     >
       <div className="marquee-track" style={{ animationDuration: "30s" }}>

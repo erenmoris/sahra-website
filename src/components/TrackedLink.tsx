@@ -6,6 +6,7 @@ type Props = {
   locale: string;
   className?: string;
   ariaLabel?: string;
+  dir?: "ltr" | "rtl";
   children: React.ReactNode;
 };
 
@@ -34,6 +35,7 @@ export default function TrackedLink({
   locale,
   className,
   ariaLabel,
+  dir,
   children,
 }: Props) {
   return (
@@ -42,6 +44,7 @@ export default function TrackedLink({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
+      dir={dir}
       className={className}
       onClick={() => track(placement, locale)}
     >
