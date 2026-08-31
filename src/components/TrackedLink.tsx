@@ -16,7 +16,7 @@ function track(placement: string, locale: string) {
     page: window.location.pathname + window.location.hash,
   });
 
-  // sendBeacon survives the tab switching to WhatsApp; fetch is the fallback.
+  // sendBeacon survives the tab switching to WhatsApp or Snapchat; fetch is the fallback.
   if (navigator.sendBeacon) {
     navigator.sendBeacon("/api/whatsapp-click", payload);
     return;
@@ -27,7 +27,8 @@ function track(placement: string, locale: string) {
   );
 }
 
-export default function WhatsAppLink({
+/** External contact link (WhatsApp, Snapchat) that records the tap before leaving. */
+export default function TrackedLink({
   href,
   placement,
   locale,

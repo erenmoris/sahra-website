@@ -2,6 +2,9 @@ import type { Locale } from "./config";
 
 export const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "201027059930";
 
+export const SNAPCHAT_USERNAME = "sahraeg";
+export const SNAPCHAT_URL = `https://www.snapchat.com/add/${SNAPCHAT_USERNAME}`;
+
 const ar = {
   meta: {
     title: "سهرات في مصر · حجز سهرات الساحل الشمالي والقاهرة | سهرة كونسييرج",
@@ -148,18 +151,27 @@ const ar = {
       },
     ],
   },
+  gallery: {
+    eyebrow: "من ليالينا",
+    title: "شوف الأماكن",
+    titleAccent: "قبل ما تحجز.",
+    lede: "صور من سهرات ظبطناها لعملائنا في القاهرة والساحل الشمالي والجونة وشرم الشيخ.",
+    fallbackAlt: "سهرة من تنظيم سهرة كونسييرج في مصر",
+  },
   testimonials: {
     eyebrow: "رسايل وصلتنا",
     title: "كلام",
     titleAccent: "عملاء من الخليج،",
     titleEnd: "زي ما وصلنا بالظبط.",
     lede: "ما غيّرناش فيها ولا كلمة — منقولة زي ما وصلت على الواتساب.",
+    // بعد ما تاخد إذن العميل، ضيف `name` وهيظهر قبل المدينة — مثال:
+    // { text: "…", name: "أحمد ع.", who: "الرياض" }
     items: [
       { text: "ماشاء الله عليك، السهرة كانت فوق الممتاز 🙌 من أول رسالة إلى ما قعدنا على الطاولة كل شي كان مرتب.", who: "عميل من الرياض" },
       { text: "والله كفيتي ووفيتي 🌹 كنا خايفين الموضوع يصير معقد بس أنتِ سهلتيه علينا من أول دقيقة.", who: "عميلة من دبي" },
       { text: "خصوصيتنا كانت أهم شي عندنا، وأنتم قدرتوا الموضوع تمام من غير ما نسأل مرتين.", who: "عميل من الكويت" },
       { text: "أبد ما توقعت الأمور تمشي بهالسهولة، وصلنا القاهرة وكل شي جاهز زي ما اتفقنا بالظبط. تسلمين 🙏", who: "عميلة من الدوحة" },
-    ],
+    ] as { text: string; who: string; name?: string }[],
   },
   form: {
     eyebrow: "اطلب ترابيزة",
@@ -205,8 +217,66 @@ const ar = {
     whatsappDirect: "افتح الواتساب مباشرة ←",
     close: "إغلاق",
   },
+  social: {
+    title: "تابعنا على سناب شات",
+    body: "بننزل سنابات من الأماكن أول بأول — تشوف الجو والزحمة وأحدث الحفلات قبل ما تختار ليلتك.",
+    snapchat: "أضفنا على سناب شات",
+    handle: "sahraeg",
+  },
+  privacy: {
+    title: "سياسة الخصوصية",
+    updated: "آخر تحديث: أغسطس ٢٠٢٦",
+    intro:
+      "الخصوصية عندنا مش بند في صفحة، هي أساس الخدمة. الصفحة دي بتوضح بالتحديد إيه البيانات اللي بناخدها، بنستخدمها في إيه، ومين ممكن يشوفها.",
+    backHome: "رجوع للصفحة الرئيسية",
+    sections: [
+      {
+        title: "البيانات اللي بناخدها",
+        body: "لما تبعت طلب حجز، بناخد الاسم ورقم الواتساب، وبشكل اختياري المدينة وتاريخ السهرة وعدد الأفراد ونوع السهرة والميزانية التقديرية وأي ملاحظات تكتبها. وبنسجّل كذلك وقت إرسال الطلب ولغة الموقع اللي استخدمتها.",
+      },
+      {
+        title: "تسجيل الضغط على زر الواتساب",
+        body: "لما تضغط على أي زر واتساب في الموقع، بنسجّل إن فيه ضغطة حصلت: الزر اللي استخدمته، الصفحة، اللغة، والدولة بشكل عام. مش بنسجّل رقمك ولا محتوى محادثتك، ومحادثة الواتساب نفسها بتحصل على تطبيق واتساب مباشرة وسياسة الخصوصية بتاعته هي اللي تحكمها.",
+      },
+      {
+        title: "استخدام البيانات",
+        body: "بنستخدم بياناتك لغرض واحد: إننا نرد عليك ونظبط حجزك. وعند الحجز بنبلّغ المكان بالاسم وعدد الأفراد فقط — القدر اللي يخليهم يثبّتوا الترابيزة باسمك، من غير أي تفاصيل زيادة.",
+      },
+      {
+        title: "اللي مش بنعمله",
+        body: "ما بنبيعش بياناتك ولا بنشاركها لأغراض تسويقية، وما بنبعتش رسايل دعائية، وما بنضيفكش على أي قوائم بريدية، وما بنستخدمش كوكيز تتبّع إعلاني على الموقع.",
+      },
+      {
+        title: "مدة الاحتفاظ بالبيانات",
+        body: "بنحتفظ بطلبات الحجز طول ما هي مفيدة لخدمتك (زي إننا نتعرف عليك لو رجعت تحجز تاني). تقدر تطلب حذف بياناتك في أي وقت برسالة واتساب واحدة، وبنحذفها بالكامل.",
+      },
+      {
+        title: "أمان البيانات",
+        body: "الطلبات بتتخزن في قاعدة بيانات مؤمّنة، والوصول للوحة التحكم محمي بحساب خاص بنا. الموقع كله بيعمل على اتصال مشفّر (HTTPS).",
+      },
+      {
+        title: "حقوقك",
+        body: "من حقك تعرف البيانات المسجلة عنك، وتصححها، أو تطلب حذفها. كلّمنا على الواتساب وهننفّذ طلبك في أسرع وقت.",
+      },
+      {
+        title: "السن القانوني",
+        body: "الخدمة موجهة للأشخاص البالغين اللي سنهم يسمح بدخول الأماكن اللي بنحجز فيها حسب قوانين المكان.",
+      },
+      {
+        title: "التواصل",
+        body: "أي سؤال أو طلب متعلق بخصوصيتك، كلّمنا مباشرة على الواتساب وهنرد عليك بنفسنا.",
+      },
+    ],
+  },
   footer: {
-    links: { whatsapp: "واتساب", venues: "أنواع السهرات", reserve: "اطلب ترابيزة", dashboard: "لوحة التحكم" },
+    links: {
+      whatsapp: "واتساب",
+      venues: "أنواع السهرات",
+      reserve: "اطلب ترابيزة",
+      dashboard: "لوحة التحكم",
+      privacy: "سياسة الخصوصية",
+      snapchat: "سناب شات",
+    },
     note:
       "سهرة خدمة كونسييرج مستقلة متخصصة في تنظيم السهر في مصر، وغير تابعة للأماكن اللي بنحجز فيها. الحجز بيتأكد رسميًا بعد التواصل على الواتساب.",
     rights: "كل الحقوق محفوظة",
@@ -363,12 +433,21 @@ const en = {
       },
     ],
   },
+  gallery: {
+    eyebrow: "From our nights",
+    title: "See the venues",
+    titleAccent: "before you book.",
+    lede: "Photos from nights we arranged for clients in Cairo, the North Coast, El Gouna and Sharm El Sheikh.",
+    fallbackAlt: "A night arranged by Sahra concierge in Egypt",
+  },
   testimonials: {
     eyebrow: "Messages we received",
     title: "What",
     titleAccent: "Gulf clients say,",
     titleEnd: "word for word.",
     lede: "Nothing edited — copied exactly as it arrived on WhatsApp.",
+    // Once a client agrees, add `name` and it will show before the city:
+    // { text: "…", name: "Ahmed A.", who: "Riyadh" }
     items: [
       { text: "The night was beyond excellent 🙌 From the first message until we sat at the table, everything was arranged.", who: "Client from Riyadh" },
       { text: "You went above and beyond 🌹 We were worried it would get complicated, but you made it simple from minute one.", who: "Client from Dubai" },
@@ -420,8 +499,66 @@ const en = {
     whatsappDirect: "Open WhatsApp directly →",
     close: "Close",
   },
+  social: {
+    title: "Follow us on Snapchat",
+    body: "We post from the venues as the night happens — see the atmosphere and the latest parties before you choose your night.",
+    snapchat: "Add us on Snapchat",
+    handle: "sahraeg",
+  },
+  privacy: {
+    title: "Privacy Policy",
+    updated: "Last updated: August 2026",
+    intro:
+      "Privacy is not a clause on a page for us, it is the basis of the service. This page explains exactly what we collect, what we use it for, and who can see it.",
+    backHome: "Back to the homepage",
+    sections: [
+      {
+        title: "What we collect",
+        body: "When you send a reservation request we collect your name and WhatsApp number, and optionally your city, the date of the night, party size, experience type, estimated budget and any notes you write. We also record when the request was sent and which language of the site you used.",
+      },
+      {
+        title: "WhatsApp button logging",
+        body: "When you tap a WhatsApp button on the site, we record that a tap happened: which button, which page, the language, and the country at a general level. We do not record your number or the content of your conversation. The WhatsApp chat itself happens in WhatsApp and is governed by their privacy policy.",
+      },
+      {
+        title: "How we use it",
+        body: "Your details serve one purpose: replying to you and arranging your booking. When we book, we pass the venue only your name and party size — the minimum needed to hold the table under your name, with no further details.",
+      },
+      {
+        title: "What we never do",
+        body: "We do not sell or share your data for marketing, we do not send promotional messages, we do not add you to mailing lists, and the site uses no advertising or tracking cookies.",
+      },
+      {
+        title: "How long we keep it",
+        body: "We keep reservation requests for as long as they are useful to serving you, such as recognising you if you book again. You can ask us to delete your data at any time with a single WhatsApp message, and we remove it completely.",
+      },
+      {
+        title: "Security",
+        body: "Requests are stored in a secured database, and dashboard access is protected by our own account. The whole site runs over an encrypted connection (HTTPS).",
+      },
+      {
+        title: "Your rights",
+        body: "You may ask what we hold about you, correct it, or request its deletion. Message us on WhatsApp and we will action it promptly.",
+      },
+      {
+        title: "Age",
+        body: "The service is intended for adults old enough to enter the venues we book, according to each venue's rules.",
+      },
+      {
+        title: "Contact",
+        body: "For any question or request about your privacy, message us directly on WhatsApp and we will reply personally.",
+      },
+    ],
+  },
   footer: {
-    links: { whatsapp: "WhatsApp", venues: "Experiences", reserve: "Request a table", dashboard: "Dashboard" },
+    links: {
+      whatsapp: "WhatsApp",
+      venues: "Experiences",
+      reserve: "Request a table",
+      dashboard: "Dashboard",
+      privacy: "Privacy Policy",
+      snapchat: "Snapchat",
+    },
     note:
       "Sahra is an independent nightlife concierge service in Egypt and is not affiliated with the venues it books. Reservations are confirmed after contact on WhatsApp.",
     rights: "All rights reserved",

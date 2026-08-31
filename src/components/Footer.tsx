@@ -1,9 +1,9 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { whatsappLink } from "@/i18n/dictionaries";
+import { SNAPCHAT_URL, whatsappLink } from "@/i18n/dictionaries";
 import { WhatsAppIcon } from "./Icons";
-import WhatsAppLink from "./WhatsAppLink";
+import TrackedLink from "./TrackedLink";
 import { Wrap } from "./ui";
 
 export default function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
@@ -15,20 +15,31 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
             {locale === "ar" ? "سهرة" : "Sahra"} <span className="text-gold-soft">·</span>
           </div>
           <div className="flex flex-wrap gap-6 text-[0.85rem] text-sand-dim">
-            <WhatsAppLink
+            <TrackedLink
               href={whatsappLink(t.whatsappMessage)}
               placement="footer"
               locale={locale}
               className="transition-colors hover:text-gold-soft"
             >
               {t.footer.links.whatsapp}
-            </WhatsAppLink>
+            </TrackedLink>
+            <TrackedLink
+              href={SNAPCHAT_URL}
+              placement="snapchat-footer"
+              locale={locale}
+              className="transition-colors hover:text-gold-soft"
+            >
+              {t.footer.links.snapchat}
+            </TrackedLink>
             <a href="#venues" className="transition-colors hover:text-gold-soft">
               {t.footer.links.venues}
             </a>
             <a href="#reserve" className="transition-colors hover:text-gold-soft">
               {t.footer.links.reserve}
             </a>
+            <Link href={`/${locale}/privacy`} className="transition-colors hover:text-gold-soft">
+              {t.footer.links.privacy}
+            </Link>
             <Link href="/admin" className="transition-colors hover:text-gold-soft">
               {t.footer.links.dashboard}
             </Link>
@@ -45,7 +56,7 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
 
 export function WhatsAppFloat({ t, locale }: { t: Dictionary; locale: Locale }) {
   return (
-    <WhatsAppLink
+    <TrackedLink
       href={whatsappLink(t.whatsappMessage)}
       placement="floating-button"
       locale={locale}
@@ -53,6 +64,6 @@ export function WhatsAppFloat({ t, locale }: { t: Dictionary; locale: Locale }) 
       className="fixed bottom-6 end-6 z-60 flex h-14 w-14 items-center justify-center rounded-full bg-[#1d7a52] text-white shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)] transition-transform hover:scale-105 hover:bg-[#22935f]"
     >
       <WhatsAppIcon className="h-7 w-7" />
-    </WhatsAppLink>
+    </TrackedLink>
   );
 }

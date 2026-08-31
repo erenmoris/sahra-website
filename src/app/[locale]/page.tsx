@@ -8,6 +8,9 @@ import ReservationForm from "@/components/ReservationForm";
 import IntroModal from "@/components/IntroModal";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
+import Gallery from "@/components/Gallery";
+import SnapchatCard from "@/components/SnapchatCard";
+import { getGalleryItems } from "@/lib/gallery";
 import Reveal from "@/components/Reveal";
 import { Accent, Divider, SectionHeading, Wrap } from "@/components/ui";
 
@@ -20,6 +23,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   if (!isLocale(locale)) notFound();
 
   const t = getDictionary(locale);
+  const galleryItems = await getGalleryItems();
 
   return (
     <>
@@ -50,6 +54,8 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           <Divider />
         </Wrap>
 
+        <Gallery items={galleryItems} locale={locale} t={t} />
+
         <Coverage t={t} />
 
         <Wrap>
@@ -67,6 +73,11 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
             </Reveal>
             <Reveal>
               <ReservationForm t={t} locale={locale} />
+            </Reveal>
+            <Reveal>
+              <div className="mt-6">
+                <SnapchatCard locale={locale} t={t} />
+              </div>
             </Reveal>
           </Wrap>
         </section>

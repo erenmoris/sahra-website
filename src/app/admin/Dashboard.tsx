@@ -219,7 +219,7 @@ export default function Dashboard({
             { label: "Requests today", value: stats.today },
             { label: "Awaiting reply", value: stats.new },
             { label: "Confirmed", value: stats.confirmed },
-            { label: "WhatsApp clicks today", value: stats.clicksToday },
+            { label: "Contact clicks today", value: stats.clicksToday },
           ].map((card) => (
             <div key={card.label} className="border border-gold/20 bg-ink-2 px-6 py-5">
               <div className="text-[0.78rem] tracking-[0.04em] text-sand-dim">{card.label}</div>
@@ -234,7 +234,7 @@ export default function Dashboard({
           {(
             [
               ["requests", `Reservation requests (${reservations.length})`],
-              ["clicks", `WhatsApp clicks (${stats.clicksTotal})`],
+              ["clicks", `WhatsApp & Snapchat clicks (${stats.clicksTotal})`],
             ] as const
           ).map(([value, label]) => (
             <button
@@ -255,8 +255,8 @@ export default function Dashboard({
         {tab === "clicks" ? (
           <>
             <p className="mt-5 text-[0.85rem] leading-[1.7] text-sand-dim">
-              Every time a visitor taps a WhatsApp button on the site it is recorded here — even if
-              they never fill in the form — so you can see interest as it happens.
+              Every time a visitor taps a WhatsApp or Snapchat button on the site it is recorded
+              here — even if they never fill in the form — so you can see interest as it happens.
             </p>
             <div className="mt-4 overflow-x-auto border border-gold/20">
               <table className="w-full min-w-[640px] border-collapse text-[0.88rem]">

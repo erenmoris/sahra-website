@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import { WHATSAPP_NUMBER, type Dictionary } from "@/i18n/dictionaries";
+import { SNAPCHAT_URL, WHATSAPP_NUMBER, type Dictionary } from "@/i18n/dictionaries";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sahra-website.vercel.app";
 
@@ -14,6 +14,7 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
       description: t.meta.description,
       url,
       telephone: `+${WHATSAPP_NUMBER}`,
+      sameAs: [SNAPCHAT_URL],
       priceRange: "$$–$$$",
       image: `${siteUrl}/opengraph-image`,
       address: {

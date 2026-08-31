@@ -126,13 +126,15 @@ export function Testimonials({ t }: { t: Dictionary }) {
 
         <div className="grid gap-7 md:grid-cols-2">
           {t.testimonials.items.map((item, index) => (
-            <Reveal key={item.who} delay={(index % 2) * 90}>
+            <Reveal key={item.text} delay={(index % 2) * 90}>
               <figure className="flex flex-col items-start">
                 <blockquote className="max-w-[92%] rounded-[14px] rounded-bl-[3px] bg-teal px-5 py-4.5 text-[1rem] leading-[1.9] text-[#dff2ea] shadow-[0_18px_40px_-20px_rgba(0,0,0,0.6)]">
                   {item.text}
                 </blockquote>
                 <figcaption className="mt-2.5 flex items-center gap-1.5 text-[0.8rem] text-sand-dim">
-                  <span className="text-[0.85rem] text-[#63c2a3]">✓✓</span> {item.who}
+                  <span className="text-[0.85rem] text-[#63c2a3]">✓✓</span>
+                  {item.name ? <span className="text-sand">{item.name}</span> : null}
+                  {item.who}
                 </figcaption>
               </figure>
             </Reveal>
