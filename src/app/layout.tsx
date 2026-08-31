@@ -52,10 +52,11 @@ export async function generateMetadata(): Promise<Metadata> {
       url: `${siteUrl}/${locale}`,
       locale: locale === "ar" ? "ar_EG" : "en_US",
     },
-    verification: {
-      // Carried over from the previous static site so search console stays verified.
-      google: "googlef9d35aaff3c2db3e.html",
-    },
+    // Google's meta method needs the long token from Search Console; the older
+    // file method still works through public/googlef9d35aaff3c2db3e.html.
+    verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : undefined,
   };
 }
 
