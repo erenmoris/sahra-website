@@ -31,12 +31,12 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
             >
               {t.footer.links.snapchat}
             </TrackedLink>
-            <a href="#venues" className="transition-colors hover:text-gold-soft">
+            <Link href={`/${locale}#venues`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.venues}
-            </a>
-            <a href="#reserve" className="transition-colors hover:text-gold-soft">
+            </Link>
+            <Link href={`/${locale}#reserve`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.reserve}
-            </a>
+            </Link>
             <Link href={`/${locale}/privacy`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.privacy}
             </Link>

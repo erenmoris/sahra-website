@@ -48,7 +48,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           <Divider />
         </Wrap>
 
-        <Venues t={t} />
+        <Venues t={t} locale={locale} />
 
         <Wrap>
           <Divider />

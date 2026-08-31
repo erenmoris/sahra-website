@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Cairo, El_Messiri, IBM_Plex_Mono } from "next/font/google";
 import { defaultLocale, dir, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { venueKeywords } from "@/content/venues";
 import "./globals.css";
 
 const elMessiri = El_Messiri({
@@ -38,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title: t.meta.title,
     description: t.meta.description,
-    keywords: [...t.meta.keywords],
+    keywords: [...t.meta.keywords, ...venueKeywords],
     robots: { index: true, follow: true },
     alternates: {
       canonical: `/${locale}`,

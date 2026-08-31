@@ -15,24 +15,24 @@ export default function Header({ locale, t }: { locale: Locale; t: Dictionary })
 
         <div className="flex items-center gap-6 sm:gap-9">
           <nav className="hidden items-center gap-9 md:flex">
-            <a
-              href="#how"
+            <Link
+              href={`/${locale}#how`}
               className="text-[0.86rem] text-sand-dim transition-colors hover:text-gold-soft"
             >
               {t.nav.how}
-            </a>
-            <a
-              href="#venues"
+            </Link>
+            <Link
+              href={`/${locale}#venues`}
               className="text-[0.86rem] text-sand-dim transition-colors hover:text-gold-soft"
             >
               {t.nav.venues}
-            </a>
-            <a
-              href="#trust"
+            </Link>
+            <Link
+              href={`/${locale}#trust`}
               className="text-[0.86rem] text-sand-dim transition-colors hover:text-gold-soft"
             >
               {t.nav.trust}
-            </a>
+            </Link>
           </nav>
 
           <Link
@@ -42,9 +42,12 @@ export default function Header({ locale, t }: { locale: Locale; t: Dictionary })
             {t.langSwitch}
           </Link>
 
-          <a href="#reserve" className={buttonClass("ghost", "px-4 py-2.5 text-[0.82rem]")}>
+          <Link
+            href={`/${locale}#reserve`}
+            className={buttonClass("ghost", "px-4 py-2.5 text-[0.82rem]")}
+          >
             {t.nav.reserve}
-          </a>
+          </Link>
         </div>
       </Wrap>
     </header>

@@ -1,5 +1,6 @@
 import type { Locale } from "@/i18n/config";
 import { SNAPCHAT_URL, WHATSAPP_NUMBER, type Dictionary } from "@/i18n/dictionaries";
+import { venueName, venues } from "@/content/venues";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sahra-website.vercel.app";
 
@@ -66,6 +67,17 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
           areaServed: item.tag,
         })),
       },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${url}#venues`,
+      name: t.venues.namesTitle,
+      itemListElement: venues.map((venue, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: venueName(venue, locale),
+        alternateName: locale === "ar" ? venue.name : venue.nameAr,
+      })),
     },
     {
       "@type": "WebSite",

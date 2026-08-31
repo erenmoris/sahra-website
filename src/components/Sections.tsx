@@ -1,4 +1,6 @@
+import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { venueName, venues } from "@/content/venues";
 import Reveal from "./Reveal";
 import { TrustIcon, VenueIcon } from "./Icons";
 import { Accent, SectionHeading, Wrap } from "./ui";
@@ -59,7 +61,7 @@ export function Trust({ t }: { t: Dictionary }) {
   );
 }
 
-export function Venues({ t }: { t: Dictionary }) {
+export function Venues({ t, locale }: { t: Dictionary; locale: Locale }) {
   return (
     <section id="venues" className="py-24">
       <Wrap>
@@ -85,6 +87,30 @@ export function Venues({ t }: { t: Dictionary }) {
             </Reveal>
           ))}
         </div>
+
+        <Reveal>
+          <div className="mt-12 border-t border-gold/15 pt-8">
+            <h3 className="mb-4 text-[0.95rem] font-semibold text-gold-soft">
+              {t.venues.namesTitle}
+            </h3>
+            <ul className="flex flex-wrap gap-2.5">
+              {venues.map((venue) => (
+                <li
+                  key={venue.name}
+                  className="border border-gold/20 px-4 py-2 text-[0.84rem] text-sand-dim"
+                >
+                  {venueName(venue, locale)}
+                  <span className="ms-2 font-mono text-[0.72rem] text-[#6b6455]" dir="ltr">
+                    {locale === "ar" ? venue.name : venue.nameAr}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-[#6b6455]">
+              {t.venues.namesNote}
+            </p>
+          </div>
+        </Reveal>
       </Wrap>
     </section>
   );
