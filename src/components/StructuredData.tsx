@@ -55,7 +55,8 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
     {
       "@type": "Service",
       "@id": `${siteUrl}#service`,
-      serviceType: t.meta.businessName,
+      serviceType: locale === "ar" ? "كونسييرج سهرات في مصر" : "Egypt nightlife concierge",
+      description: t.meta.description,
       provider: { "@id": `${siteUrl}#business` },
       areaServed: t.meta.areaServed.map((name) => ({ "@type": "Place", name })),
       hasOfferCatalog: {
@@ -90,11 +91,18 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
     {
       "@type": "FAQPage",
       "@id": `${url}#faq`,
-      mainEntity: t.how.steps.map((step) => ({
-        "@type": "Question",
-        name: step.title,
-        acceptedAnswer: { "@type": "Answer", text: step.body },
-      })),
+      mainEntity: [
+        ...t.how.steps.map((step) => ({
+          "@type": "Question",
+          name: step.title,
+          acceptedAnswer: { "@type": "Answer", text: step.body },
+        })),
+        ...t.seo.faq.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      ],
     },
   ];
 

@@ -7,24 +7,31 @@ export const SNAPCHAT_URL = `https://www.snapchat.com/add/${SNAPCHAT_USERNAME}`;
 
 const ar = {
   meta: {
-    title: "سهرات في مصر · حجز سهرات الساحل الشمالي والقاهرة | سهرة كونسييرج",
+    title: "أفضل سهرات في مصر · أماكن سهر ونايت كلوب · حجز ترابيزة | سهرة",
     description:
-      "حجز سهرات في مصر خلال ساعات: سهرات الساحل الشمالي، بيتش كلوبز الجونة، روفتوبات وحفلات مراكب النيل في القاهرة، وترابيزات VIP في شرم الشيخ. احجز ترابيزتك على الواتساب في دقايق وبخصوصية تامة.",
+      "أفضل سهرات في مصر — أماكن سهر في القاهرة والساحل الشمالي والجونة: روفتوبات، ديسكو، نايت كلوب، بيتش كلوبز وحفلات مراكب. احجز ليلتك على الواتساب في ساعتين وتدخل من غير انتظار.",
     keywords: [
+      "أفضل سهرات في مصر",
+      "أماكن سهر في مصر",
+      "أفضل سهرات",
+      "ديسكو مصر",
+      "نايتات في مصر",
       "سهرات في مصر",
-      "الساحل الشمالي",
+      "نايت كلوب مصر",
+      "أفضل نايت كلوب في مصر",
+      "أماكن سهر القاهرة",
       "سهرات الساحل الشمالي",
       "حجز سهرات",
       "حجز ترابيزة",
       "بيتش كلوب الساحل الشمالي",
       "سهرات الجونة",
-      "نايت كلوب القاهرة",
       "روفتوب القاهرة",
       "حفلات مراكب النيل",
       "ترابيزة VIP",
       "سهرات شرم الشيخ",
       "كونسييرج سهر مصر",
       "حجز نايت كلوب مصر",
+      "الساحل الشمالي",
     ],
     areaServed: ["الساحل الشمالي", "القاهرة", "الجونة", "شرم الشيخ", "الغردقة"],
     businessName: "سهرة — كونسييرج السهر في مصر",
@@ -115,6 +122,8 @@ const ar = {
     ],
   },
   ticker: [
+    "أفضل سهرات في مصر — احجز من مكان واحد",
+    "أماكن سهر في القاهرة والساحل الشمالي",
     "ترابيزتك جاهزة قبل ما توصل",
     "تأكيد في ٢–٣ ساعات",
     "دخول من غير وقفة على الباب",
@@ -296,13 +305,32 @@ const ar = {
     rights: "كل الحقوق محفوظة",
   },
   seo: {
-    eyebrow: "أماكن نغطيها",
-    title: "سهرات في مصر —",
-    titleAccent: "من الساحل الشمالي للقاهرة.",
+    eyebrow: "دليل السهر في مصر",
+    title: "أفضل سهرات في مصر —",
+    titleAccent: "أماكن سهر ونايت كلوب في القاهرة والساحل.",
     paragraphs: [
-      "لو بتدوّر على سهرات الساحل الشمالي في الصيف، بنحجزلك في البيتش كلوبز والحفلات على طول الساحل ومارينا وسيدي عبد الرحمن — ترابيزة باسمك ودخول مباشر من غير وقفة على الباب.",
-      "وفي القاهرة بننسّق روفتوبات على النيل، حفلات مراكب، وترابيزات VIP مع بوتل سيرفيس في أهم الأماكن. وفي الجونة وشرم الشيخ والغردقة نفس الخدمة متاحة طول السنة.",
-      "كل الحجوزات بتتأكد على الواتساب في ساعتين لتلاتة، بنخدمك بالعربي والإنجليزي، وبياناتك تفضل عندنا وما بتتشاركش مع أي جهة.",
+      "لو بتدور على أفضل سهرات في مصر أو أماكن سهر في مصر، سهرة بتجمّعلك روفتوبات على النيل، ديسكو ونايت كلوب في القاهرة، وبيتش كلوبز على الساحل الشمالي — ونحجزلك ترابيزة باسمك ودخول مباشر.",
+      "سهرات الساحل الشمالي في الصيف: بنحجز في البيتش كلوبز والحفلات على طول الساحل ومارينا وسيدي عبد الرحمن. في القاهرة: حفلات مراكب، ترابيزات VIP، وأشهر نايتات في مصر — كلها من مكان واحد على الواتساب.",
+      "مش محتاج تدور على «ديسكو مصر» أو «نايتات في مصر» في جوجل وتتصل بكل مكان لوحده. ابعتنا التاريخ وعدد الأفراد، ونرجعلك بالتوفر والحد الأدنى للصرف، والتأكيد في ساعتين لتلاتة.",
+    ],
+    faqTitle: "أسئلة شائعة عن السهر في مصر",
+    faq: [
+      {
+        q: "إيه أفضل سهرات في مصر؟",
+        a: "القاهرة فيها روفتوبات على النيل وحفلات مراكب ونايت كلوب في الزمالك والتجمع. الساحل الشمالي في الصيف فيه أشهر بيتش كلوبز وحفلات. الجونة وشرم الشيخ فيها سهرات طول السنة. سهرة بترشحلك حسب ميزانيتك ونوع الليلة اللي عايزها.",
+      },
+      {
+        q: "فين ألاقي أماكن سهر في مصر؟",
+        a: "أماكن السهر في مصر متوزعة: القاهرة (روفتوب، مراكب، ديسكو)، الساحل الشمالي (بيتش كلوبز)، الجونة وشرم والغردقة (سهرات ساحلية). ابعتنا المدينة والتاريخ على الواتساب ونقولك الخيارات المتاحة.",
+      },
+      {
+        q: "إزاي أحجز في ديسكو أو نايت كلوب في مصر؟",
+        a: "ابعتلنا على الواتساب: التاريخ، عدد الأفراد، والمدينة. بنرجعلك بالأماكن المتاحة والحد الأدنى للصرف، وبعد موافقتك نثبّت الترابيزة باسمك ونبعتلك تأكيد — دخول من غير انتظار على الباب.",
+      },
+      {
+        q: "ينفع أحجز نايتات في مصر من برّة؟",
+        a: "أيوه. بنخدم بالعربي والإنجليزي، وبنظبط حجوزات للزوار من السعودية والخليج ومصريين مقيمين برّة. كل التنسيق على الواتساب قبل ما توصل.",
+      },
     ],
   },
   whatsappMessage: "مرحبًا، محتاج أحجز ترابيزة",
@@ -311,10 +339,15 @@ const ar = {
 
 const en = {
   meta: {
-    title: "Nightlife in Egypt · North Coast & Cairo Party Booking | Sahra Concierge",
+    title: "Best Nightlife in Egypt · Nightclubs & Party Booking | Sahra",
     description:
-      "Book nightlife in Egypt within hours: North Coast beach clubs, El Gouna parties, Cairo rooftops and Nile boat parties, plus VIP tables in Sharm El Sheikh. Reserve your table on WhatsApp in minutes, with full privacy.",
+      "Best nightlife in Egypt — nightclubs, discos, rooftops and beach clubs in Cairo and the North Coast. Book your table on WhatsApp in hours and skip the queue.",
     keywords: [
+      "best nightlife in Egypt",
+      "nightlife places in Egypt",
+      "Egypt nightclub",
+      "disco Egypt",
+      "nights out in Egypt",
       "nightlife in Egypt",
       "North Coast Egypt nightlife",
       "Sahel beach club booking",
@@ -411,6 +444,8 @@ const en = {
     ],
   },
   ticker: [
+    "Best nightlife in Egypt — book from one place",
+    "Nightlife in Cairo and the North Coast",
     "Your table is ready before you arrive",
     "Confirmed in 2–3 hours",
     "Straight in, no queue at the door",
@@ -592,13 +627,32 @@ const en = {
     rights: "All rights reserved",
   },
   seo: {
-    eyebrow: "Where we operate",
-    title: "Nightlife in Egypt —",
-    titleAccent: "from the North Coast to Cairo.",
+    eyebrow: "Egypt nightlife guide",
+    title: "Best nightlife in Egypt —",
+    titleAccent: "nightclubs and party spots in Cairo & the coast.",
     paragraphs: [
-      "If you are looking for North Coast nightlife in the summer, we book beach clubs and parties along Sahel, Marina and Sidi Abdel Rahman — a table under your name and straight entry without queueing at the door.",
-      "In Cairo we arrange Nile-facing rooftops, boat parties, and VIP tables with bottle service at the busiest venues. In El Gouna, Sharm El Sheikh and Hurghada the same service runs all year.",
-      "Every booking is confirmed on WhatsApp within two to three hours, in Arabic or English, and your details are never shared.",
+      "Looking for the best nightlife in Egypt or nightlife places across Cairo and the North Coast? Sahra books rooftops, discos, nightclubs and beach clubs — a table under your name and straight entry.",
+      "North Coast in summer: beach clubs and parties from Marina to Sidi Abdel Rahman. In Cairo: Nile boat parties, VIP tables and the busiest nights out in Egypt — all arranged on WhatsApp.",
+      "Instead of searching \"disco Egypt\" or \"nights in Egypt\" and calling every venue, send us the date and party size. We come back with availability and the minimum spend, confirmed in two to three hours.",
+    ],
+    faqTitle: "Frequently asked about nightlife in Egypt",
+    faq: [
+      {
+        q: "What is the best nightlife in Egypt?",
+        a: "Cairo has Nile rooftops, boat parties and nightclubs in Zamalek and New Cairo. The North Coast has the biggest beach clubs in summer. El Gouna and Sharm run all year. Sahra recommends based on your budget and the kind of night you want.",
+      },
+      {
+        q: "Where can I find nightlife places in Egypt?",
+        a: "Nightlife is spread across Cairo (rooftops, boats, discos), the North Coast (beach clubs), and El Gouna, Sharm and Hurghada (coastal venues). Message us the city and date on WhatsApp and we send you what is available.",
+      },
+      {
+        q: "How do I book a disco or nightclub in Egypt?",
+        a: "Send us the date, party size and city on WhatsApp. We reply with available venues and the minimum spend, hold the table under your name once you approve, and send a confirmation — no queue at the door.",
+      },
+      {
+        q: "Can I book nights out in Egypt from abroad?",
+        a: "Yes. We serve in Arabic and English and arrange bookings for visitors from the Gulf and Egyptians abroad. Everything is handled on WhatsApp before you arrive.",
+      },
     ],
   },
   whatsappMessage: "Hi, I would like to book a table",

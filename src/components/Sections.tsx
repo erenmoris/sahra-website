@@ -130,6 +130,22 @@ export function Coverage({ t }: { t: Dictionary }) {
             ))}
           </div>
         </Reveal>
+
+        <Reveal>
+          <div className="mt-16">
+            <h3 className="mb-6 font-display text-[1.5rem] font-semibold text-sand">
+              {t.seo.faqTitle}
+            </h3>
+            <div className="grid gap-6 md:grid-cols-2">
+              {t.seo.faq.map((item) => (
+                <div key={item.q} className="border border-gold/15 bg-ink-2/40 px-6 py-6">
+                  <h4 className="mb-2.5 text-[1.02rem] font-semibold text-gold-soft">{item.q}</h4>
+                  <p className="text-[0.92rem] leading-[1.85] text-sand-dim">{item.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
       </Wrap>
     </section>
   );
