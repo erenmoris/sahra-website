@@ -40,9 +40,6 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
             <Link href={`/${locale}/privacy`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.privacy}
             </Link>
-            <Link href="/admin" className="transition-colors hover:text-gold-soft">
-              {t.footer.links.dashboard}
-            </Link>
           </div>
         </div>
         <p className="mt-7 text-[0.76rem] leading-[1.8] text-[#6b6455]">{t.footer.note}</p>
