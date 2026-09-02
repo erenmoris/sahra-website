@@ -50,6 +50,11 @@ export async function GET() {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const reservations = await listReservations();
-  return NextResponse.json({ reservations });
+  try {
+    const reservations = await listReservations();
+    return NextResponse.json({ reservations });
+  } catch (error) {
+    console.error("reservations list failed:", error);
+    return NextResponse.json({ error: "storage_unavailable", reservations: [] }, { status: 503 });
+  }
 }

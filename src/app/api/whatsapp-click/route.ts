@@ -34,6 +34,11 @@ export async function GET() {
   const session = await getSession();
   if (!session) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
-  const clicks = await listWhatsAppClicks(100);
-  return NextResponse.json({ clicks });
+  try {
+    const clicks = await listWhatsAppClicks(100);
+    return NextResponse.json({ clicks });
+  } catch (error) {
+    console.error("whatsapp-click list failed:", error);
+    return NextResponse.json({ error: "storage_unavailable", clicks: [] }, { status: 503 });
+  }
 }

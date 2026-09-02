@@ -65,19 +65,23 @@ export default function Dashboard({
   const [busyId, setBusyId] = useState<string | null>(null);
 
   async function refresh() {
-    const [reservationsResponse, clicksResponse] = await Promise.all([
-      fetch("/api/reservations", { cache: "no-store" }),
-      fetch("/api/whatsapp-click", { cache: "no-store" }),
-    ]);
+    try {
+      const [reservationsResult, clicksResult] = await Promise.allSettled([
+        fetch("/api/reservations", { cache: "no-store", credentials: "same-origin" }),
+        fetch("/api/whatsapp-click", { cache: "no-store", credentials: "same-origin" }),
+      ]);
 
-    if (reservationsResponse.ok) {
-      const data = (await reservationsResponse.json()) as { reservations: Reservation[] };
-      setReservations(data.reservations);
-    }
+      if (reservationsResult.status === "fulfilled" && reservationsResult.value.ok) {
+        const data = (await reservationsResult.value.json()) as { reservations: Reservation[] };
+        setReservations(data.reservations);
+      }
 
-    if (clicksResponse.ok) {
-      const data = (await clicksResponse.json()) as { clicks: WhatsAppClick[] };
-      setClicks(data.clicks);
+      if (clicksResult.status === "fulfilled" && clicksResult.value.ok) {
+        const data = (await clicksResult.value.json()) as { clicks: WhatsAppClick[] };
+        setClicks(data.clicks);
+      }
+    } catch {
+      // Ignore transient network errors during background polling (e.g. dev recompile).
     }
   }
 
