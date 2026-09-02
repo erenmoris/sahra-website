@@ -47,11 +47,13 @@ export default function Dashboard({
   initialReservations,
   initialClicks,
   ephemeralStorage = false,
+  ownerNotifyEnabled = false,
 }: {
   username: string;
   initialReservations: Reservation[];
   initialClicks: WhatsAppClick[];
   ephemeralStorage?: boolean;
+  ownerNotifyEnabled?: boolean;
 }) {
   const router = useRouter();
   const [reservations, setReservations] = useState(initialReservations);
@@ -212,6 +214,17 @@ export default function Dashboard({
             them permanently.
           </div>
         ) : null}
+
+        {!ownerNotifyEnabled ? (
+          <div className="mb-6 border border-gold/30 bg-gold/10 px-5 py-4 text-[0.85rem] leading-[1.7] text-gold-soft">
+            Email alerts are off. Set <code>RESEND_API_KEY</code> on Vercel to receive booking
+            notifications at <code>erenmoris5@gmail.com</code> (see <code>.env.example</code>).
+          </div>
+        ) : (
+          <div className="mb-6 border border-[#63c2a3]/40 bg-[#63c2a3]/10 px-5 py-3 text-[0.85rem] text-[#8fdcc2]">
+            Email alerts on — new reservations are sent to erenmoris5@gmail.com
+          </div>
+        )}
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
+import { notifyOwnerNewReservation } from "@/lib/notify-owner";
 import { createReservation, listReservations } from "@/lib/store";
 
 export const runtime = "nodejs";
@@ -37,6 +38,8 @@ export async function POST(request: Request) {
     source: clean(body.source, 40) ?? "website",
     locale: clean(body.locale, 5) ?? "ar",
   });
+
+  void notifyOwnerNewReservation(reservation);
 
   return NextResponse.json({ reservation }, { status: 201 });
 }

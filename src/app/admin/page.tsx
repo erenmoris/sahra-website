@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
 import { listReservations, listWhatsAppClicks, storeKind } from "@/lib/store";
+import { isOwnerNotifyConfigured } from "@/lib/notify-owner";
 import Dashboard from "./Dashboard";
 
 export const metadata = { title: "Sahra · Reservations dashboard" };
@@ -18,6 +19,7 @@ export default async function AdminPage() {
       initialReservations={reservations}
       initialClicks={clicks}
       ephemeralStorage={storeKind === "file" && Boolean(process.env.VERCEL)}
+      ownerNotifyEnabled={isOwnerNotifyConfigured()}
     />
   );
 }
