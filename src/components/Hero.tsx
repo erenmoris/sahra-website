@@ -1,9 +1,8 @@
-import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
 import { buildNavLinks } from "./Header";
-import Logo from "./Logo";
+import HeroNavPanel from "./HeroNavPanel";
 import { ButtonLink, Eyebrow, Wrap, buttonClass } from "./ui";
 import TrackedLink from "./TrackedLink";
 import Spotlight from "./Spotlight";
@@ -96,36 +95,7 @@ export default function Hero({
           </dl>
         </div>
 
-        <div className="bob relative mx-auto w-full max-w-[400px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-8 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
-          <p className="mb-6 text-center text-[0.72rem] tracking-[0.12em] text-gold-soft uppercase">
-            {locale === "ar" ? "القائمة الرئيسية" : "Main navigation"}
-          </p>
-
-          <div className="mb-8 flex justify-center">
-            <Logo locale={locale} src={logoSrc} size="lg" linked={false} />
-          </div>
-
-          <nav
-            className="flex flex-col gap-2"
-            aria-label={locale === "ar" ? "روابط الأقسام" : "Section links"}
-          >
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-sm border border-gold/15 bg-ink/60 px-4 py-3.5 text-center text-[0.95rem] text-sand transition-colors hover:border-gold/40 hover:text-gold-soft"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              href={`/${locale}#reserve`}
-              className={`${buttonClass("ghost", "mt-2 w-full justify-center py-3.5 text-[0.95rem]")}`}
-            >
-              {t.nav.reserve}
-            </Link>
-          </nav>
-        </div>
+        <HeroNavPanel locale={locale} t={t} links={links} logoSrc={logoSrc} />
       </Wrap>
     </section>
   );
