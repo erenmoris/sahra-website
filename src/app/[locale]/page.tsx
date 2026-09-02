@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { isLocale, locales } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import PromoTicker from "@/components/PromoTicker";
+import PromoVideo from "@/components/PromoVideo";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Coverage, HowItWorks, Testimonials, Trust, Venues } from "@/components/Sections";
 import ReservationForm from "@/components/ReservationForm";
@@ -14,6 +14,7 @@ import Gallery from "@/components/Gallery";
 import SnapchatCard from "@/components/SnapchatCard";
 import { getGalleryItems } from "@/lib/gallery";
 import { getVenueLogoMap } from "@/lib/venue-logos";
+import { getSiteConfig, getSiteDictionary } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import { Accent, Divider, SectionHeading, Wrap } from "@/components/ui";
 
@@ -25,8 +26,17 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const t = getDictionary(locale);
-  const [galleryItems, venueLogos] = await Promise.all([getGalleryItems(), getVenueLogoMap()]);
+  const [t, config, galleryItems, venueLogos] = await Promise.all([
+    getSiteDictionary(locale),
+    getSiteConfig(),
+    getGalleryItems(),
+    getVenueLogoMap(),
+  ]);
+
+  const { sections, promoVideo } = config;
+  const videoVisible = Boolean(promoVideo.visible && promoVideo.src);
+  const videoInHero = videoVisible && promoVideo.placement === "hero";
+  const videoAsSection = videoVisible && promoVideo.placement !== "hero" && sections.promoVideo;
 
   return (
     <>
@@ -34,55 +44,85 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       <ScrollProgress />
       <Header locale={locale} t={t} />
       <main>
-        <Hero t={t} locale={locale} />
+        {sections.hero ? (
+          <Hero
+            t={t}
+            locale={locale}
+            videoSrc={videoInHero ? promoVideo.src : undefined}
+            videoPoster={videoInHero ? promoVideo.poster : undefined}
+          />
+        ) : null}
 
-        <PromoTicker t={t} locale={locale} />
+        {videoAsSection && promoVideo.src ? (
+          <PromoVideo
+            src={promoVideo.src}
+            poster={promoVideo.poster}
+            locale={locale}
+            t={t}
+          />
+        ) : null}
 
-        <HowItWorks t={t} />
+        {sections.promoTicker ? <PromoTicker t={t} locale={locale} /> : null}
 
-        <Wrap>
-          <Divider />
-        </Wrap>
+        {sections.how ? <HowItWorks t={t} /> : null}
 
-        <Trust t={t} />
-
-        <Wrap>
-          <Divider />
-        </Wrap>
-
-        <Venues t={t} locale={locale} venueLogos={venueLogos} />
-
-        <Wrap>
-          <Divider />
-        </Wrap>
-
-        <Gallery items={galleryItems} locale={locale} t={t} />
-
-        <Coverage t={t} />
-
-        <Wrap>
-          <Divider />
-        </Wrap>
-
-        <Testimonials t={t} />
-
-        <section id="reserve" className="scroll-mt-24 py-24">
+        {sections.how && sections.trust ? (
           <Wrap>
-            <Reveal>
-              <SectionHeading eyebrow={t.form.eyebrow} lede={t.form.lede}>
-                {t.form.title} <Accent>{t.form.titleAccent}</Accent>
-              </SectionHeading>
-            </Reveal>
-            <Reveal>
-              <ReservationForm t={t} locale={locale} />
-            </Reveal>
-            <Reveal>
-              <div className="mt-6">
-                <SnapchatCard locale={locale} t={t} />
-              </div>
-            </Reveal>
+            <Divider />
           </Wrap>
-        </section>
+        ) : null}
+
+        {sections.trust ? <Trust t={t} /> : null}
+
+        {sections.trust && sections.venues ? (
+          <Wrap>
+            <Divider />
+          </Wrap>
+        ) : null}
+
+        {sections.venues ? (
+          <Venues t={t} locale={locale} venueLogos={venueLogos} />
+        ) : null}
+
+        {sections.venues && sections.gallery ? (
+          <Wrap>
+            <Divider />
+          </Wrap>
+        ) : null}
+
+        {sections.gallery ? (
+          <Gallery items={galleryItems} locale={locale} t={t} />
+        ) : null}
+
+        {sections.coverage ? <Coverage t={t} /> : null}
+
+        {sections.coverage && sections.testimonials ? (
+          <Wrap>
+            <Divider />
+          </Wrap>
+        ) : null}
+
+        {sections.testimonials ? <Testimonials t={t} /> : null}
+
+        {sections.reserve ? (
+          <section id="reserve" className="scroll-mt-24 py-24">
+            <Wrap>
+              <Reveal>
+                <SectionHeading eyebrow={t.form.eyebrow} lede={t.form.lede}>
+                  {t.form.title} <Accent>{t.form.titleAccent}</Accent>
+                </SectionHeading>
+              </Reveal>
+              <Reveal>
+                <ReservationForm t={t} locale={locale} />
+              </Reveal>
+              <Reveal>
+                <div className="mt-6">
+                  <SnapchatCard locale={locale} t={t} />
+                </div>
+              </Reveal>
+            </Wrap>
+          </section>
+        ) : null}
       </main>
 
       <Footer locale={locale} t={t} />

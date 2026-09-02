@@ -36,6 +36,7 @@ export default function Gallery({
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   priority={index < 3}
+                  unoptimized={item.src.startsWith("http")}
                 />
                 {item.caption ? (
                   <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent px-4 pt-10 pb-4 text-[0.85rem] text-sand">

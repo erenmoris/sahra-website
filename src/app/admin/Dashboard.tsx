@@ -183,6 +183,12 @@ export default function Dashboard({
           </div>
           <div className="flex items-center gap-3">
             <Link
+              href="/admin/content"
+              className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
+            >
+              Manage content
+            </Link>
+            <Link
               href="/ar"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
