@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import HeroNavPanel from "./HeroNavPanel";
+import { buttonClass } from "./ui";
 
 type NavLink = { href: string; label: string };
 
@@ -36,13 +36,11 @@ export default function HeaderMobileMenu({
   t,
   links,
   other,
-  logoSrc,
 }: {
   locale: Locale;
   t: Dictionary;
   links: NavLink[];
   other: Locale;
-  logoSrc?: string;
 }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
@@ -89,30 +87,42 @@ export default function HeaderMobileMenu({
             aria-label={locale === "ar" ? "إغلاق" : "Close"}
             onClick={close}
           />
-          <div
+          <nav
             id="mobile-nav"
-            className="fixed inset-x-0 top-[88px] z-50 max-h-[calc(100dvh-88px)] overflow-y-auto border-b border-gold/20 bg-ink px-6 py-8 md:hidden"
+            className="fixed inset-x-0 top-[88px] z-50 max-h-[calc(100dvh-88px)] overflow-y-auto border-b border-gold/20 bg-ink px-6 py-6 md:hidden"
             aria-label={locale === "ar" ? "قائمة الموبايل" : "Mobile menu"}
           >
-            <HeroNavPanel
-              locale={locale}
-              t={t}
-              links={links}
-              logoSrc={logoSrc}
-              onNavigate={close}
-              className="max-w-none shadow-none"
-            />
+            <ul className="flex flex-col gap-1">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="block border-b border-gold/10 py-4 text-[1.05rem] text-sand transition-colors hover:text-gold-soft"
+                    onClick={close}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-            <div className="mt-6">
+            <div className="mt-6 flex flex-col gap-3">
+              <Link
+                href={`/${locale}#reserve`}
+                className={buttonClass("ghost", "w-full justify-center py-3.5 text-[0.95rem]")}
+                onClick={close}
+              >
+                {t.nav.reserve}
+              </Link>
               <Link
                 href={`/${other}`}
-                className="block rounded-sm border border-gold/25 py-3.5 text-center text-[0.9rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
+                className="block border border-gold/25 py-3.5 text-center text-[0.9rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
                 onClick={close}
               >
                 {t.langSwitch}
               </Link>
             </div>
-          </div>
+          </nav>
         </>
       ) : null}
     </>

@@ -59,13 +59,7 @@ export default function Header({
             {t.nav.reserve}
           </Link>
 
-          <HeaderMobileMenu
-            locale={locale}
-            t={t}
-            links={links}
-            other={other}
-            logoSrc={logoSrc}
-          />
+          <HeaderMobileMenu locale={locale} t={t} links={links} other={other} />
         </div>
       </Wrap>
     </header>

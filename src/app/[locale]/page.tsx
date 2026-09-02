@@ -34,9 +34,10 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   ]);
 
   const { sections, promoVideo, logoUrl } = config;
+  const videoVisible = Boolean(promoVideo.visible && promoVideo.src);
+  const videoInHero = videoVisible && promoVideo.placement === "hero";
   const videoAsSection =
-    Boolean(promoVideo.visible && promoVideo.src && sections.promoVideo) &&
-    promoVideo.placement !== "hero";
+    videoVisible && promoVideo.placement !== "hero" && sections.promoVideo;
 
   return (
     <>
@@ -45,7 +46,12 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
       <Header locale={locale} t={t} logoSrc={logoUrl} />
       <main>
         {sections.hero ? (
-          <Hero t={t} locale={locale} logoSrc={logoUrl} />
+          <Hero
+            t={t}
+            locale={locale}
+            videoSrc={videoInHero ? promoVideo.src : undefined}
+            videoPoster={videoInHero ? promoVideo.poster : undefined}
+          />
         ) : null}
 
         {videoAsSection && promoVideo.src ? (

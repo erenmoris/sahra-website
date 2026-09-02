@@ -1,23 +1,24 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
-import { buildNavLinks } from "./Header";
-import HeroNavPanel from "./HeroNavPanel";
 import { ButtonLink, Eyebrow, Wrap, buttonClass } from "./ui";
 import TrackedLink from "./TrackedLink";
 import Spotlight from "./Spotlight";
+import PromoVideo from "./PromoVideo";
 
 export default function Hero({
   t,
   locale,
-  logoSrc,
+  videoSrc,
+  videoPoster,
 }: {
   t: Dictionary;
   locale: Locale;
-  logoSrc?: string;
+  videoSrc?: string;
+  videoPoster?: string;
 }) {
   const { hero } = t;
-  const links = buildNavLinks(locale, t);
+  const showVideo = Boolean(videoSrc);
 
   return (
     <section className="relative overflow-hidden pt-[168px] pb-24">
@@ -95,7 +96,59 @@ export default function Hero({
           </dl>
         </div>
 
-        <HeroNavPanel locale={locale} t={t} links={links} logoSrc={logoSrc} />
+        {showVideo ? (
+          <div className="mx-auto w-full max-w-[440px]">
+            <PromoVideo
+              src={videoSrc!}
+              poster={videoPoster}
+              locale={locale}
+              t={t}
+              compact
+            />
+          </div>
+        ) : (
+          <div className="bob relative mx-auto w-full max-w-[380px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-[18px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
+            <div className="absolute -top-px left-1/2 h-[22px] w-[120px] -translate-x-1/2 rounded-b-[14px] bg-ink" />
+
+            <div className="flex items-center gap-2.5 border-b border-gold/20 px-2 pt-3.5 pb-4">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-bold text-ink">
+                {hero.chat.name.charAt(0)}
+              </div>
+              <div>
+                <div className="text-[0.92rem] font-bold text-sand">{hero.chat.name}</div>
+                <div className="flex items-center gap-1.5 text-[0.72rem] text-[#7fbf9e]">
+                  <span className="live-dot" />
+                  {hero.chat.status.replace(/^●\s*/, "")}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex min-h-[300px] flex-col gap-2.5 px-1.5 pt-4 pb-1.5">
+              {hero.chat.messages.map((message, index) => (
+                <div
+                  key={message.text}
+                  className={`chat-bubble max-w-[82%] rounded-[14px] px-4 py-2.5 text-[0.88rem] leading-[1.6] ${
+                    message.side === "out"
+                      ? "self-end rounded-br-[3px] bg-teal text-[#dff2ea]"
+                      : "self-start rounded-bl-[3px] bg-ink-3 text-sand"
+                  }`}
+                  style={{ animationDelay: `${0.3 + index * 0.8}s` }}
+                >
+                  {message.text}
+                </div>
+              ))}
+              <div
+                className="chat-bubble max-w-[92%] self-start rounded-[14px] border border-gold/25 bg-gold/15 px-4 py-2.5 text-left font-mono text-[0.74rem] text-gold-soft"
+                dir="ltr"
+                style={{ animationDelay: `${0.3 + hero.chat.messages.length * 0.8}s` }}
+              >
+                {hero.chat.confirm.map((line) => (
+                  <div key={line}>{line}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </Wrap>
     </section>
   );
