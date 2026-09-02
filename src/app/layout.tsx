@@ -69,7 +69,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = await currentLocale();
 
   return (
-    <html lang={locale} dir={dir(locale)}>
+    <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
       <body
         className={`${elMessiri.variable} ${cairo.variable} ${plexMono.variable} bg-ink text-sand antialiased`}
       >
