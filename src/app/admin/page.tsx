@@ -4,7 +4,7 @@ import { listReservations, listWhatsAppClicks, storeKind } from "@/lib/store";
 import { isOwnerNotifyConfigured } from "@/lib/notify-owner";
 import Dashboard from "./Dashboard";
 
-export const metadata = { title: "Sahra · Reservations dashboard" };
+export const metadata = { title: "سهرة · لوحة الحجوزات" };
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {

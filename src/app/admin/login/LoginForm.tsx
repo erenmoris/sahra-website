@@ -27,7 +27,7 @@ export default function LoginForm() {
     setLoading(false);
 
     if (!response.ok) {
-      setError("Wrong username or password — اسم المستخدم أو كلمة السر غلط");
+      setError("اسم المستخدم أو كلمة السر غلط");
       return;
     }
 
@@ -36,10 +36,10 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} dir="ltr">
+    <form onSubmit={handleSubmit} dir="rtl">
       <div className="mb-5">
         <label htmlFor="username" className="mb-2 block text-[0.8rem] text-gold-soft">
-          Username
+          اسم المستخدم
         </label>
         <input
           id="username"
@@ -51,7 +51,7 @@ export default function LoginForm() {
       </div>
       <div className="mb-6">
         <label htmlFor="password" className="mb-2 block text-[0.8rem] text-gold-soft">
-          Password
+          كلمة السر
         </label>
         <input
           id="password"
@@ -64,7 +64,7 @@ export default function LoginForm() {
       </div>
 
       <button type="submit" disabled={loading} className={buttonClass("primary", "w-full")}>
-        {loading ? "Signing in…" : "Sign in"}
+        {loading ? "جاري الدخول…" : "دخول"}
       </button>
 
       {error ? <p className="mt-4 text-[0.85rem] text-[#e2857f]">{error}</p> : null}

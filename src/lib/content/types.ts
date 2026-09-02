@@ -15,6 +15,13 @@ export type LocalizedString = {
   en?: string;
 };
 
+export type NavOverrides = {
+  how?: LocalizedString;
+  venues?: LocalizedString;
+  trust?: LocalizedString;
+  reserve?: LocalizedString;
+};
+
 export type HeroOverrides = {
   eyebrow?: LocalizedString;
   titleTop?: LocalizedString;
@@ -59,6 +66,10 @@ export type PromoVideoConfig = {
 
 export type SiteContent = {
   sections?: Partial<Record<SectionKey, boolean>>;
+  /** Custom logo URL — falls back to /brand/logo-header.png */
+  logoUrl?: string;
+  /** Header navigation labels (how, venues, trust, reserve). */
+  nav?: NavOverrides;
   hero?: HeroOverrides;
   how?: SectionCopyOverrides;
   trust?: SectionCopyOverrides;
@@ -88,16 +99,16 @@ export const DEFAULT_SECTIONS: Record<SectionKey, boolean> = {
 };
 
 export const SECTION_LABELS: Record<SectionKey, string> = {
-  hero: "Hero",
-  promoTicker: "Promo ticker",
-  how: "How it works",
-  trust: "Trust",
-  venues: "Venues",
-  gallery: "Gallery",
-  coverage: "Coverage / SEO",
-  testimonials: "Testimonials",
-  reserve: "Reservation form",
-  promoVideo: "Promo video section",
+  hero: "الهيرو (أعلى الصفحة)",
+  promoTicker: "الشريط المتحرك",
+  how: "طريقة الحجز",
+  trust: "ليه تختارنا",
+  venues: "أنواع السهرات",
+  gallery: "معرض الصور",
+  coverage: "قسم التغطية / SEO",
+  testimonials: "آراء العملاء",
+  reserve: "نموذج الحجز",
+  promoVideo: "قسم الفيديو الدعائي",
 };
 
 export function emptySiteContent(): SiteContent {

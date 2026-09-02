@@ -7,12 +7,20 @@ import { WhatsAppIcon } from "./Icons";
 import TrackedLink from "./TrackedLink";
 import { Wrap } from "./ui";
 
-export default function Footer({ locale, t }: { locale: Locale; t: Dictionary }) {
+export default function Footer({
+  locale,
+  t,
+  logoSrc,
+}: {
+  locale: Locale;
+  t: Dictionary;
+  logoSrc?: string;
+}) {
   return (
     <footer className="border-t border-gold/20 pt-12 pb-10">
       <Wrap>
         <div className="flex flex-wrap items-center justify-between gap-5">
-          <Logo locale={locale} size="sm" />
+          <Logo locale={locale} size="sm" src={logoSrc} />
           <div className="flex flex-wrap gap-6 text-[0.85rem] text-sand-dim">
             <TrackedLink
               href={whatsappLink(t.whatsappMessage)}

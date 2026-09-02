@@ -1,24 +1,24 @@
+import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
+import { buildNavLinks } from "./Header";
+import Logo from "./Logo";
 import { ButtonLink, Eyebrow, Wrap, buttonClass } from "./ui";
 import TrackedLink from "./TrackedLink";
 import Spotlight from "./Spotlight";
-import PromoVideo from "./PromoVideo";
 
 export default function Hero({
   t,
   locale,
-  videoSrc,
-  videoPoster,
+  logoSrc,
 }: {
   t: Dictionary;
   locale: Locale;
-  videoSrc?: string;
-  videoPoster?: string;
+  logoSrc?: string;
 }) {
   const { hero } = t;
-  const showVideo = Boolean(videoSrc);
+  const links = buildNavLinks(locale, t);
 
   return (
     <section className="relative overflow-hidden pt-[168px] pb-24">
@@ -96,59 +96,36 @@ export default function Hero({
           </dl>
         </div>
 
-        {showVideo ? (
-          <div className="mx-auto w-full max-w-[440px]">
-            <PromoVideo
-              src={videoSrc!}
-              poster={videoPoster}
-              locale={locale}
-              t={t}
-              compact
-            />
+        <div className="bob relative mx-auto w-full max-w-[400px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-8 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
+          <p className="mb-6 text-center text-[0.72rem] tracking-[0.12em] text-gold-soft uppercase">
+            {locale === "ar" ? "القائمة الرئيسية" : "Main navigation"}
+          </p>
+
+          <div className="mb-8 flex justify-center">
+            <Logo locale={locale} src={logoSrc} size="lg" linked={false} />
           </div>
-        ) : (
-          <div className="bob relative mx-auto w-full max-w-[380px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-[18px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
-            <div className="absolute -top-px left-1/2 h-[22px] w-[120px] -translate-x-1/2 rounded-b-[14px] bg-ink" />
 
-            <div className="flex items-center gap-2.5 border-b border-gold/20 px-2 pt-3.5 pb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-bold text-ink">
-                {hero.chat.name.charAt(0)}
-              </div>
-              <div>
-                <div className="text-[0.92rem] font-bold text-sand">{hero.chat.name}</div>
-                <div className="flex items-center gap-1.5 text-[0.72rem] text-[#7fbf9e]">
-                  <span className="live-dot" />
-                  {hero.chat.status.replace(/^●\s*/, "")}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex min-h-[300px] flex-col gap-2.5 px-1.5 pt-4 pb-1.5">
-              {hero.chat.messages.map((message, index) => (
-                <div
-                  key={message.text}
-                  className={`chat-bubble max-w-[82%] rounded-[14px] px-4 py-2.5 text-[0.88rem] leading-[1.6] ${
-                    message.side === "out"
-                      ? "self-end rounded-br-[3px] bg-teal text-[#dff2ea]"
-                      : "self-start rounded-bl-[3px] bg-ink-3 text-sand"
-                  }`}
-                  style={{ animationDelay: `${0.3 + index * 0.8}s` }}
-                >
-                  {message.text}
-                </div>
-              ))}
-              <div
-                className="chat-bubble max-w-[92%] self-start rounded-[14px] border border-gold/25 bg-gold/15 px-4 py-2.5 text-left font-mono text-[0.74rem] text-gold-soft"
-                dir="ltr"
-                style={{ animationDelay: `${0.3 + hero.chat.messages.length * 0.8}s` }}
+          <nav
+            className="flex flex-col gap-2"
+            aria-label={locale === "ar" ? "روابط الأقسام" : "Section links"}
+          >
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rounded-sm border border-gold/15 bg-ink/60 px-4 py-3.5 text-center text-[0.95rem] text-sand transition-colors hover:border-gold/40 hover:text-gold-soft"
               >
-                {hero.chat.confirm.map((line) => (
-                  <div key={line}>{line}</div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href={`/${locale}#reserve`}
+              className={`${buttonClass("ghost", "mt-2 w-full justify-center py-3.5 text-[0.95rem]")}`}
+            >
+              {t.nav.reserve}
+            </Link>
+          </nav>
+        </div>
       </Wrap>
     </section>
   );

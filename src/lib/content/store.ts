@@ -108,6 +108,7 @@ export async function patchSiteContent(patch: Partial<SiteContent>): Promise<Sit
     ...current,
     ...patch,
     sections: patch.sections ? { ...current.sections, ...patch.sections } : current.sections,
+    nav: patch.nav ? { ...current.nav, ...patch.nav } : current.nav,
     hero: patch.hero ? { ...current.hero, ...patch.hero } : current.hero,
     how: patch.how ? { ...current.how, ...patch.how } : current.how,
     trust: patch.trust ? { ...current.trust, ...patch.trust } : current.trust,
@@ -123,6 +124,7 @@ export async function patchSiteContent(patch: Partial<SiteContent>): Promise<Sit
 
   if (patch.testimonialItems !== undefined) next.testimonialItems = patch.testimonialItems;
   if (patch.galleryItems !== undefined) next.galleryItems = patch.galleryItems;
+  if (patch.logoUrl !== undefined) next.logoUrl = patch.logoUrl;
 
   return saveSiteContent(next);
 }

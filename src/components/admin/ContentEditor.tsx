@@ -20,11 +20,11 @@ import type { Locale } from "@/i18n/config";
 type Tab = "sections" | "hero" | "ticker" | "testimonials" | "gallery";
 
 const TABS: { id: Tab; label: string }[] = [
-  { id: "sections", label: "Sections" },
-  { id: "hero", label: "Hero + Video" },
-  { id: "ticker", label: "Ticker" },
-  { id: "testimonials", label: "Testimonials" },
-  { id: "gallery", label: "Gallery" },
+  { id: "sections", label: "الأقسام" },
+  { id: "hero", label: "الهيرو والهيدر" },
+  { id: "ticker", label: "الشريط المتحرك" },
+  { id: "testimonials", label: "آراء العملاء" },
+  { id: "gallery", label: "معرض الصور" },
 ];
 
 function fieldClass(extra = "") {
@@ -53,7 +53,7 @@ function LocalizedFields({
   return (
     <label className="block">
       <span className="mb-1.5 block text-[0.75rem] tracking-wide text-sand-dim uppercase">
-        {label} · {locale.toUpperCase()}
+        {label} · {locale === "ar" ? "عربي" : "English"}
       </span>
       <Tag
         className={fieldClass(multiline ? "min-h-[96px] resize-y" : "")}
@@ -119,12 +119,12 @@ export default function ContentEditor({
         body: JSON.stringify(next),
       });
       const data = (await response.json()) as { content?: SiteContent; error?: string };
-      if (!response.ok) throw new Error(data.error ?? "Save failed");
+      if (!response.ok) throw new Error(data.error ?? "فشل الحفظ");
       if (data.content) setContent(data.content);
-      setMessage("Saved. Changes are live on the site.");
+      setMessage("تم الحفظ. التغييرات ظهرت على الموقع.");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Save failed");
+      setError(err instanceof Error ? err.message : "فشل الحفظ");
     } finally {
       setSaving(false);
     }
@@ -136,7 +136,7 @@ export default function ContentEditor({
 
   async function uploadFile(
     file: File,
-    purpose: "gallery" | "video" | "poster",
+    purpose: "gallery" | "video" | "poster" | "logo",
   ): Promise<string | null> {
     setUploading(true);
     setError(null);
@@ -161,6 +161,13 @@ export default function ContentEditor({
           };
           const galleryItems = [...(content.galleryItems ?? []), item];
           const next = { ...content, galleryItems };
+          setContent(next);
+          await save(next);
+          return result.url;
+        }
+
+        if (purpose === "logo") {
+          const next: SiteContent = { ...content, logoUrl: result.url };
           setContent(next);
           await save(next);
           return result.url;
@@ -205,17 +212,17 @@ export default function ContentEditor({
       if (!response.ok) {
         if (data.useClientUpload) {
           throw new Error(
-            "Video is too large for server upload. Add BLOB_READ_WRITE_TOKEN (Vercel Blob) to upload large files.",
+            "الفيديو كبير أوي للرفع من السيرفر. حط BLOB_READ_WRITE_TOKEN (Vercel Blob) لرفع الملفات الكبيرة.",
           );
         }
-        throw new Error(data.error ?? "Upload failed");
+        throw new Error(data.error ?? "فشل الرفع");
       }
       if (data.content) setContent(data.content);
-      setMessage("Upload complete.");
+      setMessage("تم الرفع");
       router.refresh();
       return data.url ?? null;
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed");
+      setError(err instanceof Error ? err.message : "فشل الرفع");
       return null;
     } finally {
       setUploading(false);
@@ -229,27 +236,27 @@ export default function ContentEditor({
   }
 
   return (
-    <div dir="ltr" className="min-h-screen">
+    <div dir="rtl" className="min-h-screen">
       <header className="sticky top-0 z-30 border-b border-gold/20 bg-ink/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-4 px-6 py-4">
           <div>
             <div className="font-display text-xl font-bold text-sand">
-              Sahra <span className="text-gold-soft">·</span> Content
+              سهرة <span className="text-gold-soft">·</span> إدارة المحتوى
             </div>
-            <p className="text-[0.78rem] text-sand-dim">Signed in as {username}</p>
+            <p className="text-[0.78rem] text-sand-dim">مسجّل دخول: {username}</p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/admin"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
-              Reservations
+              الحجوزات
             </Link>
             <Link
               href="/ar"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
-              View site
+              عرض الموقع
             </Link>
             <button
               type="button"
@@ -257,14 +264,14 @@ export default function ContentEditor({
               disabled={saving}
               className={buttonClass("primary", "px-4 py-2 text-[0.82rem] disabled:opacity-60")}
             >
-              {saving ? "Saving…" : "Save changes"}
+              {saving ? "جاري الحفظ…" : "حفظ التغييرات"}
             </button>
             <button
               type="button"
               onClick={logout}
               className="cursor-pointer border border-[#c9646f]/40 px-3 py-2 text-[0.78rem] text-[#e2857f]"
             >
-              Sign out
+              تسجيل الخروج
             </button>
           </div>
         </div>
@@ -273,9 +280,9 @@ export default function ContentEditor({
       <main className="mx-auto max-w-[1100px] px-6 py-8">
         {!blobReady ? (
           <div className="mb-6 border border-gold/30 bg-gold/10 px-5 py-4 text-[0.85rem] leading-[1.7] text-gold-soft">
-            Vercel Blob is not configured. Small images/videos save to{" "}
-            <code>public/uploads</code> in local development. For production uploads (especially
-            large videos), create a Blob store and set <code>BLOB_READ_WRITE_TOKEN</code>.
+            تخزين Vercel Blob مش متظبط. الصور الصغيرة بتحفظ في{" "}
+            <code>public/uploads</code> محليًا. للرفع على الإنتاج (خصوصًا الفيديوهات الكبيرة) اعمل
+            Blob store وحط <code>BLOB_READ_WRITE_TOKEN</code>.
           </div>
         ) : null}
 
@@ -313,13 +320,13 @@ export default function ContentEditor({
                 key={code}
                 type="button"
                 onClick={() => setLocale(code)}
-                className={`cursor-pointer border px-3 py-1.5 text-[0.78rem] uppercase ${
+                className={`cursor-pointer border px-3 py-1.5 text-[0.78rem] ${
                   locale === code
                     ? "border-gold bg-gold/15 text-gold-soft"
                     : "border-gold/25 text-sand-dim"
                 }`}
               >
-                {code}
+                {code === "ar" ? "عربي" : "English"}
               </button>
             ))}
           </div>
@@ -327,9 +334,9 @@ export default function ContentEditor({
 
         {tab === "sections" ? (
           <section className="border border-gold/20 bg-ink-2/40 p-6">
-            <h2 className="mb-2 font-display text-lg text-sand">Show / hide sections</h2>
+            <h2 className="mb-2 font-display text-lg text-sand">إظهار / إخفاء الأقسام</h2>
             <p className="mb-6 text-[0.85rem] text-sand-dim">
-              Hidden sections disappear from the public homepage immediately after save.
+              الأقسام المخفية بتختفي من الصفحة الرئيسية فور الحفظ.
             </p>
             <ul className="grid gap-3 sm:grid-cols-2">
               {(Object.keys(DEFAULT_SECTIONS) as SectionKey[]).map((key) => (
@@ -366,17 +373,87 @@ export default function ContentEditor({
         {tab === "hero" ? (
           <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
             <div>
-              <h2 className="mb-4 font-display text-lg text-sand">Hero copy</h2>
+              <h2 className="mb-2 font-display text-lg text-sand">اللوجو</h2>
+              <p className="mb-4 text-[0.85rem] text-sand-dim">
+                بيظهر في الهيدر والفوتر ولوحة الهيرو. لو فاضي هيتستخدم اللوجو الافتراضي.
+              </p>
+              {content.logoUrl ? (
+                <div className="mb-4 flex items-center gap-4 border border-gold/15 bg-ink p-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={content.logoUrl} alt="" className="h-14 w-auto object-contain" />
+                  <button
+                    type="button"
+                    className="cursor-pointer text-[0.8rem] text-[#e2857f] hover:underline"
+                    onClick={async () => {
+                      await fetch("/api/admin/media", {
+                        method: "DELETE",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ clearLogo: true }),
+                      });
+                      const next = { ...content, logoUrl: undefined };
+                      setContent(next);
+                      setMessage("تم إرجاع اللوجو الافتراضي");
+                    }}
+                  >
+                    رجّع اللوجو الافتراضي
+                  </button>
+                </div>
+              ) : null}
+              <label className={buttonClass("ghost", "cursor-pointer px-4 py-2 text-[0.82rem]")}>
+                {uploading ? "جاري الرفع…" : "رفع لوجو (PNG/WebP)"}
+                <input
+                  type="file"
+                  accept="image/png,image/webp,image/jpeg"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) void uploadFile(file, "logo");
+                    e.target.value = "";
+                  }}
+                />
+              </label>
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-2 font-display text-lg text-sand">تابات الهيدر</h2>
+              <p className="mb-4 text-[0.85rem] text-sand-dim">
+                الأسماء دي بتظهر في الهيدر وفي لوحة التنقل في الهيرو.
+              </p>
               <div className="grid gap-4">
                 {(
                   [
-                    ["eyebrow", "Eyebrow"],
-                    ["titleTop", "Title (top)"],
-                    ["titleAccent", "Title accent"],
-                    ["titleBottom", "Title (bottom)"],
-                    ["lede", "Lede"],
-                    ["ctaPrimary", "Primary CTA"],
-                    ["ctaSecondary", "Secondary CTA"],
+                    ["how", "تاب طريقة الحجز"],
+                    ["venues", "تاب أنواع السهرات"],
+                    ["trust", "تاب ليه تختارنا"],
+                    ["reserve", "زر احجز مكانك"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <LocalizedFields
+                    key={key}
+                    label={label}
+                    locale={locale}
+                    value={content.nav?.[key]}
+                    onChange={(next) =>
+                      update({ nav: { ...content.nav, [key]: next } })
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">نصوص الهيرو</h2>
+              <div className="grid gap-4">
+                {(
+                  [
+                    ["eyebrow", "سطر فوق العنوان"],
+                    ["titleTop", "العنوان (أول سطر)"],
+                    ["titleAccent", "الكلمة المميزة في العنوان"],
+                    ["titleBottom", "العنوان (آخر سطر)"],
+                    ["lede", "الوصف"],
+                    ["ctaPrimary", "الزر الأساسي"],
+                    ["ctaSecondary", "الزر الثانوي"],
                   ] as const
                 ).map(([key, label]) => (
                   <LocalizedFields
@@ -392,124 +469,19 @@ export default function ContentEditor({
                 ))}
               </div>
               <p className="mt-3 text-[0.75rem] text-sand-dim">
-                Leave a field empty to keep the default from the site dictionary.
+                سيب الحقل فاضي عشان يفضل النص الافتراضي.
               </p>
             </div>
 
             <div className="border-t border-gold/15 pt-6">
-              <h2 className="mb-4 font-display text-lg text-sand">Promo video</h2>
-              <div className="mb-4 grid gap-4 sm:grid-cols-2">
-                <label className="block">
-                  <span className="mb-1.5 block text-[0.75rem] text-sand-dim uppercase">
-                    Placement
-                  </span>
-                  <select
-                    className={fieldClass()}
-                    value={content.promoVideo?.placement ?? "section"}
-                    onChange={(e) =>
-                      update({
-                        promoVideo: {
-                          ...content.promoVideo,
-                          placement: e.target.value as "hero" | "section",
-                        },
-                      })
-                    }
-                  >
-                    <option value="hero">Inside Hero (replaces chat card)</option>
-                    <option value="section">Standalone section after Hero</option>
-                  </select>
-                </label>
-                <label className="flex items-end gap-3 pb-2">
-                  <input
-                    type="checkbox"
-                    checked={content.promoVideo?.visible ?? false}
-                    onChange={(e) =>
-                      update({
-                        promoVideo: { ...content.promoVideo, visible: e.target.checked },
-                        sections: {
-                          ...content.sections,
-                          promoVideo: e.target.checked,
-                        },
-                      })
-                    }
-                    className="h-4 w-4 accent-[var(--color-gold,#c9a24b)]"
-                  />
-                  <span className="text-[0.9rem] text-sand">Video visible on site</span>
-                </label>
-              </div>
-
-              {content.promoVideo?.src ? (
-                <div className="mb-4 overflow-hidden border border-gold/20">
-                  <video
-                    src={content.promoVideo.src}
-                    poster={content.promoVideo.poster}
-                    controls
-                    className="max-h-[280px] w-full bg-black"
-                  />
-                  <div className="flex flex-wrap gap-2 border-t border-gold/15 p-3">
-                    <button
-                      type="button"
-                      className="cursor-pointer text-[0.8rem] text-[#e2857f] hover:underline"
-                      onClick={async () => {
-                        await fetch("/api/admin/media", {
-                          method: "DELETE",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ clearVideo: true }),
-                        });
-                        const next = {
-                          ...content,
-                          promoVideo: { ...content.promoVideo, src: undefined },
-                        };
-                        setContent(next);
-                      }}
-                    >
-                      Remove video
-                    </button>
-                  </div>
-                </div>
-              ) : null}
-
-              <div className="flex flex-wrap gap-3">
-                <label className={buttonClass("ghost", "cursor-pointer px-4 py-2 text-[0.82rem]")}>
-                  {uploading ? "Uploading…" : "Upload video (MP4/WebM)"}
-                  <input
-                    type="file"
-                    accept="video/mp4,video/webm"
-                    className="hidden"
-                    disabled={uploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) void uploadFile(file, "video");
-                      e.target.value = "";
-                    }}
-                  />
-                </label>
-                <label className={buttonClass("ghost", "cursor-pointer px-4 py-2 text-[0.82rem]")}>
-                  Upload poster image
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    className="hidden"
-                    disabled={uploading}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) void uploadFile(file, "poster");
-                      e.target.value = "";
-                    }}
-                  />
-                </label>
-              </div>
-            </div>
-
-            <div className="border-t border-gold/15 pt-6">
-              <h2 className="mb-4 font-display text-lg text-sand">Section headings</h2>
+              <h2 className="mb-4 font-display text-lg text-sand">عناوين الأقسام</h2>
               <div className="space-y-6">
                 {(
                   [
-                    ["how", "How it works"],
-                    ["trust", "Trust"],
-                    ["gallery", "Gallery"],
-                    ["testimonials", "Testimonials"],
+                    ["how", "طريقة الحجز"],
+                    ["trust", "ليه تختارنا"],
+                    ["gallery", "معرض الصور"],
+                    ["testimonials", "آراء العملاء"],
                   ] as const
                 ).map(([key, title]) => (
                   <div key={key} className="border border-gold/15 bg-ink p-4">
@@ -517,10 +489,10 @@ export default function ContentEditor({
                     <div className="grid gap-3">
                       {(
                         [
-                          ["eyebrow", "Eyebrow"],
-                          ["title", "Title"],
-                          ["titleAccent", "Title accent"],
-                          ["lede", "Lede"],
+                          ["eyebrow", "السطر العلوي"],
+                          ["title", "العنوان"],
+                          ["titleAccent", "الكلمة المميزة"],
+                          ["lede", "الوصف"],
                         ] as const
                       ).map(([field, label]) =>
                         field === "lede" && key !== "how" && key !== "trust" && key !== "gallery" && key !== "testimonials" ? null : (
@@ -538,7 +510,7 @@ export default function ContentEditor({
                       )}
                       {key === "testimonials" ? (
                         <LocalizedFields
-                          label="Title end"
+                          label="تكملة العنوان"
                           locale={locale}
                           value={content.testimonials?.titleEnd}
                           onChange={(next) =>
@@ -558,9 +530,9 @@ export default function ContentEditor({
 
         {tab === "ticker" ? (
           <section className="border border-gold/20 bg-ink-2/40 p-6">
-            <h2 className="mb-2 font-display text-lg text-sand">Promo ticker lines</h2>
+            <h2 className="mb-2 font-display text-lg text-sand">أسطر الشريط المتحرك</h2>
             <p className="mb-6 text-[0.85rem] text-sand-dim">
-              Editing {locale.toUpperCase()}. Saving replaces the default ticker for this language.
+              بتعدّل لغة {locale === "ar" ? "AR" : "EN"}. الحفظ بيستبدل الشريط الافتراضي للغة دي.
             </p>
             <ul className="space-y-3">
               {tickerLines.map((line, index) => (
@@ -584,7 +556,7 @@ export default function ContentEditor({
                       update({ ticker: { ...content.ticker, [locale]: lines } });
                     }}
                   >
-                    Remove
+                    حذف
                   </button>
                 </li>
               ))}
@@ -601,7 +573,7 @@ export default function ContentEditor({
                 })
               }
             >
-              Add line
+              إضافة سطر
             </button>
           </section>
         ) : null}
@@ -610,9 +582,9 @@ export default function ContentEditor({
           <section className="border border-gold/20 bg-ink-2/40 p-6">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="font-display text-lg text-sand">Testimonials</h2>
+                <h2 className="font-display text-lg text-sand">آراء العملاء</h2>
                 <p className="text-[0.85rem] text-sand-dim">
-                  First edit seeds from defaults. After that, this list is the source of truth.
+                  أول تعديل بينسخ الافتراضي. بعد كده القائمة دي هي المصدر.
                 </p>
               </div>
               <button
@@ -631,7 +603,7 @@ export default function ContentEditor({
                   update({ testimonialItems: items });
                 }}
               >
-                Add testimonial
+                إضافة رأي
               </button>
             </div>
             <ul className="space-y-4">
@@ -651,7 +623,7 @@ export default function ContentEditor({
                             update({ testimonialItems: items });
                           }}
                         />
-                        Visible
+                        ظاهر
                       </label>
                       <button
                         type="button"
@@ -662,13 +634,13 @@ export default function ContentEditor({
                           })
                         }
                       >
-                        Delete
+                        حذف
                       </button>
                     </div>
                   </div>
                   <div className="grid gap-3">
                     <LocalizedFields
-                      label="Quote"
+                      label="النص"
                       locale={locale}
                       multiline
                       value={item.text}
@@ -681,7 +653,7 @@ export default function ContentEditor({
                       }
                     />
                     <LocalizedFields
-                      label="Who / city"
+                      label="مين / المدينة"
                       locale={locale}
                       value={item.who}
                       onChange={(next) =>
@@ -693,7 +665,7 @@ export default function ContentEditor({
                       }
                     />
                     <LocalizedFields
-                      label="Name (optional)"
+                      label="الاسم (اختياري)"
                       locale={locale}
                       value={item.name}
                       onChange={(next) =>
@@ -714,7 +686,7 @@ export default function ContentEditor({
                 className={buttonClass("primary", "mt-4 px-4 py-2 text-[0.82rem]")}
                 onClick={() => update({ testimonialItems: testimonials })}
               >
-                Start editing (copy defaults)
+                ابدأ التعديل (نسخ الافتراضي)
               </button>
             ) : null}
           </section>
@@ -724,13 +696,13 @@ export default function ContentEditor({
           <section className="border border-gold/20 bg-ink-2/40 p-6">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="font-display text-lg text-sand">Gallery</h2>
+                <h2 className="font-display text-lg text-sand">معرض الصور</h2>
                 <p className="text-[0.85rem] text-sand-dim">
-                  CMS gallery images override the empty/default folder listing when present.
+                  صور الأدمن بتظهر بدل مجلد public/gallery لما يكون فيه صور.
                 </p>
               </div>
               <label className={buttonClass("primary", "cursor-pointer px-4 py-2 text-[0.82rem]")}>
-                {uploading ? "Uploading…" : "Upload image"}
+                {uploading ? "جاري الرفع…" : "رفع صورة"}
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp,image/avif"
@@ -746,7 +718,7 @@ export default function ContentEditor({
             </div>
 
             {(content.galleryItems ?? []).length === 0 ? (
-              <p className="text-[0.9rem] text-sand-dim">No CMS gallery images yet.</p>
+              <p className="text-[0.9rem] text-sand-dim">مفيش صور في المعرض لسه.</p>
             ) : (
               <ul className="grid gap-4 sm:grid-cols-2">
                 {(content.galleryItems ?? []).map((item) => (
@@ -755,7 +727,7 @@ export default function ContentEditor({
                     <img src={item.src} alt="" className="aspect-video w-full object-cover" />
                     <div className="space-y-3 p-3">
                       <LocalizedFields
-                        label="Caption"
+                        label="التعليق"
                         locale={locale}
                         value={item.caption}
                         onChange={(next) =>
@@ -779,7 +751,7 @@ export default function ContentEditor({
                               })
                             }
                           />
-                          Visible
+                          ظاهرة
                         </label>
                         <button
                           type="button"
@@ -794,7 +766,7 @@ export default function ContentEditor({
                             if (data.content) setContent(data.content);
                           }}
                         >
-                          Delete
+                          حذف
                         </button>
                       </div>
                     </div>
@@ -805,14 +777,14 @@ export default function ContentEditor({
           </section>
         ) : null}
 
-        <div className="mt-8 flex justify-end">
+        <div className="mt-8 flex justify-start">
           <button
             type="button"
             onClick={() => save()}
             disabled={saving}
             className={buttonClass("primary", "px-6 py-3 text-[0.9rem] disabled:opacity-60")}
           >
-            {saving ? "Saving…" : "Save all changes"}
+            {saving ? "جاري الحفظ…" : "حفظ كل التغييرات"}
           </button>
         </div>
       </main>

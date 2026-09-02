@@ -29,6 +29,7 @@ function applyLocalized(
 export type SiteConfig = {
   sections: Record<SectionKey, boolean>;
   promoVideo: NonNullable<SiteContent["promoVideo"]>;
+  logoUrl?: string;
   content: SiteContent;
 };
 
@@ -36,6 +37,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
   const content = await getSiteContent();
   return {
     content,
+    logoUrl: content.logoUrl,
     sections: { ...DEFAULT_SECTIONS, ...content.sections },
     promoVideo: {
       visible: false,
@@ -61,6 +63,13 @@ export function mergeDictionary(
   locale: Locale,
 ): Dictionary {
   const next: AnyDict = structuredClone(base);
+
+  if (content.nav) {
+    next.nav.how = applyLocalized(next.nav.how, content.nav.how, locale);
+    next.nav.venues = applyLocalized(next.nav.venues, content.nav.venues, locale);
+    next.nav.trust = applyLocalized(next.nav.trust, content.nav.trust, locale);
+    next.nav.reserve = applyLocalized(next.nav.reserve, content.nav.reserve, locale);
+  }
 
   if (content.hero) {
     next.hero.eyebrow = applyLocalized(next.hero.eyebrow, content.hero.eyebrow, locale);

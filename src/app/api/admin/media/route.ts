@@ -50,8 +50,25 @@ export async function POST(request: Request) {
     buffer,
     mime,
     filename: file.name,
-    folder: purpose === "video" ? "videos" : purpose === "poster" ? "posters" : "gallery",
+    folder:
+      purpose === "video"
+        ? "videos"
+        : purpose === "poster"
+          ? "posters"
+          : purpose === "logo"
+            ? "logo"
+            : "gallery",
   });
+
+  if (purpose === "logo") {
+    const content = await getSiteContent();
+    const oldUrl = content.logoUrl;
+    const next = await patchSiteContent({ logoUrl: uploaded.url });
+    if (oldUrl && oldUrl !== uploaded.url && !oldUrl.startsWith("/brand/")) {
+      await deleteMediaUrl(oldUrl);
+    }
+    return NextResponse.json({ url: uploaded.url, content: next });
+  }
 
   if (purpose === "gallery") {
     const content = await getSiteContent();
@@ -109,7 +126,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: { url?: string; galleryId?: string; clearVideo?: boolean; clearPoster?: boolean };
+  let body: { url?: string; galleryId?: string; clearVideo?: boolean; clearPoster?: boolean; clearLogo?: boolean };
   try {
     body = (await request.json()) as typeof body;
   } catch {
@@ -123,6 +140,13 @@ export async function DELETE(request: Request) {
     const galleryItems = (content.galleryItems ?? []).filter((g) => g.id !== body.galleryId);
     const next = await patchSiteContent({ galleryItems });
     if (item?.src) await deleteMediaUrl(item.src);
+    return NextResponse.json({ content: next });
+  }
+
+  if (body.clearLogo) {
+    const old = content.logoUrl;
+    const next = await patchSiteContent({ logoUrl: undefined });
+    if (old && !old.startsWith("/brand/")) await deleteMediaUrl(old);
     return NextResponse.json({ content: next });
   }
 

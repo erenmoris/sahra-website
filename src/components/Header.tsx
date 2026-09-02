@@ -7,19 +7,30 @@ import { Wrap, buttonClass } from "./ui";
 
 type NavLink = { href: string; label: string };
 
-export default function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
-  const other: Locale = locale === "ar" ? "en" : "ar";
-
-  const links: NavLink[] = [
+export function buildNavLinks(locale: Locale, t: Dictionary): NavLink[] {
+  return [
     { href: `/${locale}#how`, label: t.nav.how },
     { href: `/${locale}#venues`, label: t.nav.venues },
     { href: `/${locale}#trust`, label: t.nav.trust },
   ];
+}
+
+export default function Header({
+  locale,
+  t,
+  logoSrc,
+}: {
+  locale: Locale;
+  t: Dictionary;
+  logoSrc?: string;
+}) {
+  const other: Locale = locale === "ar" ? "en" : "ar";
+  const links = buildNavLinks(locale, t);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 overflow-visible border-b border-gold/20 bg-ink/85 backdrop-blur-md">
       <Wrap className="flex h-[88px] items-center justify-between gap-4 sm:gap-6 md:gap-9">
-        <Logo locale={locale} className="shrink-0" />
+        <Logo locale={locale} className="shrink-0" src={logoSrc} />
 
         <div className="flex items-center gap-4 sm:gap-6 md:gap-9">
           <nav className="hidden items-center gap-9 md:flex" aria-label={locale === "ar" ? "التنقل" : "Main"}>

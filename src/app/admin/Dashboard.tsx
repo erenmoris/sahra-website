@@ -21,14 +21,22 @@ const statusStyles: Record<ReservationStatus, string> = {
 };
 
 const statusLabels: Record<ReservationStatus, string> = {
-  new: "New · جديد",
-  contacted: "Contacted · تم التواصل",
-  confirmed: "Confirmed · مؤكد",
-  cancelled: "Cancelled · ملغي",
+  new: "جديد",
+  contacted: "تم التواصل",
+  confirmed: "مؤكد",
+  cancelled: "ملغي",
+};
+
+const filterLabels: Record<ReservationStatus | "all", string> = {
+  all: "الكل",
+  new: "جديد",
+  contacted: "تم التواصل",
+  confirmed: "مؤكد",
+  cancelled: "ملغي",
 };
 
 function formatDateTime(value: string) {
-  return new Date(value).toLocaleString("en-GB", {
+  return new Date(value).toLocaleString("ar-EG", {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -39,7 +47,7 @@ function formatDateTime(value: string) {
 
 function waLink(phone: string, name: string) {
   const digits = phone.replace(/[^\d]/g, "") || WHATSAPP_NUMBER;
-  return `https://wa.me/${digits}?text=${encodeURIComponent(`Hi ${name}, this is Sahra concierge regarding your reservation request.`)}`;
+  return `https://wa.me/${digits}?text=${encodeURIComponent(`أهلاً ${name}، معاك كونسييرج سهرة بخصوص طلب الحجز.`)}`;
 }
 
 export default function Dashboard({
@@ -81,7 +89,7 @@ export default function Dashboard({
         setClicks(data.clicks);
       }
     } catch {
-      // Ignore transient network errors during background polling (e.g. dev recompile).
+      // Ignore transient network errors during background polling.
     }
   }
 
@@ -129,7 +137,7 @@ export default function Dashboard({
   }
 
   async function remove(id: string) {
-    if (!confirm("Delete this reservation permanently?")) return;
+    if (!confirm("هل تريد حذف هذا الطلب نهائيًا؟")) return;
     setBusyId(id);
     const response = await fetch(`/api/reservations/${id}`, { method: "DELETE" });
     if (response.ok) {
@@ -176,41 +184,41 @@ export default function Dashboard({
   }
 
   return (
-    <div dir="ltr" className="min-h-screen">
+    <div dir="rtl" className="min-h-screen">
       <header className="sticky top-0 z-30 border-b border-gold/20 bg-ink/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-4 px-6 py-4">
           <div>
             <div className="font-display text-xl font-bold text-sand">
-              Sahra <span className="text-gold-soft">·</span> Dashboard
+              سهرة <span className="text-gold-soft">·</span> لوحة الحجوزات
             </div>
-            <p className="text-[0.78rem] text-sand-dim">Signed in as {username}</p>
+            <p className="text-[0.78rem] text-sand-dim">مسجّل دخول: {username}</p>
           </div>
           <div className="flex items-center gap-3">
             <Link
               href="/admin/content"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
-              Manage content
+              إدارة المحتوى
             </Link>
             <Link
               href="/ar"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
-              View site
+              عرض الموقع
             </Link>
             <button
               type="button"
               onClick={exportCsv}
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
-              Export CSV
+              تصدير CSV
             </button>
             <button
               type="button"
               onClick={logout}
               className="cursor-pointer border border-[#c9646f]/40 px-3 py-2 text-[0.78rem] text-[#e2857f] transition-colors hover:border-[#c9646f]"
             >
-              Sign out
+              تسجيل الخروج
             </button>
           </div>
         </div>
@@ -219,30 +227,29 @@ export default function Dashboard({
       <main className="mx-auto max-w-[1280px] px-6 py-8">
         {ephemeralStorage ? (
           <div className="mb-6 border border-[#c9646f]/40 bg-[#c9646f]/10 px-5 py-4 text-[0.85rem] leading-[1.7] text-[#e2857f]">
-            No database is connected, so reservations are stored temporarily and will be lost when
-            the server restarts. Add a Postgres database and set <code>DATABASE_URL</code> to keep
-            them permanently.
+            مفيش قاعدة بيانات متصلة — الحجوزات هتتساب مؤقتًا وهتضيع لو السيرفر اتوقف. أضف Postgres
+            وخلّي <code>DATABASE_URL</code> عشان تتحفظ.
           </div>
         ) : null}
 
         {!ownerNotifyEnabled ? (
           <div className="mb-6 border border-gold/30 bg-gold/10 px-5 py-4 text-[0.85rem] leading-[1.7] text-gold-soft">
-            Email alerts are off. Set <code>RESEND_API_KEY</code> on Vercel to receive booking
-            notifications at <code>erenmoris5@gmail.com</code> (see <code>.env.example</code>).
+            تنبيهات الإيميل مطفّية. حط <code>RESEND_API_KEY</code> على Vercel عشان توصلك إيميلات
+            الحجوزات الجديدة.
           </div>
         ) : (
           <div className="mb-6 border border-[#63c2a3]/40 bg-[#63c2a3]/10 px-5 py-3 text-[0.85rem] text-[#8fdcc2]">
-            Email alerts on — new reservations are sent to erenmoris5@gmail.com
+            تنبيهات الإيميل شغّالة — الحجوزات الجديدة بتتبعت على الإيميل
           </div>
         )}
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[
-            { label: "Total requests", value: stats.total },
-            { label: "Requests today", value: stats.today },
-            { label: "Awaiting reply", value: stats.new },
-            { label: "Confirmed", value: stats.confirmed },
-            { label: "Contact clicks today", value: stats.clicksToday },
+            { label: "إجمالي الطلبات", value: stats.total },
+            { label: "طلبات النهاردة", value: stats.today },
+            { label: "مستني رد", value: stats.new },
+            { label: "مؤكد", value: stats.confirmed },
+            { label: "ضغطات التواصل النهاردة", value: stats.clicksToday },
           ].map((card) => (
             <div key={card.label} className="border border-gold/20 bg-ink-2 px-6 py-5">
               <div className="text-[0.78rem] tracking-[0.04em] text-sand-dim">{card.label}</div>
@@ -256,8 +263,8 @@ export default function Dashboard({
         <div className="mt-8 flex gap-2 border-b border-gold/20">
           {(
             [
-              ["requests", `Reservation requests (${reservations.length})`],
-              ["clicks", `WhatsApp & Snapchat clicks (${stats.clicksTotal})`],
+              ["requests", `طلبات الحجز (${reservations.length})`],
+              ["clicks", `ضغطات واتساب وسناب (${stats.clicksTotal})`],
             ] as const
           ).map(([value, label]) => (
             <button
@@ -278,25 +285,25 @@ export default function Dashboard({
         {tab === "clicks" ? (
           <>
             <p className="mt-5 text-[0.85rem] leading-[1.7] text-sand-dim">
-              Every time a visitor taps a WhatsApp or Snapchat button on the site it is recorded
-              here — even if they never fill in the form — so you can see interest as it happens.
+              كل مرة زائر يضغط زر واتساب أو سناب على الموقع بتتسجّل هنا — حتى لو ملأش الفورم —
+              عشان تشوف الاهتمام أول بأول.
             </p>
             <div className="mt-4 overflow-x-auto border border-gold/20">
               <table className="w-full min-w-[640px] border-collapse text-[0.88rem]">
                 <thead>
-                  <tr className="bg-ink-2 text-left text-[0.76rem] tracking-[0.04em] text-sand-dim">
-                    <th className="px-4 py-3 font-medium">When</th>
-                    <th className="px-4 py-3 font-medium">Button</th>
-                    <th className="px-4 py-3 font-medium">Page</th>
-                    <th className="px-4 py-3 font-medium">Language</th>
-                    <th className="px-4 py-3 font-medium">Country</th>
+                  <tr className="bg-ink-2 text-right text-[0.76rem] tracking-[0.04em] text-sand-dim">
+                    <th className="px-4 py-3 font-medium">الوقت</th>
+                    <th className="px-4 py-3 font-medium">الزر</th>
+                    <th className="px-4 py-3 font-medium">الصفحة</th>
+                    <th className="px-4 py-3 font-medium">اللغة</th>
+                    <th className="px-4 py-3 font-medium">الدولة</th>
                   </tr>
                 </thead>
                 <tbody>
                   {clicks.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="px-4 py-14 text-center text-sand-dim">
-                        No WhatsApp clicks recorded yet.
+                        لسه مفيش ضغطات مسجّلة.
                       </td>
                     </tr>
                   ) : (
@@ -319,131 +326,133 @@ export default function Dashboard({
             </div>
           </>
         ) : (
-        <>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <div className="flex flex-wrap gap-2">
-            {(["all", ...RESERVATION_STATUSES] as const).map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setFilter(value)}
-                className={`cursor-pointer border px-3 py-2 text-[0.78rem] capitalize transition-colors ${
-                  filter === value
-                    ? "border-gold bg-gold/15 text-gold-soft"
-                    : "border-gold/20 text-sand-dim hover:border-gold/50"
-                }`}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search name, phone, reference…"
-            className="ms-auto w-full max-w-[320px] rounded-sm border border-gold/25 bg-ink px-3.5 py-2.5 text-[0.88rem] text-sand focus:border-gold focus:outline-none"
-          />
-        </div>
-
-        <div className="mt-5 overflow-x-auto border border-gold/20">
-          <table className="w-full min-w-[900px] border-collapse text-[0.88rem]">
-            <thead>
-              <tr className="bg-ink-2 text-left text-[0.76rem] tracking-[0.04em] text-sand-dim">
-                <th className="px-4 py-3 font-medium">Ref</th>
-                <th className="px-4 py-3 font-medium">Name</th>
-                <th className="px-4 py-3 font-medium">WhatsApp</th>
-                <th className="px-4 py-3 font-medium">Night</th>
-                <th className="px-4 py-3 font-medium">Details</th>
-                <th className="px-4 py-3 font-medium">Received</th>
-                <th className="px-4 py-3 font-medium">Status</th>
-                <th className="px-4 py-3 font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visible.length === 0 ? (
-                <tr>
-                  <td colSpan={8} className="px-4 py-14 text-center text-sand-dim">
-                    No reservations yet. Requests submitted on the website appear here instantly.
-                  </td>
-                </tr>
-              ) : (
-                visible.map((item) => (
-                  <tr
-                    key={item.id}
-                    className="border-t border-gold/15 transition-colors hover:bg-ink-2/60"
+          <>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap gap-2">
+                {(["all", ...RESERVATION_STATUSES] as const).map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setFilter(value)}
+                    className={`cursor-pointer border px-3 py-2 text-[0.78rem] transition-colors ${
+                      filter === value
+                        ? "border-gold bg-gold/15 text-gold-soft"
+                        : "border-gold/20 text-sand-dim hover:border-gold/50"
+                    }`}
                   >
-                    <td className="px-4 py-3 font-mono text-[0.8rem] text-gold-soft">{item.ref}</td>
-                    <td className="px-4 py-3">
-                      <button
-                        type="button"
-                        onClick={() => setSelected(item)}
-                        className="cursor-pointer text-sand underline decoration-gold/40 underline-offset-4 hover:text-gold-soft"
-                      >
-                        {item.name}
-                      </button>
-                      <div className="text-[0.74rem] text-sand-dim">{item.source}</div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <a
-                        href={waLink(item.phone, item.name)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[#8fdcc2] hover:underline"
-                      >
-                        <WhatsAppIcon className="h-4 w-4" />
-                        {item.phone}
-                      </a>
-                    </td>
-                    <td className="px-4 py-3 text-sand-dim">
-                      {item.date || "—"}
-                      {item.guests ? ` · ${item.guests}p` : ""}
-                    </td>
-                    <td className="max-w-[220px] px-4 py-3 text-sand-dim">
-                      {[item.city, item.type, item.budget].filter(Boolean).join(" · ") || "—"}
-                    </td>
-                    <td className="px-4 py-3 whitespace-nowrap text-sand-dim">
-                      {formatDateTime(item.createdAt)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`inline-block border px-2 py-1 text-[0.72rem] ${statusStyles[item.status]}`}
-                      >
-                        {statusLabels[item.status]}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <select
-                          value={item.status}
-                          disabled={busyId === item.id}
-                          onChange={(event) =>
-                            changeStatus(item.id, event.target.value as ReservationStatus)
-                          }
-                          className="cursor-pointer rounded-sm border border-gold/25 bg-ink px-2 py-1.5 text-[0.78rem] text-sand focus:border-gold focus:outline-none"
-                        >
-                          {RESERVATION_STATUSES.map((status) => (
-                            <option key={status} value={status}>
-                              {status}
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          type="button"
-                          onClick={() => remove(item.id)}
-                          disabled={busyId === item.id}
-                          className="cursor-pointer text-[0.78rem] text-[#e2857f] hover:underline"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+                    {filterLabels[value]}
+                  </button>
+                ))}
+              </div>
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="دور بالاسم أو الرقم أو رقم الطلب…"
+                className="me-auto w-full max-w-[320px] rounded-sm border border-gold/25 bg-ink px-3.5 py-2.5 text-[0.88rem] text-sand focus:border-gold focus:outline-none"
+              />
+            </div>
+
+            <div className="mt-5 overflow-x-auto border border-gold/20">
+              <table className="w-full min-w-[900px] border-collapse text-[0.88rem]">
+                <thead>
+                  <tr className="bg-ink-2 text-right text-[0.76rem] tracking-[0.04em] text-sand-dim">
+                    <th className="px-4 py-3 font-medium">رقم الطلب</th>
+                    <th className="px-4 py-3 font-medium">الاسم</th>
+                    <th className="px-4 py-3 font-medium">واتساب</th>
+                    <th className="px-4 py-3 font-medium">الليلة</th>
+                    <th className="px-4 py-3 font-medium">التفاصيل</th>
+                    <th className="px-4 py-3 font-medium">وقت الاستلام</th>
+                    <th className="px-4 py-3 font-medium">الحالة</th>
+                    <th className="px-4 py-3 font-medium">إجراءات</th>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-        </>
+                </thead>
+                <tbody>
+                  {visible.length === 0 ? (
+                    <tr>
+                      <td colSpan={8} className="px-4 py-14 text-center text-sand-dim">
+                        مفيش طلبات لسه. الطلبات اللي بتتبعت من الموقع هتظهر هنا فورًا.
+                      </td>
+                    </tr>
+                  ) : (
+                    visible.map((item) => (
+                      <tr
+                        key={item.id}
+                        className="border-t border-gold/15 transition-colors hover:bg-ink-2/60"
+                      >
+                        <td className="px-4 py-3 font-mono text-[0.8rem] text-gold-soft">
+                          {item.ref}
+                        </td>
+                        <td className="px-4 py-3">
+                          <button
+                            type="button"
+                            onClick={() => setSelected(item)}
+                            className="cursor-pointer text-sand underline decoration-gold/40 underline-offset-4 hover:text-gold-soft"
+                          >
+                            {item.name}
+                          </button>
+                          <div className="text-[0.74rem] text-sand-dim">{item.source}</div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <a
+                            href={waLink(item.phone, item.name)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-[#8fdcc2] hover:underline"
+                          >
+                            <WhatsAppIcon className="h-4 w-4" />
+                            {item.phone}
+                          </a>
+                        </td>
+                        <td className="px-4 py-3 text-sand-dim">
+                          {item.date || "—"}
+                          {item.guests ? ` · ${item.guests} أفراد` : ""}
+                        </td>
+                        <td className="max-w-[220px] px-4 py-3 text-sand-dim">
+                          {[item.city, item.type, item.budget].filter(Boolean).join(" · ") || "—"}
+                        </td>
+                        <td className="px-4 py-3 whitespace-nowrap text-sand-dim">
+                          {formatDateTime(item.createdAt)}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`inline-block border px-2 py-1 text-[0.72rem] ${statusStyles[item.status]}`}
+                          >
+                            {statusLabels[item.status]}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-2">
+                            <select
+                              value={item.status}
+                              disabled={busyId === item.id}
+                              onChange={(event) =>
+                                changeStatus(item.id, event.target.value as ReservationStatus)
+                              }
+                              className="cursor-pointer rounded-sm border border-gold/25 bg-ink px-2 py-1.5 text-[0.78rem] text-sand focus:border-gold focus:outline-none"
+                            >
+                              {RESERVATION_STATUSES.map((status) => (
+                                <option key={status} value={status}>
+                                  {statusLabels[status]}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              type="button"
+                              onClick={() => remove(item.id)}
+                              disabled={busyId === item.id}
+                              className="cursor-pointer text-[0.78rem] text-[#e2857f] hover:underline"
+                            >
+                              حذف
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </main>
 
@@ -454,12 +463,12 @@ export default function Dashboard({
             if (event.target === event.currentTarget) setSelected(null);
           }}
         >
-          <div className="relative w-full max-w-[520px] border border-gold/40 bg-ink-2 px-8 py-8">
+          <div className="relative w-full max-w-[520px] border border-gold/40 bg-ink-2 px-8 py-8" dir="rtl">
             <button
               type="button"
               onClick={() => setSelected(null)}
-              aria-label="Close"
-              className="absolute top-3 right-4 cursor-pointer text-2xl leading-none text-sand-dim hover:text-gold-soft"
+              aria-label="إغلاق"
+              className="absolute top-3 left-4 cursor-pointer text-2xl leading-none text-sand-dim hover:text-gold-soft"
             >
               ×
             </button>
@@ -468,27 +477,27 @@ export default function Dashboard({
 
             <dl className="grid gap-3 text-[0.9rem]">
               {[
-                ["WhatsApp", selected.phone],
-                ["City", selected.city],
-                ["Night of", selected.date],
-                ["Party size", selected.guests],
-                ["Experience", selected.type],
-                ["Budget", selected.budget],
-                ["Source", selected.source],
-                ["Language", selected.locale],
-                ["Received", formatDateTime(selected.createdAt)],
-                ["Last update", formatDateTime(selected.updatedAt)],
+                ["واتساب", selected.phone],
+                ["المدينة", selected.city],
+                ["تاريخ السهرة", selected.date],
+                ["عدد الأفراد", selected.guests],
+                ["نوع السهرة", selected.type],
+                ["الميزانية", selected.budget],
+                ["المصدر", selected.source],
+                ["اللغة", selected.locale],
+                ["وقت الاستلام", formatDateTime(selected.createdAt)],
+                ["آخر تحديث", formatDateTime(selected.updatedAt)],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between gap-4 border-b border-gold/10 pb-2">
                   <dt className="text-sand-dim">{label}</dt>
-                  <dd className="text-right text-sand">{value || "—"}</dd>
+                  <dd className="text-left text-sand">{value || "—"}</dd>
                 </div>
               ))}
             </dl>
 
             {selected.notes ? (
               <div className="mt-5">
-                <div className="mb-2 text-[0.8rem] text-gold-soft">Notes</div>
+                <div className="mb-2 text-[0.8rem] text-gold-soft">ملاحظات</div>
                 <p className="leading-[1.8] text-sand-dim">{selected.notes}</p>
               </div>
             ) : null}
@@ -499,7 +508,7 @@ export default function Dashboard({
               rel="noopener noreferrer"
               className={buttonClass("whatsapp", "mt-7 w-full")}
             >
-              <WhatsAppIcon /> Reply on WhatsApp
+              <WhatsAppIcon /> رد على الواتساب
             </a>
           </div>
         </div>

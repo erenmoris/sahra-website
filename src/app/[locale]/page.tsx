@@ -33,24 +33,19 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
     getVenueLogoMap(),
   ]);
 
-  const { sections, promoVideo } = config;
-  const videoVisible = Boolean(promoVideo.visible && promoVideo.src);
-  const videoInHero = videoVisible && promoVideo.placement === "hero";
-  const videoAsSection = videoVisible && promoVideo.placement !== "hero" && sections.promoVideo;
+  const { sections, promoVideo, logoUrl } = config;
+  const videoAsSection =
+    Boolean(promoVideo.visible && promoVideo.src && sections.promoVideo) &&
+    promoVideo.placement !== "hero";
 
   return (
     <>
       <StructuredData locale={locale} t={t} />
       <ScrollProgress />
-      <Header locale={locale} t={t} />
+      <Header locale={locale} t={t} logoSrc={logoUrl} />
       <main>
         {sections.hero ? (
-          <Hero
-            t={t}
-            locale={locale}
-            videoSrc={videoInHero ? promoVideo.src : undefined}
-            videoPoster={videoInHero ? promoVideo.poster : undefined}
-          />
+          <Hero t={t} locale={locale} logoSrc={logoUrl} />
         ) : null}
 
         {videoAsSection && promoVideo.src ? (
@@ -125,7 +120,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         ) : null}
       </main>
 
-      <Footer locale={locale} t={t} />
+      <Footer locale={locale} t={t} logoSrc={logoUrl} />
       <WhatsAppFloat t={t} locale={locale} />
       <IntroModal t={t} locale={locale} />
     </>
