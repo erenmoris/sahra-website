@@ -131,6 +131,34 @@ export function mergeDictionary(
     }
   }
 
+  if (content.seo) {
+    next.seo.eyebrow = applyLocalized(next.seo.eyebrow, content.seo.eyebrow, locale);
+    next.seo.title = applyLocalized(next.seo.title, content.seo.title, locale);
+    next.seo.titleAccent = applyLocalized(
+      next.seo.titleAccent,
+      content.seo.titleAccent,
+      locale,
+    );
+    next.seo.faqTitle = applyLocalized(next.seo.faqTitle, content.seo.faqTitle, locale);
+    const paragraphs = content.seo.paragraphs?.[locale];
+    if (paragraphs && paragraphs.length > 0) {
+      next.seo.paragraphs = paragraphs.filter(Boolean);
+    }
+  }
+
+  if (content.faqItems && content.faqItems.length > 0) {
+    const items = content.faqItems
+      .filter((item) => item.visible !== false)
+      .map((item) => ({
+        q: pickLocalized(item.q, locale) ?? "",
+        a: pickLocalized(item.a, locale) ?? "",
+      }))
+      .filter((item) => item.q && item.a);
+    if (items.length > 0) {
+      next.seo.faq = items;
+    }
+  }
+
   return next as Dictionary;
 }
 

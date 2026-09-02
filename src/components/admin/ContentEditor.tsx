@@ -8,6 +8,7 @@ import {
   DEFAULT_SECTIONS,
   SECTION_LABELS,
   type GalleryMediaItem,
+  type FaqItem,
   type LocalizedString,
   type SectionKey,
   type SiteContent,
@@ -17,12 +18,13 @@ import { buttonClass } from "@/components/ui";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 
-type Tab = "sections" | "hero" | "ticker" | "testimonials" | "gallery";
+type Tab = "sections" | "hero" | "ticker" | "coverage" | "testimonials" | "gallery";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "sections", label: "الأقسام" },
   { id: "hero", label: "الهيرو والهيدر" },
   { id: "ticker", label: "الشريط المتحرك" },
+  { id: "coverage", label: "دليل السهر والأسئلة" },
   { id: "testimonials", label: "آراء العملاء" },
   { id: "gallery", label: "معرض الصور" },
 ];
@@ -107,6 +109,22 @@ export default function ContentEditor({
   const tickerLines =
     content.ticker?.[locale] ??
     ([...getDictionary(locale).ticker] as string[]);
+
+  const seoParagraphs =
+    content.seo?.paragraphs?.[locale] ??
+    ([...getDictionary(locale).seo.paragraphs] as string[]);
+
+  const faqItems: FaqItem[] = useMemo(() => {
+    if (content.faqItems?.length) return content.faqItems;
+    const ar = getDictionary("ar").seo.faq;
+    const en = getDictionary("en").seo.faq;
+    return ar.map((item, index) => ({
+      id: `default-faq-${index}`,
+      q: { ar: item.q, en: en[index]?.q ?? "" },
+      a: { ar: item.a, en: en[index]?.a ?? "" },
+      visible: true,
+    }));
+  }, [content.faqItems]);
 
   async function save(next: SiteContent = content) {
     setSaving(true);
@@ -375,7 +393,7 @@ export default function ContentEditor({
             <div>
               <h2 className="mb-2 font-display text-lg text-sand">اللوجو</h2>
               <p className="mb-4 text-[0.85rem] text-sand-dim">
-                بيظهر في الهيدر والفوتر ولوحة الهيرو. لو فاضي هيتستخدم اللوجو الافتراضي.
+                بيظهر في الهيدر والفوتر. لو فاضي هيتستخدم اللوجو الافتراضي.
               </p>
               {content.logoUrl ? (
                 <div className="mb-4 flex items-center gap-4 border border-gold/15 bg-ink p-4">
@@ -418,7 +436,7 @@ export default function ContentEditor({
             <div className="border-t border-gold/15 pt-6">
               <h2 className="mb-2 font-display text-lg text-sand">تابات الهيدر</h2>
               <p className="mb-4 text-[0.85rem] text-sand-dim">
-                الأسماء دي بتظهر في الهيدر وفي لوحة التنقل في الهيرو.
+                الأسماء دي بتظهر في الهيدر وقائمة الموبايل.
               </p>
               <div className="grid gap-4">
                 {(
@@ -469,61 +487,196 @@ export default function ContentEditor({
                 ))}
               </div>
               <p className="mt-3 text-[0.75rem] text-sand-dim">
-                سيب الحقل فاضي عشان يفضل النص الافتراضي.
+                سيب الحقل فاضي عشان يفضل النص الافتراضي. على اليمين في الموقع بيظهر محادثة الواتساب — مش بيتعدّل من هنا.
               </p>
+            </div>
+          </section>
+        ) : null}
+
+        {tab === "coverage" ? (
+          <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
+            <div>
+              <h2 className="mb-2 font-display text-lg text-sand">قسم دليل السهر (SEO)</h2>
+              <p className="mb-4 text-[0.85rem] text-sand-dim">
+                العنوان والفقرات اللي فوق الأسئلة الشائعة في الصفحة.
+              </p>
+              <div className="grid gap-4">
+                {(
+                  [
+                    ["eyebrow", "السطر العلوي"],
+                    ["title", "العنوان"],
+                    ["titleAccent", "الكلمة المميزة في العنوان"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <LocalizedFields
+                    key={key}
+                    label={label}
+                    locale={locale}
+                    value={content.seo?.[key]}
+                    onChange={(next) => update({ seo: { ...content.seo, [key]: next } })}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="border-t border-gold/15 pt-6">
-              <h2 className="mb-4 font-display text-lg text-sand">عناوين الأقسام</h2>
-              <div className="space-y-6">
-                {(
-                  [
-                    ["how", "طريقة الحجز"],
-                    ["trust", "ليه تختارنا"],
-                    ["gallery", "معرض الصور"],
-                    ["testimonials", "آراء العملاء"],
-                  ] as const
-                ).map(([key, title]) => (
-                  <div key={key} className="border border-gold/15 bg-ink p-4">
-                    <h3 className="mb-3 text-[0.9rem] font-semibold text-gold-soft">{title}</h3>
-                    <div className="grid gap-3">
-                      {(
-                        [
-                          ["eyebrow", "السطر العلوي"],
-                          ["title", "العنوان"],
-                          ["titleAccent", "الكلمة المميزة"],
-                          ["lede", "الوصف"],
-                        ] as const
-                      ).map(([field, label]) =>
-                        field === "lede" && key !== "how" && key !== "trust" && key !== "gallery" && key !== "testimonials" ? null : (
-                          <LocalizedFields
-                            key={field}
-                            label={label}
-                            locale={locale}
-                            multiline={field === "lede"}
-                            value={content[key]?.[field]}
-                            onChange={(next) =>
-                              update({ [key]: { ...content[key], [field]: next } })
-                            }
+              <h2 className="mb-2 font-display text-lg text-sand">فقرات القسم</h2>
+              <p className="mb-4 text-[0.85rem] text-sand-dim">
+                بتعدّل لغة {locale === "ar" ? "عربي" : "English"}. الحفظ بيستبدل الفقرات الافتراضية للغة دي.
+              </p>
+              <ul className="space-y-3">
+                {seoParagraphs.map((line, index) => (
+                  <li key={`${index}-${line.slice(0, 12)}`} className="flex gap-2">
+                    <textarea
+                      className={fieldClass("min-h-[88px] resize-y")}
+                      value={line}
+                      onChange={(e) => {
+                        const lines = [...seoParagraphs];
+                        lines[index] = e.target.value;
+                        update({
+                          seo: {
+                            ...content.seo,
+                            paragraphs: { ...content.seo?.paragraphs, [locale]: lines },
+                          },
+                        });
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="shrink-0 cursor-pointer border border-[#c9646f]/40 px-3 text-[#e2857f]"
+                      onClick={() => {
+                        const lines = seoParagraphs.filter((_, i) => i !== index);
+                        update({
+                          seo: {
+                            ...content.seo,
+                            paragraphs: { ...content.seo?.paragraphs, [locale]: lines },
+                          },
+                        });
+                      }}
+                    >
+                      حذف
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                className={buttonClass("ghost", "mt-4 px-4 py-2 text-[0.82rem]")}
+                onClick={() =>
+                  update({
+                    seo: {
+                      ...content.seo,
+                      paragraphs: {
+                        ...content.seo?.paragraphs,
+                        [locale]: [...seoParagraphs, ""],
+                      },
+                    },
+                  })
+                }
+              >
+                إضافة فقرة
+              </button>
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h2 className="font-display text-lg text-sand">الأسئلة الشائعة</h2>
+                  <LocalizedFields
+                    label="عنوان قسم الأسئلة"
+                    locale={locale}
+                    value={content.seo?.faqTitle}
+                    onChange={(next) => update({ seo: { ...content.seo, faqTitle: next } })}
+                  />
+                  <p className="mt-2 text-[0.85rem] text-sand-dim">
+                    أول تعديل على الأسئلة بينسخ الافتراضي. بعد كده القائمة دي هي المصدر.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className={buttonClass("ghost", "px-4 py-2 text-[0.82rem]")}
+                  onClick={() => {
+                    update({
+                      faqItems: [
+                        ...faqItems,
+                        {
+                          id: newId(),
+                          q: { ar: "", en: "" },
+                          a: { ar: "", en: "" },
+                          visible: true,
+                        },
+                      ],
+                    });
+                  }}
+                >
+                  إضافة سؤال
+                </button>
+              </div>
+              <ul className="space-y-4">
+                {faqItems.map((item, index) => (
+                  <li key={item.id} className="border border-gold/15 bg-ink p-4">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <span className="text-[0.78rem] text-sand-dim">#{index + 1}</span>
+                      <div className="flex items-center gap-3">
+                        <label className="flex items-center gap-2 text-[0.8rem] text-sand-dim">
+                          <input
+                            type="checkbox"
+                            checked={item.visible !== false}
+                            onChange={(e) => {
+                              update({
+                                faqItems: faqItems.map((entry) =>
+                                  entry.id === item.id
+                                    ? { ...entry, visible: e.target.checked }
+                                    : entry,
+                                ),
+                              });
+                            }}
                           />
-                        ),
-                      )}
-                      {key === "testimonials" ? (
-                        <LocalizedFields
-                          label="تكملة العنوان"
-                          locale={locale}
-                          value={content.testimonials?.titleEnd}
-                          onChange={(next) =>
+                          ظاهر
+                        </label>
+                        <button
+                          type="button"
+                          className="cursor-pointer text-[0.8rem] text-[#e2857f] hover:underline"
+                          onClick={() =>
                             update({
-                              testimonials: { ...content.testimonials, titleEnd: next },
+                              faqItems: faqItems.filter((entry) => entry.id !== item.id),
                             })
                           }
-                        />
-                      ) : null}
+                        >
+                          حذف
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                    <div className="grid gap-3">
+                      <LocalizedFields
+                        label="السؤال"
+                        locale={locale}
+                        value={item.q}
+                        onChange={(next) =>
+                          update({
+                            faqItems: faqItems.map((entry) =>
+                              entry.id === item.id ? { ...entry, q: next } : entry,
+                            ),
+                          })
+                        }
+                      />
+                      <LocalizedFields
+                        label="الإجابة"
+                        locale={locale}
+                        multiline
+                        value={item.a}
+                        onChange={(next) =>
+                          update({
+                            faqItems: faqItems.map((entry) =>
+                              entry.id === item.id ? { ...entry, a: next } : entry,
+                            ),
+                          })
+                        }
+                      />
+                    </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </section>
         ) : null}

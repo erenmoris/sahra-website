@@ -64,6 +64,22 @@ export type PromoVideoConfig = {
   visible?: boolean;
 };
 
+export type FaqItem = {
+  id: string;
+  q: LocalizedString;
+  a: LocalizedString;
+  visible?: boolean;
+};
+
+export type SeoOverrides = {
+  eyebrow?: LocalizedString;
+  title?: LocalizedString;
+  titleAccent?: LocalizedString;
+  /** When set, replaces default SEO paragraphs for that locale. */
+  paragraphs?: { ar?: string[]; en?: string[] };
+  faqTitle?: LocalizedString;
+};
+
 export type SiteContent = {
   sections?: Partial<Record<SectionKey, boolean>>;
   /** Custom logo URL — falls back to /brand/logo-header.png */
@@ -82,6 +98,10 @@ export type SiteContent = {
   /** When set, replaces / merges with filesystem gallery. */
   galleryItems?: GalleryMediaItem[];
   promoVideo?: PromoVideoConfig;
+  /** Coverage / SEO section copy (above FAQ). */
+  seo?: SeoOverrides;
+  /** When set, replaces the default FAQ list. */
+  faqItems?: FaqItem[];
   updatedAt?: string;
 };
 

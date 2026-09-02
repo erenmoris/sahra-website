@@ -120,10 +120,20 @@ export async function patchSiteContent(patch: Partial<SiteContent>): Promise<Sit
     promoVideo: patch.promoVideo
       ? { ...current.promoVideo, ...patch.promoVideo }
       : current.promoVideo,
+    seo: patch.seo
+      ? {
+          ...current.seo,
+          ...patch.seo,
+          paragraphs: patch.seo.paragraphs
+            ? { ...current.seo?.paragraphs, ...patch.seo.paragraphs }
+            : current.seo?.paragraphs,
+        }
+      : current.seo,
   };
 
   if (patch.testimonialItems !== undefined) next.testimonialItems = patch.testimonialItems;
   if (patch.galleryItems !== undefined) next.galleryItems = patch.galleryItems;
+  if (patch.faqItems !== undefined) next.faqItems = patch.faqItems;
   if (patch.logoUrl !== undefined) next.logoUrl = patch.logoUrl;
 
   return saveSiteContent(next);
