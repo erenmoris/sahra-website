@@ -16,7 +16,7 @@ export type Venue = {
  */
 export const venues: Venue[] = [
   // ── North Coast (Sahel) ─────────────────────────────────────────────────────
-  { slug: "lemon-tree-and-co", name: "Lemon Tree & Co", nameAr: "ليمون تري آند كو", regions: ["sahel", "cairo"], aliases: ["Lemon Tree and Co", "ليمون تري"] },
+  { slug: "lemon-tree-and-co", name: "Lemon Tree & Co", nameAr: "ليمون تري آند كو", regions: ["sahel", "cairo"], aliases: ["Lemon Tree and Co", "Lemon Tree", "ليمون تري"] },
   { slug: "amelia", name: "Amelia", nameAr: "أميليا", regions: ["sahel"], aliases: ["Amelia By The Sea", "Amelia Beirut", "أميليا بيروت"] },
   { slug: "esca-playa", name: "Esca Playa", nameAr: "إسكا بلايا", regions: ["sahel"] },
   { slug: "sachi", name: "Sachi", nameAr: "ساشي", regions: ["sahel", "cairo"], aliases: ["Satchi", "Sachi by the Sea", "ساتشي"] },
@@ -31,6 +31,8 @@ export const venues: Venue[] = [
   { slug: "villa-coconut", name: "Villa Coconut", nameAr: "فيلا كوكونت", regions: ["sahel"], aliases: ["Villa Coconut North Coast"] },
 
   // ── Cairo ───────────────────────────────────────────────────────────────────
+  { slug: "amelia-beirut", name: "Amelia Beirut", nameAr: "أميليا بيروت", regions: ["cairo"], aliases: ["Amelia", "Amelia Beirut New Cairo"] },
+  { slug: "moon-deck", name: "Moon Deck", nameAr: "مون ديك", regions: ["cairo"], aliases: ["MoonDeck", "The Moon Deck"] },
   { slug: "ava", name: "Ava", nameAr: "آفا", regions: ["cairo"], aliases: ["Club Ava"] },
   { slug: "esca-cueva", name: "Esca Cueva", nameAr: "إسكا كويفا", regions: ["cairo"], aliases: ["Esca", "إسكا"] },
   { slug: "the-origin", name: "The Origin", nameAr: "ذا أوريجين", regions: ["cairo"], aliases: ["Origin", "The Origins"] },
