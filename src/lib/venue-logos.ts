@@ -6,7 +6,7 @@ const LOGO_PATTERN = /\.(?:png|svg|webp|jpe?g|avif)$/i;
 /** Skip empty/corrupt files (e.g. failed downloads). */
 const MIN_LOGO_BYTES = 400;
 
-/** slug → public URL, e.g. { "anzu-rooftop": "/venues/logos/anzu-rooftop.png?v=…" } */
+/** slug → public URL, e.g. { "anzu-rooftop": "/venues/logos/anzu-rooftop.png" } */
 export async function getVenueLogoMap(): Promise<Record<string, string>> {
   try {
     const files = await fs.readdir(LOGO_DIR);
@@ -17,8 +17,7 @@ export async function getVenueLogoMap(): Promise<Record<string, string>> {
       const stat = await fs.stat(filePath);
       if (stat.size < MIN_LOGO_BYTES) continue;
       const slug = file.replace(LOGO_PATTERN, "");
-      const v = Math.floor(stat.mtimeMs / 1000);
-      map[slug] = `/venues/logos/${file}?v=${v}`;
+      map[slug] = `/venues/logos/${file}`;
     }
     return map;
   } catch {
