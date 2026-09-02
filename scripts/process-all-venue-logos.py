@@ -18,7 +18,7 @@ DIRECT: dict[str, str] = {
     "villa-coconut": "https://tltconcepts.com/images/Logos-larg/PNG/Hospitality/Villa%20Coconut.png",
     "esca-cueva": "https://i0.wp.com/escahospitality.com/wp-content/uploads/2025/09/Esca-Cueva-logo.png?ssl=1",
     "esca-playa": "https://i0.wp.com/escahospitality.com/wp-content/uploads/2025/09/Esca-Playa-logo.png?ssl=1",
-    "satchi": "https://static.wixstatic.com/media/f3847d_07f36910360641e18ac21adccf37e4fc~mv2.png",
+    "sachi": "https://static.wixstatic.com/media/f3847d_07f36910360641e18ac21adccf37e4fc~mv2.png",
     "maison-de-la-plage": "https://static.wixstatic.com/media/67a7fa_96489ec29f1343d8b261207719f8d92b~mv2.png",
     "the-smokery": (
         "https://static.wixstatic.com/media/c8fcaa_b993d601b2904ac99bf7a0798b2e1d1f~mv2_d_1500_1500_s_2.png"
@@ -51,10 +51,9 @@ PRESERVE = {
 WORDMARKS: dict[str, tuple[str, str | None]] = {
     "amelia": ("AMELIA", "BY THE SEA"),
     "ahm-sahel": ("AHM", "SAHEL"),
-    "bleu-vert": ("BLEU", "VERT"),
     "cairo-jazz-club": ("CAIRO", "JAZZ CLUB"),
-    "kanter": ("KANTER", None),
     "lucida": ("LUCIDA", None),
+    "lucida-coast": ("LUCIDA", "COAST"),
     "nobu-ogami": ("NOBU", None),
     "pier-88": ("PIER", "88"),
     "sass-beach": ("SASS", "BEACH"),

@@ -3,13 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { Locale } from "@/i18n/config";
-import {
-  cairoVenues,
-  sahelVenues,
-  tickerExcludedSlugs,
-  venueName,
-  type Venue,
-} from "@/content/venues";
+import { cairoVenues, sahelVenues, venueName, type Venue } from "@/content/venues";
 
 type Props = {
   locale: Locale;
@@ -107,7 +101,7 @@ function TickerStrip({
 }
 
 function withLogos(venues: Venue[], venueLogos: Record<string, string>) {
-  return venues.filter((v) => venueLogos[v.slug] && !tickerExcludedSlugs.has(v.slug));
+  return venues.filter((v) => venueLogos[v.slug]);
 }
 
 /** Scrolling strips of North Coast and Cairo venue logos. */
