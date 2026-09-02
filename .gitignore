@@ -44,3 +44,7 @@ next-env.d.ts
 # reservation data
 /data
 
+# python
+__pycache__/
+*.pyc
+
