@@ -24,6 +24,11 @@ DIRECT: dict[str, str] = {
         "https://static.wixstatic.com/media/c8fcaa_b993d601b2904ac99bf7a0798b2e1d1f~mv2_d_1500_1500_s_2.png"
         "/v1/crop/x_333,y_336,w_901,h_904/thesmokerylogo_ko_splash.png"
     ),
+    # Cairo — official brand assets
+    "riverside": "https://riversidecairo.com/assets/img/logo-light.png",
+    "mood-bar": "https://static.wixstatic.com/media/eb9851_f301c034fd3f484997c1414127331d65~mv2.png",
+    "kazoku": "https://static.wixstatic.com/media/f3847d_dd4ea15bc108478682d0bc092d76281b~mv2.png",
+    "tap-east": "https://static.wixstatic.com/media/f73908_5518380a40524ea6820fc624e0a1791f.png",
 }
 
 # Already confirmed real brand marks (downloaded from IG when profile pic = logo)
@@ -49,17 +54,13 @@ WORDMARKS: dict[str, tuple[str, str | None]] = {
     "bleu-vert": ("BLEU", "VERT"),
     "cairo-jazz-club": ("CAIRO", "JAZZ CLUB"),
     "kanter": ("KANTER", None),
-    "kazoku": ("KAZOKU", None),
     "lucida": ("LUCIDA", None),
-    "mood-bar": ("MOOD", "BAR"),
     "nobu-ogami": ("NOBU", None),
     "pier-88": ("PIER", "88"),
-    "riverside": ("RIVERSIDE", None),
     "sass-beach": ("SASS", "BEACH"),
     "sol-beach": ("SOL", "BEACH"),
     "sonbola": ("SONBOLA", None),
     "tabla-luna": ("TABLA", "LUNA"),
-    "tap-east": ("TAP", "EAST"),
     "zenz": ("ZENZ", None),
 }
 

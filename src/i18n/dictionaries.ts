@@ -137,9 +137,11 @@ const ar = {
     eyebrow: "أنواع السهرات",
     title: "أي جو",
     titleAccent: "تفضّله، هتلاقيه عندنا.",
-    namesTitle: "أماكن الساحل الشمالي اللي بنظبط فيها حجوزات",
+    namesTitle: "أماكن الساحل الشمالي والقاهرة اللي بنظبط فيها حجوزات",
+    tickerSahel: "الساحل الشمالي",
+    tickerCairo: "القاهرة",
     namesNote:
-      "بنحجز ترابيزات في أشهر بيتش كلوبز ونوادٍ ليلية على الساحل — من مراسي ومارينا لحد رأس الحكمة والساحل. سهرة خدمة كونسييرج مستقلة وغير تابعة للأماكن دي، والأسماء التجارية ملك أصحابها وبنذكرها للتوضيح بس.",
+      "بنحجز ترابيزات في أشهر بيتش كلوبز وروفتوبات ونوادٍ ليلية في القاهرة والساحل الشمالي. سهرة خدمة كونسييرج مستقلة وغير تابعة للأماكن دي، والأسماء التجارية ملك أصحابها وبنذكرها للتوضيح بس.",
     items: [
       {
         tag: "القاهرة",
@@ -459,9 +461,11 @@ const en = {
     eyebrow: "Experiences",
     title: "Whatever the mood,",
     titleAccent: "we have it.",
-    namesTitle: "North Coast venues we book",
+    namesTitle: "North Coast & Cairo venues we book",
+    tickerSahel: "North Coast",
+    tickerCairo: "Cairo",
     namesNote:
-      "We arrange tables at the best-known beach clubs and nightlife spots along Egypt's North Coast — from Marassi and Marina to Ras El Hekma. Sahra is an independent concierge service and is not affiliated with these venues; trade names belong to their owners and are listed for identification only.",
+      "We arrange tables at the best-known beach clubs, rooftops, and nightlife spots across Cairo and Egypt's North Coast. Sahra is an independent concierge service and is not affiliated with these venues; trade names belong to their owners and are listed for identification only.",
     items: [
       {
         tag: "Cairo",

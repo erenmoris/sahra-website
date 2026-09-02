@@ -10,7 +10,7 @@ export type Venue = {
 };
 
 /**
- * Venues we take reservations for. Listed on the home page ticker (Sahel logos)
+ * Venues we take reservations for. Listed on the home page logo tickers (Sahel + Cairo)
  * and used as search keywords so the site can surface for "<venue> booking" queries.
  */
 export const venues: Venue[] = [
@@ -27,7 +27,7 @@ export const venues: Venue[] = [
   { slug: "the-smokery", name: "The Smokery", nameAr: "ذا سموكري", region: "sahel", aliases: ["Smokery", "سموكري"] },
   { slug: "pier-88", name: "Pier 88", nameAr: "بيير ٨٨", region: "sahel", aliases: ["Pier88"] },
   { slug: "nobu-ogami", name: "Nobu", nameAr: "نوبو", region: "sahel", aliases: ["Nobu Ogami", "نوبو أوجامي"] },
-  // Cairo — SEO keywords only (not in the Sahel logo ticker)
+  // Cairo — shown in the Cairo logo ticker
   { slug: "ava", name: "Ava", nameAr: "آفا", region: "cairo" },
   { slug: "esca-cueva", name: "Esca Cueva", nameAr: "إسكا كويفا", region: "cairo", aliases: ["Esca", "إسكا"] },
   { slug: "the-origin", name: "The Origin", nameAr: "ذا أوريجين", region: "cairo", aliases: ["Origin"] },
@@ -48,8 +48,14 @@ export const venues: Venue[] = [
   { slug: "kanter", name: "Kanter", nameAr: "كانتر", region: "cairo" },
 ];
 
-/** North Coast venues — used for the scrolling logo strip on the home page. */
+/** North Coast venues — used for the Sahel scrolling logo strip on the home page. */
 export const sahelVenues: Venue[] = venues.filter((v) => v.region === "sahel");
+
+/** Cairo venues — used for the Cairo scrolling logo strip on the home page. */
+export const cairoVenues: Venue[] = venues.filter((v) => v.region === "cairo");
+
+/** Typographic fallbacks only — kept for SEO but hidden from logo tickers. */
+export const tickerExcludedSlugs = new Set(["bleu-vert", "kanter"]);
 
 export function venueName(venue: Venue, locale: string): string {
   return locale === "ar" ? venue.nameAr : venue.name;

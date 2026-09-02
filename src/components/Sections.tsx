@@ -109,7 +109,14 @@ export function Venues({
             <h3 className="mb-5 text-[0.95rem] font-semibold text-gold-soft">
               {t.venues.namesTitle}
             </h3>
-            <VenueTicker locale={locale} venueLogos={venueLogos} />
+            <VenueTicker
+              locale={locale}
+              venueLogos={venueLogos}
+              labels={{
+                sahel: t.venues.tickerSahel,
+                cairo: t.venues.tickerCairo,
+              }}
+            />
             <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-[#6b6455]">
               {t.venues.namesNote}
             </p>
