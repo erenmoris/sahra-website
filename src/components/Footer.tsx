@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { SNAPCHAT_URL, whatsappLink } from "@/i18n/dictionaries";
+import Logo from "./Logo";
 import { WhatsAppIcon } from "./Icons";
 import TrackedLink from "./TrackedLink";
 import { Wrap } from "./ui";
@@ -11,9 +12,7 @@ export default function Footer({ locale, t }: { locale: Locale; t: Dictionary })
     <footer className="border-t border-gold/20 pt-12 pb-10">
       <Wrap>
         <div className="flex flex-wrap items-center justify-between gap-5">
-          <div className="font-display text-xl font-bold text-sand">
-            {locale === "ar" ? "سهرة" : "Sahra"} <span className="text-gold-soft">·</span>
-          </div>
+          <Logo locale={locale} size="sm" />
           <div className="flex flex-wrap gap-6 text-[0.85rem] text-sand-dim">
             <TrackedLink
               href={whatsappLink(t.whatsappMessage)}

@@ -27,10 +27,8 @@ DIRECT: dict[str, str] = {
     # Cairo — official brand assets
     "riverside": "https://riversidecairo.com/assets/img/logo-light.png",
     "mood-bar": "https://static.wixstatic.com/media/eb9851_f301c034fd3f484997c1414127331d65~mv2.png",
-    "kazoku": "https://static.wixstatic.com/media/f3847d_dd4ea15bc108478682d0bc092d76281b~mv2.png",
     "tap-east": "https://static.wixstatic.com/media/f73908_5518380a40524ea6820fc624e0a1791f.png",
     "amelia-beirut": "https://amelialounge.com/wp-content/uploads/2025/06/Amelia-Logo-Texture-No-Shadow.png",
-    "moon-deck": "https://bluenileboat.net/wp-content/uploads/2026/04/MOON-DECK-BLACK-LOGO.webp",
 }
 
 # Already confirmed real brand marks (downloaded from IG when profile pic = logo)
@@ -63,6 +61,8 @@ WORDMARKS: dict[str, tuple[str, str | None]] = {
     "sonbola": ("SONBOLA", None),
     "tabla-luna": ("TABLA", "LUNA"),
     "zenz": ("ZENZ", None),
+    "moon-deck": ("MOON", "DECK"),
+    "kazoku": ("KAZOKU", None),
 }
 
 

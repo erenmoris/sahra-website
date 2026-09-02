@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import Logo from "./Logo";
 import { Wrap, buttonClass } from "./ui";
 
 type NavLink = { href: string; label: string };
@@ -59,9 +60,7 @@ export default function Header({ locale, t }: { locale: Locale; t: Dictionary })
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-gold/20 bg-ink/85 backdrop-blur-md">
       <Wrap className="flex h-[76px] items-center justify-between">
-        <Link href={`/${locale}`} className="font-display text-2xl font-bold text-sand">
-          {locale === "ar" ? "سهرة" : "Sahra"} <span className="text-gold-soft">·</span>
-        </Link>
+        <Logo locale={locale} />
 
         <div className="flex items-center gap-4 sm:gap-6 md:gap-9">
           <nav className="hidden items-center gap-9 md:flex" aria-label={locale === "ar" ? "التنقل" : "Main"}>

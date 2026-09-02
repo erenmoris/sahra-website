@@ -51,6 +51,11 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       url: `${siteUrl}/${locale}`,
       locale: locale === "ar" ? "ar_EG" : "en_US",
+      images: [{ url: "/brand/logo-horizontal.png", width: 1637, height: 630, alt: "Sahra" }],
+    },
+    icons: {
+      icon: [{ url: "/brand/logo-icon.png", type: "image/png" }],
+      apple: [{ url: "/brand/logo-icon.png", type: "image/png" }],
     },
     // Google's meta method needs the long token from Search Console; the older
     // file method still works through public/googlef9d35aaff3c2db3e.html.

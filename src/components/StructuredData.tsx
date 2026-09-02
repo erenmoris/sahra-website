@@ -17,7 +17,7 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
       telephone: `+${WHATSAPP_NUMBER}`,
       sameAs: [SNAPCHAT_URL],
       priceRange: "$$–$$$",
-      image: `${siteUrl}/opengraph-image`,
+      image: `${siteUrl}/brand/logo-horizontal.png`,
       address: {
         "@type": "PostalAddress",
         addressCountry: "EG",
