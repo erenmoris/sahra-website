@@ -26,6 +26,7 @@ export default function Logo({ locale, className = "", size = "md" }: Props) {
         alt={alt}
         width={width}
         height={height}
+        unoptimized
         className="h-auto w-auto shrink-0 transition-transform duration-300 group-hover:scale-[1.03]"
         priority={size === "md"}
       />
