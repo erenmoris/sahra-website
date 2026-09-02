@@ -13,7 +13,7 @@ export default function Logo({ locale, className = "", size = "md" }: Props) {
   const src = "/brand/logo-header.png";
   const alt = locale === "ar" ? "سهرة" : "Sahra";
   const height = size === "sm" ? 36 : 44;
-  const width = Math.round(height * (1024 / 280));
+  const width = Math.round(height * (519 / 244));
 
   return (
     <Link
