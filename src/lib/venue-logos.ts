@@ -1,0 +1,21 @@
+import { promises as fs } from "fs";
+import path from "path";
+
+const LOGO_DIR = path.join(process.cwd(), "public", "venues", "logos");
+const LOGO_PATTERN = /\.(?:png|svg|webp|jpe?g|avif)$/i;
+
+/** slug → public URL, e.g. { "anzu-rooftop": "/venues/logos/anzu-rooftop.png" } */
+export async function getVenueLogoMap(): Promise<Record<string, string>> {
+  try {
+    const files = await fs.readdir(LOGO_DIR);
+    const map: Record<string, string> = {};
+    for (const file of files) {
+      if (!LOGO_PATTERN.test(file)) continue;
+      const slug = file.replace(LOGO_PATTERN, "");
+      map[slug] = `/venues/logos/${file}`;
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}

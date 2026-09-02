@@ -66,7 +66,15 @@ export function Trust({ t }: { t: Dictionary }) {
   );
 }
 
-export function Venues({ t, locale }: { t: Dictionary; locale: Locale }) {
+export function Venues({
+  t,
+  locale,
+  venueLogos,
+}: {
+  t: Dictionary;
+  locale: Locale;
+  venueLogos: Record<string, string>;
+}) {
   return (
     <section id="venues" className="py-24">
       <Wrap>
@@ -101,7 +109,7 @@ export function Venues({ t, locale }: { t: Dictionary; locale: Locale }) {
             <h3 className="mb-5 text-[0.95rem] font-semibold text-gold-soft">
               {t.venues.namesTitle}
             </h3>
-            <VenueTicker locale={locale} rows={2} />
+            <VenueTicker locale={locale} venueLogos={venueLogos} />
             <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-[#6b6455]">
               {t.venues.namesNote}
             </p>

@@ -13,6 +13,7 @@ import StructuredData from "@/components/StructuredData";
 import Gallery from "@/components/Gallery";
 import SnapchatCard from "@/components/SnapchatCard";
 import { getGalleryItems } from "@/lib/gallery";
+import { getVenueLogoMap } from "@/lib/venue-logos";
 import Reveal from "@/components/Reveal";
 import { Accent, Divider, SectionHeading, Wrap } from "@/components/ui";
 
@@ -25,7 +26,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   if (!isLocale(locale)) notFound();
 
   const t = getDictionary(locale);
-  const galleryItems = await getGalleryItems();
+  const [galleryItems, venueLogos] = await Promise.all([getGalleryItems(), getVenueLogoMap()]);
 
   return (
     <>
@@ -49,7 +50,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
           <Divider />
         </Wrap>
 
-        <Venues t={t} locale={locale} />
+        <Venues t={t} locale={locale} venueLogos={venueLogos} />
 
         <Wrap>
           <Divider />
