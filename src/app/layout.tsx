@@ -62,6 +62,9 @@ export async function generateMetadata(): Promise<Metadata> {
     verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
       ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
       : undefined,
+    other: {
+      "google-adsense-account": "ca-pub-1287316495357755",
+    },
   };
 }
 
