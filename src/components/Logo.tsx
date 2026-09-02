@@ -14,7 +14,7 @@ export default function Logo({ locale, className = "", size = "md" }: Props) {
   const alt = locale === "ar" ? "سهرة" : "Sahra";
   // ~56px in 88px header — full wordmark including crescent
   const height = size === "sm" ? 32 : 56;
-  const width = Math.round(height * (863 / 472));
+  const width = Math.round(height * (864 / 476));
   const sizeClass = size === "sm" ? "h-8" : "h-14";
 
   return (
