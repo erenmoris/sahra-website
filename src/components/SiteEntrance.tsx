@@ -1,15 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
-const STORAGE_KEY = "sahra:entrance-load-v2";
+export const ENTRANCE_STORAGE_KEY = "sahra:entrance-load-v2";
 const LOAD_MS = 4200;
 const TEASER_SRC = "/brand/entrance-teaser.mp4";
+const GATE_CLASS = "sahra-gate";
+
+function clearGate() {
+  document.documentElement.classList.remove(GATE_CLASS);
+}
 
 /**
  * Loading splash with teasing background video — once per session.
+ * A pre-React gate in the root layout covers the page until this mounts.
  */
 export default function SiteEntrance({
   t,
@@ -20,16 +26,26 @@ export default function SiteEntrance({
   videoSrc?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Start closed so SSR matches returning visitors. New visitors stay covered by
+  // the pre-React `sahra-gate` until this layout effect opens the splash.
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [ready, setReady] = useState(false);
   const copy = t.entrance;
 
-  useEffect(() => {
-    if (sessionStorage.getItem(STORAGE_KEY)) return;
+  useLayoutEffect(() => {
+    if (sessionStorage.getItem(ENTRANCE_STORAGE_KEY)) {
+      clearGate();
+      return;
+    }
     setOpen(true);
   }, []);
+
+  // Drop the CSS gate only after the splash is in the DOM — avoids a one-frame content flash.
+  useLayoutEffect(() => {
+    if (open) clearGate();
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -81,7 +97,8 @@ export default function SiteEntrance({
 
   function close() {
     setLeaving(true);
-    sessionStorage.setItem(STORAGE_KEY, "1");
+    sessionStorage.setItem(ENTRANCE_STORAGE_KEY, "1");
+    clearGate();
     window.setTimeout(() => setOpen(false), 500);
   }
 
@@ -89,12 +106,13 @@ export default function SiteEntrance({
 
   return (
     <div
+      data-sahra-entrance
       role="status"
       aria-live="polite"
       aria-busy={!ready}
       aria-label={copy.loading}
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className={`fixed inset-0 z-200 flex flex-col items-center justify-center overflow-hidden bg-[#07090f] transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-end overflow-hidden bg-[#07090f] transition-opacity duration-500 ${
         leaving ? "opacity-0" : "opacity-100"
       }`}
     >
@@ -109,10 +127,10 @@ export default function SiteEntrance({
         preload="auto"
         aria-hidden
       />
-      <div className="absolute inset-0 bg-ink/55" aria-hidden />
-      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/35" aria-hidden />
+      <div className="absolute inset-0 bg-ink/40" aria-hidden />
+      <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-transparent" aria-hidden />
 
-      <div className="relative z-10 flex w-full max-w-[280px] flex-col items-center px-6">
+      <div className="relative z-10 mb-[min(6vh,48px)] flex w-full max-w-[280px] flex-col items-center px-6 pb-6 pt-4">
         <p className="font-display text-[2rem] tracking-[0.28em] text-gold-soft drop-shadow-[0_2px_20px_rgba(0,0,0,0.65)]">
           {copy.brand}
         </p>

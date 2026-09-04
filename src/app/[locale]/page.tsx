@@ -34,6 +34,7 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
 
   return (
     <>
+      <SiteEntrance t={t} locale={locale} />
       <StructuredData locale={locale} t={t} />
       <ScrollProgress />
       <Header locale={locale} t={t} logoSrc={logoUrl} />
@@ -85,7 +86,6 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
 
       <Footer locale={locale} t={t} logoSrc={logoUrl} />
       <WhatsAppFloat t={t} locale={locale} />
-      <SiteEntrance t={t} locale={locale} />
     </>
   );
 }

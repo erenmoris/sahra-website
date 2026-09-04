@@ -22,6 +22,24 @@
     scroll-behavior: smooth;
   }
 
+  /* Instant homepage gate — applied by inline script before paint */
+  html.sahra-gate {
+    overflow: hidden;
+  }
+
+  html.sahra-gate body {
+    overflow: hidden;
+  }
+
+  html.sahra-gate::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: #07090f;
+    pointer-events: all;
+  }
+
   body {
     background-color: var(--color-ink);
     color: var(--color-sand);

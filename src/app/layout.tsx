@@ -73,6 +73,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
+      <head>
+        {/* Covers the homepage before React hydrates so content never flashes first. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=location.pathname.replace(/\\/+$/,"")||"/";if(p!=="/ar"&&p!=="/en"&&p!=="/")return;if(sessionStorage.getItem("sahra:entrance-load-v2"))return;document.documentElement.classList.add("sahra-gate");setTimeout(function(){document.documentElement.classList.remove("sahra-gate")},9000)}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body
         className={`${elMessiri.variable} ${cairo.variable} ${plexMono.variable} bg-ink text-sand antialiased`}
       >
