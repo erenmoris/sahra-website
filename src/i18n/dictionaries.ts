@@ -738,7 +738,7 @@ const en = {
     title: "Chat",
     titleAccent: "screenshots",
     titleEnd: "after the night.",
-    lede: "Messages that landed on our WhatsApp — shown in the same chat layout.",
+    lede: "Messages that landed on our WhatsApp.",
     items: [
       {
         who: "Client from Riyadh",
