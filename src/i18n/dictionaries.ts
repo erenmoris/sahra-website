@@ -345,6 +345,42 @@ const ar = {
           },
         ],
       },
+      {
+        who: "عميل من الإمارات",
+        contact: "عميل دبي",
+        lastSeen: "آخر ظهور الساعة ٧:٣٠ م",
+        dayLabel: "٢٢ فبراير",
+        messages: [
+          {
+            from: "them",
+            text: "من دبي لمصر وكل شي كان جاهز قبل ما نهبط بساعة. السرعة والدقة فرقوا معنا كثير 🔥",
+            time: "١:٠٥ ص",
+          },
+          {
+            from: "us",
+            text: "تسلم، هذا أسلوبنا. أي سفرة جاية ابعتلنا قبلها ونثبّت لك أفضل ترابيزة.",
+            time: "١:٠٩ ص",
+          },
+        ],
+      },
+      {
+        who: "عميل من الكويت",
+        contact: "عميل الكويت",
+        lastSeen: "آخر ظهور الساعة ٢:١٨ م",
+        dayLabel: "٢٨ يونيو",
+        messages: [
+          {
+            from: "us",
+            text: "أكدنا لكم بيتش كلوب الساحل، دخول مباشر والخصوصية محفوظة.",
+            time: "٨:١٥ م",
+          },
+          {
+            from: "them",
+            text: "والله خدمتكم محترمة، ما احتجنا نسأل مرتين وكل شي طلع زي الاتفاق بالظبط. تسلمون 🙏",
+            time: "٢:٥٠ ص",
+          },
+        ],
+      },
     ] as {
       image?: string;
       who: string;
@@ -886,6 +922,42 @@ const en = {
             from: "us",
             text: "Anytime — reach out early next trip and we will package the whole stay.",
             time: "11:14 PM",
+          },
+        ],
+      },
+      {
+        who: "Client from the UAE",
+        contact: "Client Dubai",
+        lastSeen: "last seen at 7:30 PM",
+        dayLabel: "22 February",
+        messages: [
+          {
+            from: "them",
+            text: "Flew in from Dubai and everything was ready an hour before landing. Speed and precision made the difference 🔥",
+            time: "1:05 AM",
+          },
+          {
+            from: "us",
+            text: "That's how we work — message us before the next trip and we will lock the best table.",
+            time: "1:09 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Kuwait",
+        contact: "Client Kuwait",
+        lastSeen: "last seen at 2:18 PM",
+        dayLabel: "28 June",
+        messages: [
+          {
+            from: "us",
+            text: "North Coast beach club confirmed — direct entry, privacy handled.",
+            time: "8:15 PM",
+          },
+          {
+            from: "them",
+            text: "Truly professional service. We never had to ask twice and everything matched the plan 🙏",
+            time: "2:50 AM",
           },
         ],
       },
