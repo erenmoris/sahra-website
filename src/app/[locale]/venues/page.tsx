@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
 import { Venues } from "@/components/Sections";
 import Gallery from "@/components/Gallery";
+import VenuesEntrance from "@/components/venues/VenuesEntrance";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Divider, Wrap } from "@/components/ui";
 
@@ -46,7 +47,14 @@ export default async function VenuesPage({ params }: { params: Promise<{ locale:
     <>
       <ScrollProgress />
       <Header locale={locale} t={t} logoSrc={logoUrl} />
-      <main className="pt-[88px]">
+      <main>
+        <VenuesEntrance
+          locale={locale}
+          title={t.venues.title}
+          titleAccent={t.venues.titleAccent}
+          lede={t.venues.metaDescription}
+        />
+
         {sections.venues ? <Venues t={t} locale={locale} venueLogos={venueLogos} /> : null}
 
         {sections.venues && sections.gallery && galleryItems.length > 0 ? (
