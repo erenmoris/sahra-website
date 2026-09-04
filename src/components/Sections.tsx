@@ -220,6 +220,7 @@ export function Testimonials({
                       battery: item.battery,
                       signal: item.signal,
                       lastSeen: item.lastSeen,
+                      dayLabel: item.dayLabel,
                     }}
                     caption={item.who}
                     locale={locale}

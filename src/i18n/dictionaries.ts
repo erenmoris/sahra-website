@@ -199,10 +199,8 @@ const ar = {
       {
         who: "عميل من الرياض",
         contact: "عميل الرياض",
-        clock: "١١:٣٨",
-        battery: 64,
-        signal: 4,
         lastSeen: "آخر ظهور الساعة ٤:٢٢ م",
+        dayLabel: "١٥ يناير",
         messages: [
           {
             from: "us",
@@ -211,73 +209,139 @@ const ar = {
           },
           {
             from: "them",
-            text: "ماشاء الله عليك، السهرة كانت فوق الممتاز 🙌 من أول رسالة إلى ما قعدنا على الطاولة كل شي كان مرتب.",
+            text: "والله ما قصرتي، الجو كان أسطوري والتنسيق من أول رسالة مرتب. تسلمين يا وحش 🔥",
             time: "٢:١٣ ص",
           },
           {
             from: "us",
-            text: "يسعدك، أي وقت تحجز تاني إحنا موجودين.",
+            text: "يسعدك، أي وقت تبي ليلة ثانية إحنا موجودين.",
             time: "٢:١٦ ص",
           },
         ],
       },
       {
-        who: "عميلة من دبي",
-        contact: "عميلة دبي",
-        clock: "٠٠:٤١",
-        battery: 38,
-        signal: 3,
+        who: "عميلة من جدة",
+        contact: "عميلة جدة",
         lastSeen: "آخر ظهور الساعة ٩:٥٥ م",
+        dayLabel: "١٢ فبراير",
         messages: [
           {
             from: "them",
-            text: "والله كفيتي ووفيتي 🌹 كنا خايفين الموضوع يصير معقد بس أنتِ سهلتيه علينا من أول دقيقة.",
+            text: "صراحة ما توقعت الموضوع بهالسهولة 🌹 حجزنا ونحن في الطيارة ولما وصلنا كل شي جاهز.",
             time: "١١:٥٨ م",
           },
           {
             from: "us",
-            text: "العفو 🤍 فرحتكم تهمنا. لو احتجتِ أي حاجة باقي الرحلة كلّميني.",
+            text: "هذا شغلنا 🤍 لو تبي مكان ثاني باقي الرحلة كلّميني.",
             time: "١٢:٠٣ ص",
           },
         ],
       },
       {
-        who: "عميل من الكويت",
-        contact: "عميل الكويت",
-        clock: "١٤:٠٧",
-        battery: 81,
-        signal: 2,
+        who: "عميل من الدمام",
+        contact: "عميل الدمام",
         lastSeen: "آخر ظهور الساعة ١١:١٨ ص",
+        dayLabel: "١٤ مارس",
         messages: [
           {
             from: "us",
-            text: "خصوصيتكم محفوظة ١٠٠٪ زي ما طلبتوا. السائق بيستناكم عند البوابة.",
+            text: "السائق عند الباب، والكود جاهز. تدخلون من غير طابور.",
             time: "٧:٥٢ م",
           },
           {
             from: "them",
-            text: "خصوصيتنا كانت أهم شي عندنا، وأنتم قدرتوا الموضوع تمام من غير ما نسأل مرتين.",
+            text: "يا سلام عليك، دخلنا في ثواني والخصوصية ١٠٠٪ زي ما طلبنا. الله يعطيك العافية.",
             time: "١:٢٩ ص",
           },
         ],
       },
       {
-        who: "عميلة من الدوحة",
-        contact: "عميلة الدوحة",
-        clock: "٢١:١٦",
-        battery: 52,
-        signal: 4,
-        lastSeen: "آخر ظهور أمس الساعة ٨:٤٠ م",
+        who: "عميل من الخبر",
+        contact: "عميل الخبر",
+        lastSeen: "آخر ظهور الساعة ٨:٤٠ م",
+        dayLabel: "١٨ أبريل",
         messages: [
           {
             from: "them",
-            text: "أبد ما توقعت الأمور تمشي بهالسهولة، وصلنا القاهرة وكل شي جاهز زي ما اتفقنا بالظبط. تسلمين 🙏",
+            text: "أفضل حجز سويته في مصر. الروفتوب كان على النيل والخدمة فوق، وأنتم ما ضيّعتوا وقتنا أبد 🙏",
             time: "١٢:٥١ ص",
           },
           {
             from: "us",
-            text: "تسلمي، دي شغلتنا ✨ استمتعوا بباقي الإقامة.",
+            text: "تسلم، فرحتكم تهمنا. جاهزين لأي ليلة ثانية.",
             time: "١٢:٥٤ ص",
+          },
+        ],
+      },
+      {
+        who: "عميلة من المدينة",
+        contact: "عميلة المدينة",
+        lastSeen: "آخر ظهور الساعة ٣:١٠ م",
+        dayLabel: "١٦ مايو",
+        messages: [
+          {
+            from: "us",
+            text: "أكدتلكم ترابيزة VIP قدام الدي جي، والبوتل جاهز قبل وصولكم.",
+            time: "٩:٢٠ م",
+          },
+          {
+            from: "them",
+            text: "ما شاء الله الترتيب دقيق جدًا، حسّينا إن في أحد يتابع معنا كل خطوة. شكراً من القلب 🤍",
+            time: "٣:٠٥ ص",
+          },
+        ],
+      },
+      {
+        who: "عميل من الرياض",
+        contact: "عميل الرياض ٢",
+        lastSeen: "آخر ظهور الساعة ٦:٤٥ م",
+        dayLabel: "١١ يونيو",
+        messages: [
+          {
+            from: "them",
+            text: "كنت متردد أول مرة، بس التجربة غيرت رأيي تمام. سرعة الرد والأسعار أوضح من أي مكان ثاني.",
+            time: "١:١٢ ص",
+          },
+          {
+            from: "us",
+            text: "مرحبا فيك بأي وقت — ابعتلنا قبلها بيوم ونظبط لك أفضل خيار.",
+            time: "١:١٨ ص",
+          },
+        ],
+      },
+      {
+        who: "عميل من أبها",
+        contact: "عميل أبها",
+        lastSeen: "آخر ظهور الساعة ١٠:٠٢ م",
+        dayLabel: "٢٠ يوليو",
+        messages: [
+          {
+            from: "us",
+            text: "حجزنا لكم مركب الجمعة، العدد ٨، والموعد ١١ بالليل.",
+            time: "٤:٣٠ م",
+          },
+          {
+            from: "them",
+            text: "كانت ليلة ما تنسى، والشباب كلهم مبسوطين. تسلم يالغالي على المتابعة 🙌",
+            time: "٢:٤٠ ص",
+          },
+        ],
+      },
+      {
+        who: "عميلة من جدة",
+        contact: "عميلة جدة ٢",
+        lastSeen: "آخر ظهور الساعة ٥:١٥ م",
+        dayLabel: "٩ أغسطس",
+        messages: [
+          {
+            from: "them",
+            text: "حجزنا شاليه + سهرة في نفس اليوم، وكل شي كان متناسق من غير لخبطة. أنصح فيكم بقوة ✨",
+            time: "١١:١٠ م",
+          },
+          {
+            from: "us",
+            text: "العفو، هذي راحتنا. أي رحلة جاية كلّمونا بدري ونرتب الباقة كاملة.",
+            time: "١١:١٤ م",
           },
         ],
       },
@@ -290,6 +354,7 @@ const ar = {
       battery?: number;
       signal?: number;
       lastSeen?: string;
+      dayLabel?: string;
       messages: { from: "them" | "us"; text: string; time: string }[];
     }[],
   },
@@ -678,10 +743,8 @@ const en = {
       {
         who: "Client from Riyadh",
         contact: "Client Riyadh",
-        clock: "11:38",
-        battery: 64,
-        signal: 4,
-        lastSeen: "last seen today at 4:22 PM",
+        lastSeen: "last seen at 4:22 PM",
+        dayLabel: "15 January",
         messages: [
           {
             from: "us",
@@ -690,73 +753,139 @@ const en = {
           },
           {
             from: "them",
-            text: "The night was beyond excellent 🙌 From the first message until we sat down, everything was arranged.",
+            text: "You absolutely delivered — the night was legendary and everything was sorted from the first message 🔥",
             time: "2:13 AM",
           },
           {
             from: "us",
-            text: "Glad you enjoyed it — book again anytime.",
+            text: "Glad you loved it — book again anytime.",
             time: "2:16 AM",
           },
         ],
       },
       {
-        who: "Client from Dubai",
-        contact: "Client Dubai",
-        clock: "00:41",
-        battery: 38,
-        signal: 3,
-        lastSeen: "last seen today at 9:55 PM",
+        who: "Client from Jeddah",
+        contact: "Client Jeddah",
+        lastSeen: "last seen at 9:55 PM",
+        dayLabel: "12 February",
         messages: [
           {
             from: "them",
-            text: "You went above and beyond 🌹 We were worried it would get complicated, but you made it simple from minute one.",
+            text: "I never expected it to be this easy 🌹 We booked on the plane and everything was ready when we landed.",
             time: "11:58 PM",
           },
           {
             from: "us",
-            text: "Anytime 🤍 Message me if you need anything else during the trip.",
+            text: "That's our job 🤍 Message me if you want another spot during the trip.",
             time: "12:03 AM",
           },
         ],
       },
       {
-        who: "Client from Kuwait",
-        contact: "Client Kuwait",
-        clock: "14:07",
-        battery: 81,
-        signal: 2,
-        lastSeen: "last seen today at 11:18 AM",
+        who: "Client from Dammam",
+        contact: "Client Dammam",
+        lastSeen: "last seen at 11:18 AM",
+        dayLabel: "14 March",
         messages: [
           {
             from: "us",
-            text: "Privacy handled 100% as requested. Driver is waiting at the gate.",
+            text: "Driver is at the door and your code is ready. No queue.",
             time: "7:52 PM",
           },
           {
             from: "them",
-            text: "Privacy mattered most to us, and you handled it perfectly without us asking twice.",
+            text: "We were in within seconds and privacy was 100% as requested. Well done.",
             time: "1:29 AM",
           },
         ],
       },
       {
-        who: "Client from Doha",
-        contact: "Client Doha",
-        clock: "21:16",
-        battery: 52,
-        signal: 4,
-        lastSeen: "last seen yesterday at 8:40 PM",
+        who: "Client from Khobar",
+        contact: "Client Khobar",
+        lastSeen: "last seen at 8:40 PM",
+        dayLabel: "18 April",
         messages: [
           {
             from: "them",
-            text: "I never expected it to be this easy. We landed in Cairo and everything was ready exactly as agreed 🙏",
+            text: "Best booking I made in Egypt. Nile rooftop, great service, and you never wasted our time 🙏",
             time: "12:51 AM",
           },
           {
             from: "us",
-            text: "That's our job ✨ Enjoy the rest of your stay.",
+            text: "Thank you — ready whenever you want another night.",
             time: "12:54 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Madinah",
+        contact: "Client Madinah",
+        lastSeen: "last seen at 3:10 PM",
+        dayLabel: "16 May",
+        messages: [
+          {
+            from: "us",
+            text: "VIP table in front of the DJ confirmed, bottle ready before you arrive.",
+            time: "9:20 PM",
+          },
+          {
+            from: "them",
+            text: "The planning was so precise — we felt someone was with us every step. Thank you 🤍",
+            time: "3:05 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Riyadh",
+        contact: "Client Riyadh 2",
+        lastSeen: "last seen at 6:45 PM",
+        dayLabel: "11 June",
+        messages: [
+          {
+            from: "them",
+            text: "I was hesitant the first time, but this changed my mind. Fast replies and clearer pricing than anywhere else.",
+            time: "1:12 AM",
+          },
+          {
+            from: "us",
+            text: "Anytime — message us a day ahead and we will lock the best option.",
+            time: "1:18 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Abha",
+        contact: "Client Abha",
+        lastSeen: "last seen at 10:02 PM",
+        dayLabel: "20 July",
+        messages: [
+          {
+            from: "us",
+            text: "Boat booked for Friday, party of 8, 11 PM.",
+            time: "4:30 PM",
+          },
+          {
+            from: "them",
+            text: "Unforgettable night — the whole group loved it. Thanks for the follow-up 🙌",
+            time: "2:40 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Jeddah",
+        contact: "Client Jeddah 2",
+        lastSeen: "last seen at 5:15 PM",
+        dayLabel: "9 August",
+        messages: [
+          {
+            from: "them",
+            text: "We booked a chalet and a night out the same day — everything lined up perfectly. Highly recommend ✨",
+            time: "11:10 PM",
+          },
+          {
+            from: "us",
+            text: "Anytime — reach out early next trip and we will package the whole stay.",
+            time: "11:14 PM",
           },
         ],
       },
@@ -769,6 +898,7 @@ const en = {
       battery?: number;
       signal?: number;
       lastSeen?: string;
+      dayLabel?: string;
       messages: { from: "them" | "us"; text: string; time: string }[];
     }[],
   },
