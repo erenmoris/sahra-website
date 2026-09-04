@@ -5,8 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { upload } from "@vercel/blob/client";
 import {
+  DEFAULT_CHALETS,
   DEFAULT_SECTIONS,
   SECTION_LABELS,
+  type ChaletListing,
   type GalleryMediaItem,
   type FaqItem,
   type LocalizedString,
@@ -18,14 +20,15 @@ import { buttonClass } from "@/components/ui";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
 
-type Tab = "sections" | "hero" | "ticker" | "coverage" | "testimonials" | "gallery";
+type Tab = "sections" | "hero" | "ticker" | "coverage" | "testimonials" | "gallery" | "chalets";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "sections", label: "الأقسام" },
   { id: "hero", label: "الهيرو والهيدر" },
   { id: "ticker", label: "الشريط المتحرك" },
   { id: "coverage", label: "دليل السهر والأسئلة" },
-  { id: "testimonials", label: "آراء العملاء" },
+  { id: "chalets", label: "الشاليهات" },
+  { id: "testimonials", label: "سكرينات واتساب" },
   { id: "gallery", label: "معرض الصور" },
 ];
 
@@ -90,21 +93,10 @@ export default function ContentEditor({
     [content.sections],
   );
 
-  const testimonials: TestimonialItem[] = useMemo(() => {
-    if (content.testimonialItems?.length) return content.testimonialItems;
-    const ar = getDictionary("ar").testimonials.items;
-    const en = getDictionary("en").testimonials.items;
-    return ar.map((item, index) => ({
-      id: `default-${index}`,
-      text: { ar: item.text, en: en[index]?.text ?? "" },
-      who: { ar: item.who, en: en[index]?.who ?? "" },
-      name:
-        item.name || en[index]?.name
-          ? { ar: item.name ?? "", en: en[index]?.name ?? "" }
-          : undefined,
-      visible: true,
-    }));
-  }, [content.testimonialItems]);
+  const testimonials: TestimonialItem[] = useMemo(
+    () => content.testimonialItems ?? [],
+    [content.testimonialItems],
+  );
 
   const tickerLines =
     content.ticker?.[locale] ??
@@ -125,6 +117,15 @@ export default function ContentEditor({
       visible: true,
     }));
   }, [content.faqItems]);
+
+  const chalets: ChaletListing[] = useMemo(() => {
+    if (content.chalets?.length) return content.chalets;
+    return DEFAULT_CHALETS.map((item) => ({ ...item, features: [...item.features] }));
+  }, [content.chalets]);
+
+  function setChalets(next: ChaletListing[]) {
+    update({ chalets: next });
+  }
 
   async function save(next: SiteContent = content) {
     setSaving(true);
@@ -154,7 +155,7 @@ export default function ContentEditor({
 
   async function uploadFile(
     file: File,
-    purpose: "gallery" | "video" | "poster" | "logo",
+    purpose: "gallery" | "video" | "poster" | "logo" | "chalet" | "testimonial",
   ): Promise<string | null> {
     setUploading(true);
     setError(null);
@@ -168,6 +169,11 @@ export default function ContentEditor({
           handleUploadUrl: "/api/admin/upload-token",
           multipart: isVideo,
         });
+
+        if (purpose === "chalet" || purpose === "testimonial") {
+          setMessage("تم الرفع");
+          return result.url;
+        }
 
         if (purpose === "gallery") {
           const item: GalleryMediaItem = {
@@ -442,7 +448,8 @@ export default function ContentEditor({
                 {(
                   [
                     ["how", "تاب طريقة الحجز"],
-                    ["venues", "تاب أنواع السهرات"],
+                    ["venues", "تاب سهرات"],
+                    ["chalets", "تاب الشاليهات"],
                     ["trust", "تاب ليه تختارنا"],
                     ["reserve", "زر احجز مكانك"],
                   ] as const
@@ -735,109 +742,476 @@ export default function ContentEditor({
           <section className="border border-gold/20 bg-ink-2/40 p-6">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="font-display text-lg text-sand">آراء العملاء</h2>
+                <h2 className="font-display text-lg text-sand">سكرينات واتساب</h2>
+                <p className="mt-1 max-w-xl text-[0.85rem] leading-[1.7] text-sand-dim">
+                  ارفع سكرينات حقيقية من شات العملاء (بعد إذنهم). الصفحة بتعرض الصور زي ما هي —
+                  من غير رسائل مكتوبة يدوي.
+                </p>
+              </div>
+              <label className={buttonClass("primary", "cursor-pointer px-4 py-2 text-[0.82rem]")}>
+                {uploading ? "جاري الرفع…" : "رفع سكرين واتساب"}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  disabled={uploading}
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    e.target.value = "";
+                    if (!file) return;
+                    const url = await uploadFile(file, "testimonial");
+                    if (!url) return;
+                    update({
+                      testimonialItems: [
+                        ...testimonials,
+                        {
+                          id: newId(),
+                          image: url,
+                          who: { ar: "", en: "" },
+                          visible: true,
+                        },
+                      ],
+                    });
+                  }}
+                />
+              </label>
+            </div>
+            {testimonials.length === 0 ? (
+              <p className="border border-dashed border-gold/25 px-5 py-10 text-center text-[0.9rem] text-sand-dim">
+                لسة مفيش سكرينات — ارفع أول صورة من واتساب.
+              </p>
+            ) : (
+              <ul className="grid gap-4 sm:grid-cols-2">
+                {testimonials.map((item, index) => (
+                  <li key={item.id} className="border border-gold/15 bg-ink p-4">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <span className="text-[0.78rem] text-sand-dim">#{index + 1}</span>
+                      <div className="flex items-center gap-3">
+                        <label className="flex items-center gap-2 text-[0.8rem] text-sand-dim">
+                          <input
+                            type="checkbox"
+                            checked={item.visible !== false}
+                            onChange={(e) => {
+                              update({
+                                testimonialItems: testimonials.map((t) =>
+                                  t.id === item.id ? { ...t, visible: e.target.checked } : t,
+                                ),
+                              });
+                            }}
+                          />
+                          ظاهر
+                        </label>
+                        <button
+                          type="button"
+                          className="cursor-pointer text-[0.8rem] text-[#e2857f] hover:underline"
+                          onClick={() =>
+                            update({
+                              testimonialItems: testimonials.filter((t) => t.id !== item.id),
+                            })
+                          }
+                        >
+                          حذف
+                        </button>
+                      </div>
+                    </div>
+                    {item.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="mb-3 aspect-9/16 max-h-72 w-full object-cover object-top"
+                      />
+                    ) : (
+                      <p className="mb-3 text-[0.8rem] text-[#e2857f]">مفيش صورة — ارفع سكرين</p>
+                    )}
+                    <label className={buttonClass("ghost", "mb-3 inline-flex cursor-pointer px-3 py-1.5 text-[0.78rem]")}>
+                      تغيير الصورة
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        className="hidden"
+                        disabled={uploading}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          e.target.value = "";
+                          if (!file) return;
+                          const url = await uploadFile(file, "testimonial");
+                          if (!url) return;
+                          update({
+                            testimonialItems: testimonials.map((t) =>
+                              t.id === item.id ? { ...t, image: url } : t,
+                            ),
+                          });
+                        }}
+                      />
+                    </label>
+                    <div className="grid gap-3">
+                      <LocalizedFields
+                        label="المدينة / الوصف (اختياري)"
+                        locale={locale}
+                        value={item.who}
+                        onChange={(next) =>
+                          update({
+                            testimonialItems: testimonials.map((t) =>
+                              t.id === item.id ? { ...t, who: next } : t,
+                            ),
+                          })
+                        }
+                      />
+                      <LocalizedFields
+                        label="الاسم (اختياري — بعد إذن العميل)"
+                        locale={locale}
+                        value={item.name}
+                        onChange={(next) =>
+                          update({
+                            testimonialItems: testimonials.map((t) =>
+                              t.id === item.id ? { ...t, name: next } : t,
+                            ),
+                          })
+                        }
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ) : null}
+
+        {tab === "chalets" ? (
+          <section className="border border-gold/20 bg-ink-2/40 p-6">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="font-display text-lg text-sand">الشاليهات للإيجار</h2>
                 <p className="text-[0.85rem] text-sand-dim">
-                  أول تعديل بينسخ الافتراضي. بعد كده القائمة دي هي المصدر.
+                  أول تعديل بينسخ الشاليه الافتراضي. بعد كده القائمة دي هي المصدر. الحجز عبر واتساب فقط.
                 </p>
               </div>
               <button
                 type="button"
                 className={buttonClass("ghost", "px-4 py-2 text-[0.82rem]")}
                 onClick={() => {
-                  const items = [
-                    ...testimonials,
+                  const id = newId();
+                  setChalets([
+                    ...chalets,
                     {
-                      id: newId(),
-                      text: { ar: "", en: "" },
-                      who: { ar: "", en: "" },
+                      id,
+                      slug: `chalet-${id.slice(0, 8)}`,
                       visible: true,
+                      title: { ar: "", en: "" },
+                      location: { ar: "", en: "" },
+                      summary: { ar: "", en: "" },
+                      bedrooms: 1,
+                      bathrooms: 1,
+                      familyOnly: true,
+                      fromOwner: true,
+                      features: [],
+                      coverImage: "",
+                      gallery: [],
+                      whatsappMessage: { ar: "", en: "" },
+                      sortOrder: chalets.length + 1,
                     },
-                  ];
-                  update({ testimonialItems: items });
+                  ]);
                 }}
               >
-                إضافة رأي
+                إضافة شاليه
               </button>
             </div>
-            <ul className="space-y-4">
-              {testimonials.map((item, index) => (
+
+            <ul className="space-y-6">
+              {chalets.map((item, index) => (
                 <li key={item.id} className="border border-gold/15 bg-ink p-4">
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="text-[0.78rem] text-sand-dim">#{index + 1}</span>
-                    <div className="flex items-center gap-3">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                    <span className="text-[0.78rem] text-sand-dim">
+                      #{index + 1} · {item.slug}
+                    </span>
+                    <div className="flex flex-wrap items-center gap-3">
                       <label className="flex items-center gap-2 text-[0.8rem] text-sand-dim">
                         <input
                           type="checkbox"
                           checked={item.visible !== false}
-                          onChange={(e) => {
-                            const items = testimonials.map((t) =>
-                              t.id === item.id ? { ...t, visible: e.target.checked } : t,
-                            );
-                            update({ testimonialItems: items });
-                          }}
+                          onChange={(e) =>
+                            setChalets(
+                              chalets.map((c) =>
+                                c.id === item.id ? { ...c, visible: e.target.checked } : c,
+                              ),
+                            )
+                          }
                         />
                         ظاهر
+                      </label>
+                      <label className="flex items-center gap-2 text-[0.8rem] text-sand-dim">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(item.fromOwner)}
+                          onChange={(e) =>
+                            setChalets(
+                              chalets.map((c) =>
+                                c.id === item.id ? { ...c, fromOwner: e.target.checked } : c,
+                              ),
+                            )
+                          }
+                        />
+                        من المالك
+                      </label>
+                      <label className="flex items-center gap-2 text-[0.8rem] text-sand-dim">
+                        <input
+                          type="checkbox"
+                          checked={Boolean(item.familyOnly)}
+                          onChange={(e) =>
+                            setChalets(
+                              chalets.map((c) =>
+                                c.id === item.id ? { ...c, familyOnly: e.target.checked } : c,
+                              ),
+                            )
+                          }
+                        />
+                        عائلات فقط
                       </label>
                       <button
                         type="button"
                         className="cursor-pointer text-[0.8rem] text-[#e2857f] hover:underline"
-                        onClick={() =>
-                          update({
-                            testimonialItems: testimonials.filter((t) => t.id !== item.id),
-                          })
-                        }
+                        onClick={() => setChalets(chalets.filter((c) => c.id !== item.id))}
                       >
                         حذف
                       </button>
                     </div>
                   </div>
+
                   <div className="grid gap-3">
+                    <label className="block">
+                      <span className="mb-1.5 block text-[0.75rem] text-sand-dim">Slug (رابط الصفحة)</span>
+                      <input
+                        className={fieldClass()}
+                        value={item.slug}
+                        onChange={(e) =>
+                          setChalets(
+                            chalets.map((c) =>
+                              c.id === item.id
+                                ? {
+                                    ...c,
+                                    slug: e.target.value
+                                      .toLowerCase()
+                                      .replace(/[^a-z0-9-]+/g, "-")
+                                      .replace(/^-|-$/g, ""),
+                                  }
+                                : c,
+                            ),
+                          )
+                        }
+                      />
+                    </label>
                     <LocalizedFields
-                      label="النص"
+                      label="العنوان"
+                      locale={locale}
+                      value={item.title}
+                      onChange={(next) =>
+                        setChalets(chalets.map((c) => (c.id === item.id ? { ...c, title: next } : c)))
+                      }
+                    />
+                    <LocalizedFields
+                      label="الموقع"
+                      locale={locale}
+                      value={item.location}
+                      onChange={(next) =>
+                        setChalets(
+                          chalets.map((c) => (c.id === item.id ? { ...c, location: next } : c)),
+                        )
+                      }
+                    />
+                    <LocalizedFields
+                      label="الوصف القصير"
                       locale={locale}
                       multiline
-                      value={item.text}
+                      value={item.summary}
                       onChange={(next) =>
-                        update({
-                          testimonialItems: testimonials.map((t) =>
-                            t.id === item.id ? { ...t, text: next } : t,
-                          ),
-                        })
+                        setChalets(
+                          chalets.map((c) => (c.id === item.id ? { ...c, summary: next } : c)),
+                        )
                       }
                     />
                     <LocalizedFields
-                      label="مين / المدينة"
+                      label="رسالة واتساب"
                       locale={locale}
-                      value={item.who}
+                      value={item.whatsappMessage}
                       onChange={(next) =>
-                        update({
-                          testimonialItems: testimonials.map((t) =>
-                            t.id === item.id ? { ...t, who: next } : t,
+                        setChalets(
+                          chalets.map((c) =>
+                            c.id === item.id ? { ...c, whatsappMessage: next } : c,
                           ),
-                        })
+                        )
                       }
                     />
-                    <LocalizedFields
-                      label="الاسم (اختياري)"
-                      locale={locale}
-                      value={item.name}
-                      onChange={(next) =>
-                        update({
-                          testimonialItems: testimonials.map((t) =>
-                            t.id === item.id ? { ...t, name: next } : t,
-                          ),
-                        })
-                      }
-                    />
+                    <div className="grid grid-cols-2 gap-3">
+                      <label className="block">
+                        <span className="mb-1.5 block text-[0.75rem] text-sand-dim">غرف نوم</span>
+                        <input
+                          type="number"
+                          min={0}
+                          className={fieldClass()}
+                          value={item.bedrooms}
+                          onChange={(e) =>
+                            setChalets(
+                              chalets.map((c) =>
+                                c.id === item.id
+                                  ? { ...c, bedrooms: Number(e.target.value) || 0 }
+                                  : c,
+                              ),
+                            )
+                          }
+                        />
+                      </label>
+                      <label className="block">
+                        <span className="mb-1.5 block text-[0.75rem] text-sand-dim">حمامات</span>
+                        <input
+                          type="number"
+                          min={0}
+                          className={fieldClass()}
+                          value={item.bathrooms}
+                          onChange={(e) =>
+                            setChalets(
+                              chalets.map((c) =>
+                                c.id === item.id
+                                  ? { ...c, bathrooms: Number(e.target.value) || 0 }
+                                  : c,
+                              ),
+                            )
+                          }
+                        />
+                      </label>
+                    </div>
+
+                    <div>
+                      <span className="mb-1.5 block text-[0.75rem] text-sand-dim">
+                        المميزات · {locale === "ar" ? "عربي" : "English"} (سطر لكل ميزة)
+                      </span>
+                      <textarea
+                        className={fieldClass("min-h-[120px] resize-y")}
+                        value={(item.features ?? [])
+                          .map((f) => f[locale] ?? "")
+                          .join("\n")}
+                        onChange={(e) => {
+                          const lines = e.target.value.split("\n");
+                          const features = lines.map((line, i) => ({
+                            ...(item.features?.[i] ?? {}),
+                            [locale]: line,
+                          }));
+                          setChalets(
+                            chalets.map((c) => (c.id === item.id ? { ...c, features } : c)),
+                          );
+                        }}
+                      />
+                    </div>
+
+                    <div className="border-t border-gold/10 pt-4">
+                      <p className="mb-2 text-[0.8rem] text-sand-dim">صورة الغلاف</p>
+                      {item.coverImage ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.coverImage}
+                          alt=""
+                          className="mb-3 h-28 w-auto max-w-full object-cover border border-gold/15"
+                        />
+                      ) : null}
+                      <label className={buttonClass("ghost", "cursor-pointer px-3 py-2 text-[0.8rem]")}>
+                        {uploading ? "جاري الرفع…" : "رفع غلاف"}
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/png,image/webp"
+                          className="hidden"
+                          disabled={uploading}
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            e.target.value = "";
+                            if (!file) return;
+                            const url = await uploadFile(file, "chalet");
+                            if (!url) return;
+                            setChalets(
+                              chalets.map((c) => {
+                                if (c.id !== item.id) return c;
+                                const gallery = c.gallery.includes(url)
+                                  ? c.gallery
+                                  : [url, ...c.gallery.filter((g) => g !== c.coverImage)];
+                                return { ...c, coverImage: url, gallery };
+                              }),
+                            );
+                          }}
+                        />
+                      </label>
+                    </div>
+
+                    <div className="border-t border-gold/10 pt-4">
+                      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                        <p className="text-[0.8rem] text-sand-dim">صور الجاليري</p>
+                        <label className={buttonClass("ghost", "cursor-pointer px-3 py-2 text-[0.8rem]")}>
+                          {uploading ? "جاري الرفع…" : "إضافة صورة"}
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            className="hidden"
+                            disabled={uploading}
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              e.target.value = "";
+                              if (!file) return;
+                              const url = await uploadFile(file, "chalet");
+                              if (!url) return;
+                              setChalets(
+                                chalets.map((c) =>
+                                  c.id === item.id
+                                    ? {
+                                        ...c,
+                                        gallery: [...c.gallery, url],
+                                        coverImage: c.coverImage || url,
+                                      }
+                                    : c,
+                                ),
+                              );
+                            }}
+                          />
+                        </label>
+                      </div>
+                      <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                        {item.gallery.map((src) => (
+                          <li key={src} className="relative border border-gold/15">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={src} alt="" className="aspect-square w-full object-cover" />
+                            <button
+                              type="button"
+                              className="absolute top-1 end-1 bg-ink/80 px-1.5 text-[0.7rem] text-[#e2857f]"
+                              onClick={() =>
+                                setChalets(
+                                  chalets.map((c) =>
+                                    c.id === item.id
+                                      ? {
+                                          ...c,
+                                          gallery: c.gallery.filter((g) => g !== src),
+                                          coverImage:
+                                            c.coverImage === src
+                                              ? c.gallery.find((g) => g !== src) ?? ""
+                                              : c.coverImage,
+                                        }
+                                      : c,
+                                  ),
+                                )
+                              }
+                            >
+                              ×
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </li>
               ))}
             </ul>
-            {!content.testimonialItems?.length ? (
+
+            {!content.chalets?.length ? (
               <button
                 type="button"
-                className={buttonClass("primary", "mt-4 px-4 py-2 text-[0.82rem]")}
-                onClick={() => update({ testimonialItems: testimonials })}
+                className={buttonClass("ghost", "mt-4 px-4 py-2 text-[0.82rem]")}
+                onClick={() => setChalets(chalets)}
               >
                 ابدأ التعديل (نسخ الافتراضي)
               </button>

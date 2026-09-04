@@ -134,6 +134,7 @@ export async function patchSiteContent(patch: Partial<SiteContent>): Promise<Sit
   if (patch.testimonialItems !== undefined) next.testimonialItems = patch.testimonialItems;
   if (patch.galleryItems !== undefined) next.galleryItems = patch.galleryItems;
   if (patch.faqItems !== undefined) next.faqItems = patch.faqItems;
+  if (patch.chalets !== undefined) next.chalets = patch.chalets;
   if (patch.logoUrl !== undefined) next.logoUrl = patch.logoUrl;
 
   return saveSiteContent(next);

@@ -38,8 +38,14 @@ export default function Footer({
             >
               {t.footer.links.snapchat}
             </TrackedLink>
-            <Link href={`/${locale}#venues`} className="transition-colors hover:text-gold-soft">
+            <Link href={`/${locale}/venues`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.venues}
+            </Link>
+            <Link href={`/${locale}/chalets`} className="transition-colors hover:text-gold-soft">
+              {t.footer.links.chalets}
+            </Link>
+            <Link href={`/${locale}/trust`} className="transition-colors hover:text-gold-soft">
+              {t.nav.trust}
             </Link>
             <Link href={`/${locale}#reserve`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.reserve}

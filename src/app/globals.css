@@ -61,6 +61,23 @@
   animation: sahra-pop 0.5s ease forwards;
 }
 
+@keyframes entrance-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.entrance-line {
+  animation: entrance-line-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .reveal {
   opacity: 1;
   transform: none;

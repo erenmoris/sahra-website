@@ -78,9 +78,9 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
   }
 
   return (
-    <div className="border border-gold/25 bg-ink-2 px-6 py-10 sm:px-14 sm:py-14">
-      <form onSubmit={handleSubmit} className="mx-auto max-w-[720px]">
-        <div className="grid gap-5 sm:grid-cols-2">
+    <div className="border border-gold/25 bg-ink-2 px-6 py-10 sm:px-14 sm:py-12">
+      <form onSubmit={handleSubmit} className="mx-auto max-w-[480px]">
+        <div className="grid gap-5">
           <div>
             <Label htmlFor="name">{f.name}</Label>
             <input
@@ -88,6 +88,7 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
               name="name"
               required
               maxLength={80}
+              autoComplete="name"
               placeholder={f.namePlaceholder}
               className={fieldClass}
             />
@@ -101,78 +102,19 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
               required
               maxLength={30}
               dir="ltr"
+              autoComplete="tel"
               placeholder={f.phonePlaceholder}
               className={fieldClass}
             />
           </div>
           <div>
-            <Label htmlFor="city">
-              {f.city} <span className="text-sand-dim">({f.optional})</span>
-            </Label>
-            <select id="city" name="city" defaultValue="" className={fieldClass}>
-              <option value="">—</option>
-              {t.form.cities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <Label htmlFor="type">
-              {f.type} <span className="text-sand-dim">({f.optional})</span>
-            </Label>
-            <select id="type" name="type" defaultValue="" className={fieldClass}>
-              <option value="">—</option>
-              {t.form.types.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <Label htmlFor="date">
-              {f.date} <span className="text-sand-dim">({f.optional})</span>
-            </Label>
-            <input id="date" name="date" type="date" className={fieldClass} />
-          </div>
-          <div>
-            <Label htmlFor="guests">
-              {f.guests} <span className="text-sand-dim">({f.optional})</span>
-            </Label>
-            <input
-              id="guests"
-              name="guests"
-              type="number"
-              min={1}
-              max={200}
-              placeholder="6"
-              className={fieldClass}
-            />
-          </div>
-          <div className="sm:col-span-2">
-            <Label htmlFor="budget">
-              {f.budget} <span className="text-sand-dim">({f.optional})</span>
-            </Label>
-            <select id="budget" name="budget" defaultValue="" className={fieldClass}>
-              <option value="">—</option>
-              {t.form.budgets.map((budget) => (
-                <option key={budget} value={budget}>
-                  {budget}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="sm:col-span-2">
             <Label htmlFor="notes">
               {f.notes} <span className="text-sand-dim">({f.optional})</span>
             </Label>
-            <textarea
+            <input
               id="notes"
               name="notes"
-              rows={4}
-              maxLength={1000}
+              maxLength={200}
               placeholder={f.notesPlaceholder}
               className={fieldClass}
             />
@@ -190,16 +132,16 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
         {status === "error" ? (
           <p className="mt-4 text-[0.85rem] text-[#e2857f]">{t.form.error}</p>
         ) : (
-          <p className="mt-4 text-[0.82rem] leading-[1.7] text-sand-dim">{t.form.note}</p>
+          <p className="mt-4 text-center text-[0.82rem] leading-[1.7] text-sand-dim">{t.form.note}</p>
         )}
       </form>
 
-      <div className="relative mx-auto my-7 max-w-[720px] text-center">
+      <div className="relative mx-auto my-7 max-w-[480px] text-center">
         <span className="absolute inset-x-0 top-1/2 h-px bg-gold/20" />
         <span className="relative bg-ink-2 px-3.5 text-[0.78rem] text-sand-dim">{t.form.or}</span>
       </div>
 
-      <div className="mx-auto grid max-w-[720px] gap-3 sm:grid-cols-2">
+      <div className="mx-auto grid max-w-[480px] gap-3 sm:grid-cols-2">
         <TrackedLink
           href={whatsappLink(t.whatsappMessage)}
           placement="form-direct"

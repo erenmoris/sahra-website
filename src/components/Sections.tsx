@@ -1,7 +1,9 @@
+import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
 import VenueTicker from "./VenueTicker";
+import WhatsAppScreenshot from "./WhatsAppScreenshot";
 import { TrustIcon, VenueIcon } from "./Icons";
 import { Accent, SectionHeading, Wrap } from "./ui";
 
@@ -166,7 +168,18 @@ export function Coverage({ t }: { t: Dictionary }) {
   );
 }
 
-export function Testimonials({ t }: { t: Dictionary }) {
+export function Testimonials({
+  t,
+  locale = "ar",
+}: {
+  t: Dictionary;
+  locale?: Locale;
+}) {
+  const items = t.testimonials.items.filter(
+    (item) => item.image || (item.messages && item.messages.length > 0),
+  );
+  if (items.length === 0) return null;
+
   return (
     <section className="py-24">
       <Wrap>
@@ -177,18 +190,48 @@ export function Testimonials({ t }: { t: Dictionary }) {
           </SectionHeading>
         </Reveal>
 
-        <div className="grid gap-7 md:grid-cols-2">
-          {t.testimonials.items.map((item, index) => (
-            <Reveal key={item.text} delay={(index % 2) * 90}>
-              <figure className="flex flex-col items-start">
-                <blockquote className="max-w-[92%] rounded-[14px] rounded-bl-[3px] bg-teal px-5 py-4.5 text-[1rem] leading-[1.9] text-[#dff2ea] shadow-[0_18px_40px_-20px_rgba(0,0,0,0.6)]">
-                  {item.text}
-                </blockquote>
-                <figcaption className="mt-2.5 flex items-center gap-1.5 text-[0.8rem] text-sand-dim">
-                  <span className="text-[0.85rem] text-[#63c2a3]">✓✓</span>
-                  {item.name ? <span className="text-sand">{item.name}</span> : null}
-                  {item.who}
-                </figcaption>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {items.map((item, index) => (
+            <Reveal key={item.image ?? item.contact ?? item.who} delay={(index % 4) * 80}>
+              <figure className="flex flex-col">
+                {item.image ? (
+                  <div className="overflow-hidden rounded-[22px] border border-[#25D366]/35 bg-[#0b141a] p-1.5 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.85)]">
+                    <div className="relative aspect-9/16 overflow-hidden rounded-[16px] bg-[#111b21]">
+                      <Image
+                        src={item.image}
+                        alt={
+                          item.name || item.who
+                            ? `واتساب — ${[item.name, item.who].filter(Boolean).join(" · ")}`
+                            : "سكرين شات واتساب من عميل"
+                        }
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover object-top"
+                        unoptimized={item.image.startsWith("http")}
+                      />
+                    </div>
+                  </div>
+                ) : item.messages ? (
+                  <WhatsAppScreenshot
+                    chat={{
+                      contact: item.contact ?? "عميل",
+                      messages: item.messages,
+                      clock: item.clock,
+                      battery: item.battery,
+                      signal: item.signal,
+                      lastSeen: item.lastSeen,
+                    }}
+                    caption={item.who}
+                    locale={locale}
+                  />
+                ) : null}
+                {item.who ? (
+                  <figcaption className="mt-3 flex items-center gap-1.5 text-[0.8rem] text-sand-dim">
+                    <span className="text-[0.85rem] text-[#63c2a3]">✓✓</span>
+                    {item.name ? <span className="text-sand">{item.name}</span> : null}
+                    {item.who}
+                  </figcaption>
+                ) : null}
               </figure>
             </Reveal>
           ))}

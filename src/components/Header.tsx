@@ -10,8 +10,9 @@ type NavLink = { href: string; label: string };
 export function buildNavLinks(locale: Locale, t: Dictionary): NavLink[] {
   return [
     { href: `/${locale}#how`, label: t.nav.how },
-    { href: `/${locale}#venues`, label: t.nav.venues },
-    { href: `/${locale}#trust`, label: t.nav.trust },
+    { href: `/${locale}/venues`, label: t.nav.venues },
+    { href: `/${locale}/chalets`, label: t.nav.chalets },
+    { href: `/${locale}/trust`, label: t.nav.trust },
   ];
 }
 

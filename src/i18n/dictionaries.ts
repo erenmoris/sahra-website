@@ -38,9 +38,10 @@ const ar = {
   },
   nav: {
     how: "طريقة الحجز",
-    venues: "أنواع السهرات",
+    venues: "سهرات",
     trust: "ليه تختارنا",
     reserve: "احجز مكانك",
+    chalets: "شاليهات",
     dashboard: "لوحة التحكم",
   },
   hero: {
@@ -49,7 +50,7 @@ const ar = {
     titleAccent: "متظبطة",
     titleBottom: "قبل ما توصل.",
     lede:
-      "اختار نوع السهرة اللي في بالك — روفتوب على النيل، حفلة مركب، بيتش كلوب، أو ترابيزة VIP — وسيب الباقي علينا. التعامل بيكون معايا شخصيًا، بياناتك محفوظة وما بتتشاركش مع أي جهة، وكل مكان بنرشحه متجرّب بنفسنا قبل كده.",
+      "ليلة واحدة ممكن تغيّر الإجازة كلها. اختار الجو — روفتوب، مركب، بيتش، VIP، أو شاليه — وسيب الباقي علينا. التعامل شخصي، والخصوصية كاملة.",
     ctaPrimary: "كلّمنا على الواتساب",
     ctaSecondary: "اطلب ترابيزة",
     trust: [
@@ -103,6 +104,9 @@ const ar = {
     title: "ثقتك",
     titleAccent: "أهم من أي حجز.",
     lede: "إحنا عارفين إن الخصوصية على رأس أولوياتك، فأي تفاصيل بينا تفضل بينا إحنا بس.",
+    metaTitle: "ليه تختار سهرة | خصوصية وتعامل شخصي",
+    metaDescription:
+      "خصوصية كاملة، تعامل مع شخص حقيقي، وأماكن متجرّبة — اعرف ليه العملاء بيختاروا سهرة.",
     items: [
       {
         icon: "shield",
@@ -134,7 +138,7 @@ const ar = {
     "احجز دلوقتي على الواتساب",
   ],
   venues: {
-    eyebrow: "أنواع السهرات",
+    eyebrow: "سهرات",
     title: "أي جو",
     titleAccent: "تفضّله، هتلاقيه عندنا.",
     namesTitle: "أماكن الساحل الشمالي والقاهرة اللي بنظبط فيها حجوزات",
@@ -142,6 +146,9 @@ const ar = {
     tickerCairo: "القاهرة",
     namesNote:
       "بنحجز ترابيزات في أشهر بيتش كلوبز وروفتوبات ونوادٍ ليلية في القاهرة والساحل الشمالي. سهرة خدمة كونسييرج مستقلة وغير تابعة للأماكن دي، والأسماء التجارية ملك أصحابها وبنذكرها للتوضيح بس.",
+    metaTitle: "سهرات في مصر · روفتوب وبيتش كلوب وVIP | سهرة",
+    metaDescription:
+      "اكتشف أنواع السهرات: روفتوبات، مراكب، بيتش كلوبز، ترابيزات VIP وجيست ليست — احجز عبر سهرة على الواتساب.",
     items: [
       {
         tag: "القاهرة",
@@ -183,53 +190,142 @@ const ar = {
     fallbackAlt: "سهرة من تنظيم سهرة كونسييرج في مصر",
   },
   testimonials: {
-    eyebrow: "رسايل وصلتنا",
-    title: "كلام",
-    titleAccent: "عملاء من الخليج،",
-    titleEnd: "زي ما وصلنا بالظبط.",
-    lede: "ما غيّرناش فيها ولا كلمة — منقولة زي ما وصلت على الواتساب.",
-    // بعد ما تاخد إذن العميل، ضيف `name` وهيظهر قبل المدينة — مثال:
-    // { text: "…", name: "أحمد ع.", who: "الرياض" }
+    eyebrow: "من واتساب",
+    title: "سكرينات",
+    titleAccent: "من الشات",
+    titleEnd: "بعد السهرة.",
+    lede: "رسايل وصلتنا على واتساب — معروضة بنفس شكل المحادثة.",
     items: [
-      { text: "ماشاء الله عليك، السهرة كانت فوق الممتاز 🙌 من أول رسالة إلى ما قعدنا على الطاولة كل شي كان مرتب.", who: "عميل من الرياض" },
-      { text: "والله كفيتي ووفيتي 🌹 كنا خايفين الموضوع يصير معقد بس أنتِ سهلتيه علينا من أول دقيقة.", who: "عميلة من دبي" },
-      { text: "خصوصيتنا كانت أهم شي عندنا، وأنتم قدرتوا الموضوع تمام من غير ما نسأل مرتين.", who: "عميل من الكويت" },
-      { text: "أبد ما توقعت الأمور تمشي بهالسهولة، وصلنا القاهرة وكل شي جاهز زي ما اتفقنا بالظبط. تسلمين 🙏", who: "عميلة من الدوحة" },
-    ] as { text: string; who: string; name?: string }[],
+      {
+        who: "عميل من الرياض",
+        contact: "عميل الرياض",
+        clock: "١١:٣٨",
+        battery: 64,
+        signal: 4,
+        lastSeen: "آخر ظهور الساعة ٤:٢٢ م",
+        messages: [
+          {
+            from: "us",
+            text: "الترابيزة جاهزة زي ما اتفقنا 🙌 أي حاجة قبل ما توصلوا؟",
+            time: "١٠:٤٧ م",
+          },
+          {
+            from: "them",
+            text: "ماشاء الله عليك، السهرة كانت فوق الممتاز 🙌 من أول رسالة إلى ما قعدنا على الطاولة كل شي كان مرتب.",
+            time: "٢:١٣ ص",
+          },
+          {
+            from: "us",
+            text: "يسعدك، أي وقت تحجز تاني إحنا موجودين.",
+            time: "٢:١٦ ص",
+          },
+        ],
+      },
+      {
+        who: "عميلة من دبي",
+        contact: "عميلة دبي",
+        clock: "٠٠:٤١",
+        battery: 38,
+        signal: 3,
+        lastSeen: "آخر ظهور الساعة ٩:٥٥ م",
+        messages: [
+          {
+            from: "them",
+            text: "والله كفيتي ووفيتي 🌹 كنا خايفين الموضوع يصير معقد بس أنتِ سهلتيه علينا من أول دقيقة.",
+            time: "١١:٥٨ م",
+          },
+          {
+            from: "us",
+            text: "العفو 🤍 فرحتكم تهمنا. لو احتجتِ أي حاجة باقي الرحلة كلّميني.",
+            time: "١٢:٠٣ ص",
+          },
+        ],
+      },
+      {
+        who: "عميل من الكويت",
+        contact: "عميل الكويت",
+        clock: "١٤:٠٧",
+        battery: 81,
+        signal: 2,
+        lastSeen: "آخر ظهور الساعة ١١:١٨ ص",
+        messages: [
+          {
+            from: "us",
+            text: "خصوصيتكم محفوظة ١٠٠٪ زي ما طلبتوا. السائق بيستناكم عند البوابة.",
+            time: "٧:٥٢ م",
+          },
+          {
+            from: "them",
+            text: "خصوصيتنا كانت أهم شي عندنا، وأنتم قدرتوا الموضوع تمام من غير ما نسأل مرتين.",
+            time: "١:٢٩ ص",
+          },
+        ],
+      },
+      {
+        who: "عميلة من الدوحة",
+        contact: "عميلة الدوحة",
+        clock: "٢١:١٦",
+        battery: 52,
+        signal: 4,
+        lastSeen: "آخر ظهور أمس الساعة ٨:٤٠ م",
+        messages: [
+          {
+            from: "them",
+            text: "أبد ما توقعت الأمور تمشي بهالسهولة، وصلنا القاهرة وكل شي جاهز زي ما اتفقنا بالظبط. تسلمين 🙏",
+            time: "١٢:٥١ ص",
+          },
+          {
+            from: "us",
+            text: "تسلمي، دي شغلتنا ✨ استمتعوا بباقي الإقامة.",
+            time: "١٢:٥٤ ص",
+          },
+        ],
+      },
+    ] as {
+      image?: string;
+      who: string;
+      name?: string;
+      contact: string;
+      clock?: string;
+      battery?: number;
+      signal?: number;
+      lastSeen?: string;
+      messages: { from: "them" | "us"; text: string; time: string }[];
+    }[],
   },
   form: {
-    eyebrow: "اطلب ترابيزة",
-    title: "كلّمنا عن",
-    titleAccent: "الليلة اللي في بالك.",
-    lede: "املا البيانات وهنرد عليك على الواتساب بالخيارات والأسعار — عادةً في ساعتين لتلاتة.",
+    eyebrow: "احجز مكانك",
+    title: "سيبك من",
+    titleAccent: "التفاصيل الكتيرة.",
+    lede: "اسمك ورقم الواتساب بس — وإحنا هنكلّمك ونظبط الباقي.",
     fields: {
-      name: "الاسم كامل",
+      name: "الاسم",
       namePlaceholder: "اكتب اسمك",
       phone: "رقم الواتساب",
-      phonePlaceholder: "+966 5X XXX XXXX",
+      phonePlaceholder: "+20 أو +966…",
       city: "المدينة",
       date: "تاريخ السهرة",
       guests: "عدد الأفراد",
       type: "نوع السهرة",
       budget: "الميزانية التقديرية",
-      notes: "تفاصيل إضافية",
-      notesPlaceholder: "أي طلب خاص: المناسبة، الإطلالة، نوع الموسيقى…",
+      notes: "ملاحظات سريعة",
+      notesPlaceholder: "مثلاً: ترابيزة VIP الجمعة · الساحل",
       optional: "اختياري",
     },
     cities: ["القاهرة", "الجونة", "الساحل الشمالي", "شرم الشيخ", "الغردقة"],
     types: ["روفتوب", "حفلة مركب", "بيتش كلوب", "ترابيزة VIP", "برنامج ليلة كاملة"],
     budgets: ["أقل من ٥٠٠٠ ج", "٥٠٠٠ – ١٥٠٠٠ ج", "١٥٠٠٠ – ٣٠٠٠٠ ج", "أكثر من ٣٠٠٠٠ ج"],
-    submit: "إرسال الطلب",
+    submit: "ابعتلي",
     submitting: "جاري الإرسال…",
-    note: "وبكده خلصنا — هنكلمك على الواتساب مباشرة لتثبيت التفاصيل.",
-    or: "أو",
-    whatsappDirect: "افتح شات الواتساب مباشرة",
-    snapchatDirect: "افتح شات سناب شات",
-    successTitle: "تم إرسال طلبك.",
-    successBody: "طلبك وصلنا، وهنرد عليك على الواتساب بالخيارات والأسعار — عادةً في ساعتين لتلاتة.",
+    note: "هنرد عليك على الواتساب خلال ساعتين لتلاتة.",
+    or: "أو أسرع",
+    whatsappDirect: "واتساب مباشرة",
+    snapchatDirect: "سناب شات",
+    successTitle: "تم الإرسال.",
+    successBody: "طلبك وصلنا، وهنرد عليك على الواتساب قريب.",
     successRef: "رقم طلبك",
-    newRequest: "إرسال طلب تاني",
-    error: "حصلت مشكلة في الإرسال. حاول تاني أو كلّمنا على الواتساب.",
+    newRequest: "إرسال تاني",
+    error: "حصلت مشكلة. حاول تاني أو كلّمنا على الواتساب.",
     required: "لازم تكتب الاسم ورقم الواتساب.",
   },
   modal: {
@@ -241,6 +337,11 @@ const ar = {
     or: "أو",
     whatsappDirect: "افتح الواتساب مباشرة ←",
     close: "إغلاق",
+  },
+  entrance: {
+    brand: "سهرة",
+    loading: "الليلة بتتحضّر…",
+    skip: "تخطّي",
   },
   social: {
     title: "تابعنا على سناب شات",
@@ -296,8 +397,9 @@ const ar = {
   footer: {
     links: {
       whatsapp: "واتساب",
-      venues: "أنواع السهرات",
+      venues: "سهرات",
       reserve: "اطلب ترابيزة",
+      chalets: "شاليهات للإيجار",
       dashboard: "لوحة التحكم",
       privacy: "سياسة الخصوصية",
       snapchat: "سناب شات",
@@ -337,6 +439,59 @@ const ar = {
   },
   whatsappMessage: "مرحبًا، محتاج أحجز ترابيزة",
   langSwitch: "English",
+  chalets: {
+    eyebrow: "إيجار شاليهات",
+    title: "شاليهات",
+    titleAccent: "للإيجار.",
+    lede: "وحدات من المالك — صور واضحة، ومواصفات صريحة. السعر؟ هننافس أي عرض في الساحل… والرقم هيوصلك على واتساب.",
+    priceBadge: "أرخص سعر في الساحل",
+    priceTeaser:
+      "مفيش رقم مكتوب هنا عن قصد — الأسعار تنافسية وتشويقية، وبنتحدّى أي عرض في الساحل. اسأل على واتساب وهتتفاجئ.",
+    priceHint: "سعر تنافسي · اسأل على واتساب",
+    empty: "مفيش شاليهات متاحة دلوقتي. كلّمنا على الواتساب لو محتاج توصية.",
+    details: "التفاصيل",
+    backToList: "كل الشاليهات",
+    bedrooms: "غرف نوم",
+    bathrooms: "حمامات",
+    familyOnly: "عائلات فقط",
+    fromOwner: "من المالك",
+    featuresTitle: "المواصفات",
+    galleryTitle: "الصور",
+    ctaWhatsapp: "اسأل عن السعر والتفاصيل على الواتساب",
+    metaTitle: "شاليهات للإيجار | سهرة",
+    metaDescription:
+      "شاليهات للإيجار في الساحل بأسعار تنافسية من المالك — أرخص من السوق، التفاصيل على الواتساب.",
+  },
+  home: {
+    teaserEyebrow: "اختار جو ليلتك",
+    teaserTitle: "ليلة تستاهل",
+    teaserAccent: "تتحكى.",
+    teaserLede:
+      "من روفتوب على النيل لبيتش كلوب في الساحل، ومن شاليه هادي لليلة VIP — اختار اللي يناسبك، وإحنا نظبط الباقي.",
+    cards: [
+      {
+        href: "venues",
+        tag: "سهرات",
+        title: "روفتوب · مركب · بيتش · VIP",
+        body: "شوف أنواع السهرات اللي بنحجزها، والأماكن اللي بنشتغل معاها في القاهرة والساحل.",
+        cta: "اكتشف السهرات",
+      },
+      {
+        href: "chalets",
+        tag: "إقامة",
+        title: "شاليهات من المالك",
+        body: "وحدات جاهزة للإيجار — صور واضحة، مواصفات صريحة، والتفاصيل على الواتساب.",
+        cta: "شوف الشاليهات",
+      },
+      {
+        href: "trust",
+        tag: "ثقة",
+        title: "خصوصية وتعامل شخصي",
+        body: "اعرف ليه العملاء بيسيّبوا الحجز علينا: بياناتك بينا، ومتابعة لحد ما تقعد على ترابيزتك.",
+        cta: "ليه تختارنا",
+      },
+    ],
+  },
 } as const;
 
 const en = {
@@ -367,9 +522,10 @@ const en = {
   },
   nav: {
     how: "How it works",
-    venues: "Experiences",
-    trust: "Why trust us",
+    venues: "Nights out",
+    trust: "Why us",
     reserve: "Book my table",
+    chalets: "Chalets",
     dashboard: "Dashboard",
   },
   hero: {
@@ -378,7 +534,7 @@ const en = {
     titleAccent: "handled",
     titleBottom: "before you land.",
     lede:
-      "Tell me the kind of night you want — rooftop, Nile boat, beach club, VIP table — and I take care of the rest. You deal with me personally, your details are never shared, and every venue I recommend is one I have been to myself.",
+      "One night can make the whole trip. Pick the vibe — rooftop, boat, beach, VIP, or a chalet — and we handle the rest. Personal service, full privacy.",
     ctaPrimary: "Message me on WhatsApp",
     ctaSecondary: "Request a table",
     trust: [
@@ -427,6 +583,9 @@ const en = {
     title: "Your trust matters",
     titleAccent: "more than any booking.",
     lede: "We know privacy comes first, so everything between us stays between us.",
+    metaTitle: "Why choose Sahra | Privacy & personal service",
+    metaDescription:
+      "Full privacy, a real person every time, and venues we have tested — why guests choose Sahra.",
     items: [
       {
         icon: "shield",
@@ -458,7 +617,7 @@ const en = {
     "Book now on WhatsApp",
   ],
   venues: {
-    eyebrow: "Experiences",
+    eyebrow: "Nights out",
     title: "Whatever the mood,",
     titleAccent: "we have it.",
     namesTitle: "North Coast & Cairo venues we book",
@@ -466,6 +625,9 @@ const en = {
     tickerCairo: "Cairo",
     namesNote:
       "We arrange tables at the best-known beach clubs, rooftops, and nightlife spots across Cairo and Egypt's North Coast. Sahra is an independent concierge service and is not affiliated with these venues; trade names belong to their owners and are listed for identification only.",
+    metaTitle: "Nightlife in Egypt · Rooftops, beach clubs & VIP | Sahra",
+    metaDescription:
+      "Explore nightlife types: rooftops, Nile boats, beach clubs, VIP tables and guest list — book with Sahra on WhatsApp.",
     items: [
       {
         tag: "Cairo",
@@ -507,53 +669,142 @@ const en = {
     fallbackAlt: "A night arranged by Sahra concierge in Egypt",
   },
   testimonials: {
-    eyebrow: "Messages we received",
-    title: "What",
-    titleAccent: "Gulf clients say,",
-    titleEnd: "word for word.",
-    lede: "Nothing edited — copied exactly as it arrived on WhatsApp.",
-    // Once a client agrees, add `name` and it will show before the city:
-    // { text: "…", name: "Ahmed A.", who: "Riyadh" }
+    eyebrow: "From WhatsApp",
+    title: "Chat",
+    titleAccent: "screenshots",
+    titleEnd: "after the night.",
+    lede: "Messages that landed on our WhatsApp — shown in the same chat layout.",
     items: [
-      { text: "The night was beyond excellent 🙌 From the first message until we sat at the table, everything was arranged.", who: "Client from Riyadh" },
-      { text: "You went above and beyond 🌹 We were worried it would get complicated, but you made it simple from minute one.", who: "Client from Dubai" },
-      { text: "Privacy mattered most to us, and you handled it perfectly without us having to ask twice.", who: "Client from Kuwait" },
-      { text: "I never expected it to be this easy. We landed in Cairo and everything was ready exactly as agreed 🙏", who: "Client from Doha" },
-    ],
+      {
+        who: "Client from Riyadh",
+        contact: "Client Riyadh",
+        clock: "11:38",
+        battery: 64,
+        signal: 4,
+        lastSeen: "last seen today at 4:22 PM",
+        messages: [
+          {
+            from: "us",
+            text: "The table is ready as agreed 🙌 Anything you need before you arrive?",
+            time: "10:47 PM",
+          },
+          {
+            from: "them",
+            text: "The night was beyond excellent 🙌 From the first message until we sat down, everything was arranged.",
+            time: "2:13 AM",
+          },
+          {
+            from: "us",
+            text: "Glad you enjoyed it — book again anytime.",
+            time: "2:16 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Dubai",
+        contact: "Client Dubai",
+        clock: "00:41",
+        battery: 38,
+        signal: 3,
+        lastSeen: "last seen today at 9:55 PM",
+        messages: [
+          {
+            from: "them",
+            text: "You went above and beyond 🌹 We were worried it would get complicated, but you made it simple from minute one.",
+            time: "11:58 PM",
+          },
+          {
+            from: "us",
+            text: "Anytime 🤍 Message me if you need anything else during the trip.",
+            time: "12:03 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Kuwait",
+        contact: "Client Kuwait",
+        clock: "14:07",
+        battery: 81,
+        signal: 2,
+        lastSeen: "last seen today at 11:18 AM",
+        messages: [
+          {
+            from: "us",
+            text: "Privacy handled 100% as requested. Driver is waiting at the gate.",
+            time: "7:52 PM",
+          },
+          {
+            from: "them",
+            text: "Privacy mattered most to us, and you handled it perfectly without us asking twice.",
+            time: "1:29 AM",
+          },
+        ],
+      },
+      {
+        who: "Client from Doha",
+        contact: "Client Doha",
+        clock: "21:16",
+        battery: 52,
+        signal: 4,
+        lastSeen: "last seen yesterday at 8:40 PM",
+        messages: [
+          {
+            from: "them",
+            text: "I never expected it to be this easy. We landed in Cairo and everything was ready exactly as agreed 🙏",
+            time: "12:51 AM",
+          },
+          {
+            from: "us",
+            text: "That's our job ✨ Enjoy the rest of your stay.",
+            time: "12:54 AM",
+          },
+        ],
+      },
+    ] as {
+      image?: string;
+      who: string;
+      name?: string;
+      contact: string;
+      clock?: string;
+      battery?: number;
+      signal?: number;
+      lastSeen?: string;
+      messages: { from: "them" | "us"; text: string; time: string }[];
+    }[],
   },
   form: {
-    eyebrow: "Request a table",
-    title: "Tell me about",
-    titleAccent: "the night you have in mind.",
-    lede: "Fill in your details and I will reply on WhatsApp — usually within two to three hours — with options and prices.",
+    eyebrow: "Book your spot",
+    title: "Skip the",
+    titleAccent: "long form.",
+    lede: "Just your name and WhatsApp — we will call you and sort the rest.",
     fields: {
-      name: "Full name",
+      name: "Name",
       namePlaceholder: "Your name",
       phone: "WhatsApp number",
-      phonePlaceholder: "+966 5X XXX XXXX",
+      phonePlaceholder: "+20 or +966…",
       city: "City",
       date: "Night of",
       guests: "Party size",
       type: "Experience",
       budget: "Estimated budget",
-      notes: "Anything else",
-      notesPlaceholder: "Special requests: occasion, view, music style…",
+      notes: "Quick note",
+      notesPlaceholder: "e.g. VIP table Friday · North Coast",
       optional: "optional",
     },
     cities: ["Cairo", "El Gouna", "North Coast", "Sharm El Sheikh", "Hurghada"],
     types: ["Rooftop", "Boat party", "Beach club", "VIP table", "Full night programme"],
     budgets: ["Under 5,000 EGP", "5,000 – 15,000 EGP", "15,000 – 30,000 EGP", "Over 30,000 EGP"],
-    submit: "Send my request",
+    submit: "Send",
     submitting: "Sending…",
-    note: "That is all — I will reply on WhatsApp directly to settle the details.",
-    or: "or",
-    whatsappDirect: "Open WhatsApp chat directly",
-    snapchatDirect: "Open Snapchat chat",
-    successTitle: "Request sent.",
-    successBody: "I have your request and will reply on WhatsApp with options and prices — usually within two to three hours.",
+    note: "We reply on WhatsApp within two to three hours.",
+    or: "or faster",
+    whatsappDirect: "WhatsApp now",
+    snapchatDirect: "Snapchat",
+    successTitle: "Sent.",
+    successBody: "We have your request and will reply on WhatsApp shortly.",
     successRef: "Your reference",
-    newRequest: "Send another request",
-    error: "Something went wrong. Please try again or message me on WhatsApp.",
+    newRequest: "Send another",
+    error: "Something went wrong. Try again or message us on WhatsApp.",
     required: "Name and WhatsApp number are required.",
   },
   modal: {
@@ -565,6 +816,11 @@ const en = {
     or: "or",
     whatsappDirect: "Open WhatsApp directly →",
     close: "Close",
+  },
+  entrance: {
+    brand: "Sahra",
+    loading: "The night is warming up…",
+    skip: "Skip",
   },
   social: {
     title: "Follow us on Snapchat",
@@ -620,8 +876,9 @@ const en = {
   footer: {
     links: {
       whatsapp: "WhatsApp",
-      venues: "Experiences",
+      venues: "Nights out",
       reserve: "Request a table",
+      chalets: "Chalets for rent",
       dashboard: "Dashboard",
       privacy: "Privacy Policy",
       snapchat: "Snapchat",
@@ -661,6 +918,59 @@ const en = {
   },
   whatsappMessage: "Hi, I would like to book a table",
   langSwitch: "العربية",
+  chalets: {
+    eyebrow: "Chalet rentals",
+    title: "Chalets",
+    titleAccent: "for rent.",
+    lede: "Owner units — clear photos, honest specs. The price? We undercut the North Coast… and the number lands on WhatsApp.",
+    priceBadge: "Lowest rates on the Coast",
+    priceTeaser:
+      "No figure on the page on purpose — prices stay teasing and competitive. Ask on WhatsApp; you will be surprised.",
+    priceHint: "Competitive rate · ask on WhatsApp",
+    empty: "No chalets listed right now. Message us on WhatsApp if you need a recommendation.",
+    details: "View details",
+    backToList: "All chalets",
+    bedrooms: "Bedrooms",
+    bathrooms: "Bathrooms",
+    familyOnly: "Family only",
+    fromOwner: "From owner",
+    featuresTitle: "Amenities",
+    galleryTitle: "Photos",
+    ctaWhatsapp: "Ask price & details on WhatsApp",
+    metaTitle: "Chalets for rent | Sahra",
+    metaDescription:
+      "North Coast chalets for rent at competitive owner rates — details on WhatsApp.",
+  },
+  home: {
+    teaserEyebrow: "Pick the night",
+    teaserTitle: "A night worth",
+    teaserAccent: "talking about.",
+    teaserLede:
+      "From a Nile rooftop to a North Coast beach club, a quiet chalet to a VIP table — pick your vibe, we handle the rest.",
+    cards: [
+      {
+        href: "venues",
+        tag: "Nights out",
+        title: "Rooftop · boat · beach · VIP",
+        body: "See the nightlife we book and the spots we work with in Cairo and the coast.",
+        cta: "Explore nights",
+      },
+      {
+        href: "chalets",
+        tag: "Stay",
+        title: "Owner chalets",
+        body: "Units ready to rent — clear photos, honest specs, details on WhatsApp.",
+        cta: "Browse chalets",
+      },
+      {
+        href: "trust",
+        tag: "Trust",
+        title: "Privacy & a real person",
+        body: "Why guests leave the booking to us: your data stays with us, and we follow through until you are seated.",
+        cta: "Why choose us",
+      },
+    ],
+  },
 } as const;
 
 export type Dictionary = typeof ar;

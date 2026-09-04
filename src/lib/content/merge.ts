@@ -69,6 +69,7 @@ export function mergeDictionary(
     next.nav.venues = applyLocalized(next.nav.venues, content.nav.venues, locale);
     next.nav.trust = applyLocalized(next.nav.trust, content.nav.trust, locale);
     next.nav.reserve = applyLocalized(next.nav.reserve, content.nav.reserve, locale);
+    next.nav.chalets = applyLocalized(next.nav.chalets, content.nav.chalets, locale);
   }
 
   if (content.hero) {
@@ -119,16 +120,14 @@ export function mergeDictionary(
 
   if (content.testimonialItems && content.testimonialItems.length > 0) {
     const items = content.testimonialItems
-      .filter((item) => item.visible !== false)
+      .filter((item) => item.visible !== false && item.image)
       .map((item) => ({
+        image: item.image as string,
         text: pickLocalized(item.text, locale) ?? "",
         who: pickLocalized(item.who, locale) ?? "",
         name: pickLocalized(item.name, locale),
-      }))
-      .filter((item) => item.text);
-    if (items.length > 0) {
-      next.testimonials.items = items;
-    }
+      }));
+    next.testimonials.items = items;
   }
 
   if (content.seo) {

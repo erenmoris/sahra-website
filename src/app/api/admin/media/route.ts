@@ -57,8 +57,16 @@ export async function POST(request: Request) {
           ? "posters"
           : purpose === "logo"
             ? "logo"
-            : "gallery",
+            : purpose === "chalet"
+              ? "chalets"
+              : purpose === "testimonial"
+                ? "testimonials"
+                : "gallery",
   });
+
+  if (purpose === "chalet" || purpose === "testimonial") {
+    return NextResponse.json({ url: uploaded.url });
+  }
 
   if (purpose === "logo") {
     const content = await getSiteContent();
