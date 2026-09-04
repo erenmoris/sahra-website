@@ -133,6 +133,10 @@ export type SiteContent = {
 const MARASSI_BASE = "/chalets/marassi-marina-2";
 const BLANCA_BASE = "/chalets/blanca-204-101";
 const STELLA_BASE = "/chalets/stella-heights-292";
+const FAYA_BASE = "/chalets/faya-ground-garden";
+const CATANIA_BASE = "/chalets/catania-ground-studio";
+const LIA_BASE = "/chalets/lia-2bedroom";
+const MARASSI_3BED_BASE = "/chalets/marassi-marina-3bedroom";
 
 /** Default seeded listing shown until admin saves a custom chalets array. */
 export const DEFAULT_CHALETS: ChaletListing[] = [
@@ -294,6 +298,179 @@ export const DEFAULT_CHALETS: ChaletListing[] = [
     whatsappMessage: {
       ar: "مرحبًا، مهتم بإيجار فيلا ستيلا هايتس ٢٩٢ — سيدي عبد الرحمن",
       en: "Hi, I'm interested in renting Stella Heights Villa 292 — Sidi Abdel Rahman",
+    },
+  },
+  {
+    id: "faya-ground-garden",
+    slug: "faya-ground-garden",
+    visible: true,
+    sortOrder: 4,
+    title: {
+      ar: "شاليه فايا — أرضي بجنينة",
+      en: "Faya Chalet — Ground with Garden",
+    },
+    location: {
+      ar: "فايا · الشالية الرابع · أرضي",
+      en: "Faya · Unit 4 · Ground floor",
+    },
+    summary: {
+      ar: "غرفة نوم واحدة، أرضي بجنينة، خطوات من حمامات السباحة — صالة ومطبخ وحمام، من المالك.",
+      en: "One bedroom, ground floor with garden, steps to swimming pools — living, kitchen, and bath, from owner.",
+    },
+    bedrooms: 1,
+    bathrooms: 1,
+    familyOnly: true,
+    fromOwner: true,
+    features: [
+      { ar: "متاح للإيجار", en: "Available for rental" },
+      { ar: "من المالك مباشرة", en: "From owner" },
+      { ar: "غرفة نوم واحدة", en: "One bedroom" },
+      { ar: "أرضي بجنينة", en: "Ground floor with garden" },
+      { ar: "خطوات من حمامات السباحة", en: "Steps to swimming pools" },
+      { ar: "صالة مفتوحة على المطبخ", en: "Open living with kitchen" },
+      { ar: "حمام", en: "Bathroom" },
+      { ar: "عائلات فقط", en: "Family only" },
+    ],
+    coverImage: `${FAYA_BASE}/01-garden-patio.jpg`,
+    gallery: [
+      `${FAYA_BASE}/01-garden-patio.jpg`,
+      `${FAYA_BASE}/02-garden-view.jpg`,
+      `${FAYA_BASE}/03-living-garden.jpg`,
+      `${FAYA_BASE}/04-living-kitchen.jpg`,
+      `${FAYA_BASE}/05-living-wide.jpg`,
+      `${FAYA_BASE}/06-living-entrance.jpg`,
+      `${FAYA_BASE}/07-kitchen-bar.jpg`,
+      `${FAYA_BASE}/08-bedroom.jpg`,
+      `${FAYA_BASE}/09-bathroom.jpg`,
+    ],
+    whatsappMessage: {
+      ar: "مرحبًا، مهتم بإيجار شاليه فايا الأرضي بجنينة — الشالية الرابع",
+      en: "Hi, I'm interested in renting the Faya ground-floor garden chalet — unit 4",
+    },
+  },
+  {
+    id: "catania-ground-studio",
+    slug: "catania-ground-studio",
+    visible: true,
+    sortOrder: 5,
+    title: {
+      ar: "استوديو كاتانيا — أرضي",
+      en: "Catania Studio — Ground Floor",
+    },
+    location: {
+      ar: "كاتانيا · الشالية الخامس · أرضي",
+      en: "Catania · Unit 5 · Ground floor",
+    },
+    summary: {
+      ar: "استوديو أرضي بجنينة/تراس، صالة وتلفزيون، مطبخ كامل، غرفة نوم بإطلالة على الحديقة — من المالك.",
+      en: "Ground-floor studio with garden patio, living with TV, full kitchen, bedroom opening to the garden — from owner.",
+    },
+    bedrooms: 1,
+    bathrooms: 1,
+    familyOnly: true,
+    fromOwner: true,
+    features: [
+      { ar: "متاح للإيجار", en: "Available for rental" },
+      { ar: "من المالك مباشرة", en: "From owner" },
+      { ar: "استوديو أرضي", en: "Ground-floor studio" },
+      { ar: "تراس على الجنينة", en: "Patio overlooking the garden" },
+      { ar: "صالة وتلفزيون", en: "Living area with TV" },
+      { ar: "مطبخ كامل", en: "Full kitchen" },
+      { ar: "غرفة نوم", en: "Bedroom" },
+      { ar: "عائلات فقط", en: "Family only" },
+    ],
+    coverImage: `${CATANIA_BASE}/01-patio-garden.jpg`,
+    gallery: [
+      `${CATANIA_BASE}/01-patio-garden.jpg`,
+      `${CATANIA_BASE}/02-living-sofa.jpg`,
+      `${CATANIA_BASE}/03-living-tv.jpg`,
+      `${CATANIA_BASE}/04-living-garden.jpg`,
+      `${CATANIA_BASE}/05-living-dining.jpg`,
+      `${CATANIA_BASE}/06-kitchen.jpg`,
+      `${CATANIA_BASE}/07-bedroom.jpg`,
+    ],
+    whatsappMessage: {
+      ar: "مرحبًا، مهتم بإيجار استوديو كاتانيا الأرضي — الشالية الخامس",
+      en: "Hi, I'm interested in renting the Catania ground-floor studio — unit 5",
+    },
+  },
+  {
+    id: "lia-2bedroom",
+    slug: "lia-2bedroom",
+    visible: true,
+    sortOrder: 6,
+    title: {
+      ar: "شاليه ليا — غرفتين",
+      en: "Lia Chalet — 2 Bedroom",
+    },
+    location: {
+      ar: "ليا · الشالية السادس · غرفتين",
+      en: "Lia · Unit 6 · 2 bedroom",
+    },
+    summary: {
+      ar: "غرفتين نوم، صالة واسعة، سفرة ومطبخ، حمام، جنينة خاصة — من المالك، عائلات فقط.",
+      en: "2 bedrooms, wide living, dining and kitchen, bathroom, private garden — from owner, families only.",
+    },
+    bedrooms: 2,
+    bathrooms: 1,
+    familyOnly: true,
+    fromOwner: true,
+    features: [
+      { ar: "متاح للإيجار", en: "Available for rental" },
+      { ar: "من المالك مباشرة", en: "From owner" },
+      { ar: "غرفتين نوم", en: "2 bedrooms" },
+      { ar: "صالة واسعة", en: "Wide living area" },
+      { ar: "سفرة ومطبخ", en: "Dining and kitchen" },
+      { ar: "جنينة خاصة", en: "Private garden" },
+      { ar: "تكييف", en: "Air conditioning" },
+      { ar: "عائلات فقط", en: "Family only" },
+    ],
+    coverImage: `${LIA_BASE}/01.jpg`,
+    gallery: Array.from({ length: 41 }, (_, i) => `${LIA_BASE}/${String(i + 1).padStart(2, "0")}.jpg`),
+    whatsappMessage: {
+      ar: "مرحبًا، مهتم بإيجار شاليه ليا غرفتين — الشالية السادس",
+      en: "Hi, I'm interested in renting the Lia two-bedroom chalet — unit 6",
+    },
+  },
+  {
+    id: "marassi-marina-3bedroom",
+    slug: "marassi-marina-3bedroom",
+    visible: true,
+    sortOrder: 7,
+    title: {
+      ar: "شاليه مراسي — ٣ غرف · مارينا",
+      en: "Marassi Chalet — 3 Bedroom · Marina",
+    },
+    location: {
+      ar: "مراسي · مارينا · ٣ غرف",
+      en: "Marassi · Marina · 3 bedrooms",
+    },
+    summary: {
+      ar: "٣ غرف نوم، صالة واسعة وبلكونة على حمامات السباحة، سفرة ومطبخ كامل — من المالك، عائلات فقط.",
+      en: "3 bedrooms, wide living with balcony overlooking the pools, dining and full kitchen — from owner, families only.",
+    },
+    bedrooms: 3,
+    bathrooms: 2,
+    familyOnly: true,
+    fromOwner: true,
+    features: [
+      { ar: "متاح للإيجار", en: "Available for rental" },
+      { ar: "من المالك مباشرة", en: "From owner" },
+      { ar: "٣ غرف نوم", en: "3 bedrooms" },
+      { ar: "بلكونة بإطلالة على حمامات السباحة", en: "Balcony with pool view" },
+      { ar: "صالة واسعة", en: "Wide living area" },
+      { ar: "سفرة ومطبخ كامل", en: "Dining and full kitchen" },
+      { ar: "تكييف", en: "Air conditioning" },
+      { ar: "عائلات فقط", en: "Family only" },
+    ],
+    coverImage: `${MARASSI_3BED_BASE}/01.jpg`,
+    gallery: Array.from(
+      { length: 38 },
+      (_, i) => `${MARASSI_3BED_BASE}/${String(i + 1).padStart(2, "0")}.jpg`,
+    ),
+    whatsappMessage: {
+      ar: "مرحبًا، مهتم بإيجار شاليه مراسي مارينا ٣ غرف",
+      en: "Hi, I'm interested in renting the Marassi Marina 3-bedroom chalet",
     },
   },
 ];
