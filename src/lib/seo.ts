@@ -36,6 +36,7 @@ export function pageMetadata(options: {
   const image = ogImage ?? absoluteOgImage(locale);
 
   // Keep hreflang paths in sync with the current route (nested pages included).
+  // Prefer absolute URLs for Google's duplicate detection (not relative paths).
   const siblingPath = path === "" ? "" : path;
   const arPath = `/ar${siblingPath}`;
   const enPath = `/en${siblingPath}`;

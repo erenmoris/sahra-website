@@ -4,7 +4,7 @@ import { Cairo, El_Messiri, IBM_Plex_Mono } from "next/font/google";
 import { defaultLocale, dir, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { venueKeywords } from "@/content/venues";
-import { absoluteOgImage, siteUrl } from "@/lib/seo";
+import { absoluteOgImage, absoluteUrl, siteUrl } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = getDictionary(locale);
   const title = t.meta.title;
   const description = t.meta.description;
-  const url = `${siteUrl}/${locale}`;
+  const url = absoluteUrl(`/${locale}`);
   const image = absoluteOgImage(locale);
 
   return {
@@ -50,10 +50,10 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: [...t.meta.keywords, ...venueKeywords],
     robots: { index: true, follow: true },
     alternates: {
-      canonical: `/${locale}`,
+      canonical: url,
       languages: {
-        ar: "/ar",
-        en: "/en",
+        ar: absoluteUrl("/ar"),
+        en: absoluteUrl("/en"),
       },
     },
     openGraph: {

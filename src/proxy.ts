@@ -11,7 +11,8 @@ export default function proxy(request: NextRequest) {
     if (target !== pathname) {
       const url = request.nextUrl.clone();
       url.pathname = target;
-      return NextResponse.redirect(url);
+      // Permanent redirect so Google does not soft-duplicate /admin and /ar/admin.
+      return NextResponse.redirect(url, 301);
     }
   }
 
@@ -21,10 +22,11 @@ export default function proxy(request: NextRequest) {
 
   // Arabic is the site's primary language, so every visitor starts there and
   // switches to English deliberately from the header.
+  // Permanent 301: Google treats / and /ar as soft-duplicates if / is 307.
   if (!hasLocale && pathname === "/") {
     const url = request.nextUrl.clone();
     url.pathname = `/${defaultLocale}`;
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(url, 301);
   }
 
   const headers = new Headers(request.headers);
