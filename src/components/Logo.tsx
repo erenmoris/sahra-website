@@ -38,6 +38,7 @@ export default function Logo({
       unoptimized
       className={`${sizeClass} w-auto object-contain object-center drop-shadow-[0_0_12px_rgba(201,162,75,0.45)] transition-transform duration-300 group-hover:scale-[1.03]`}
       priority={size === "md" || size === "lg"}
+      loading={size === "sm" ? "lazy" : "eager"}
     />
   );
 

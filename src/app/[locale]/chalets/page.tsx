@@ -8,6 +8,7 @@ import ChaletCard from "@/components/chalets/ChaletCard";
 import ChaletEntrance from "@/components/chalets/ChaletEntrance";
 import Reveal from "@/components/Reveal";
 import { Wrap } from "@/components/ui";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -21,10 +22,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getSiteDictionary(locale);
-  return {
+  return pageMetadata({
+    locale,
     title: t.chalets.metaTitle,
     description: t.chalets.metaDescription,
-  };
+    path: "/chalets",
+  });
 }
 
 export default async function ChaletsPage({ params }: { params: Promise<{ locale: string }> }) {

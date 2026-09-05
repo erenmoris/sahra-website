@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
 import TrackedLink from "@/components/TrackedLink";
 import { Wrap, buttonClass } from "@/components/ui";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -21,11 +22,12 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const t = getDictionary(locale);
 
-  return {
-    title: `${t.privacy.title} · ${t.meta.businessName}`,
+  return pageMetadata({
+    locale,
+    title: t.privacy.title,
     description: t.privacy.intro,
-    alternates: { canonical: `/${locale}/privacy` },
-  };
+    path: "/privacy",
+  });
 }
 
 export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -122,6 +124,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
                     href={whatsappLink(t.privacy.whatsappMessage)}
                     placement="privacy-contact"
                     locale={locale}
+                    t={t}
                     className={buttonClass("whatsapp")}
                   >
                     {t.privacy.contactCta}

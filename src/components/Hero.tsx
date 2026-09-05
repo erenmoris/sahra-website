@@ -68,13 +68,16 @@ export default function Hero({
             <br />
             {hero.titleBottom}
           </h1>
-          <p className="mt-6 max-w-[48ch] text-[1.12rem] leading-[1.85] text-sand-dim">{hero.lede}</p>
+          <p className="mt-6 max-w-[48ch] text-[1.12rem] leading-[1.85] text-sand-dim">
+            {hero.lede}
+          </p>
 
           <div className="mt-9 flex flex-wrap gap-4">
             <TrackedLink
               href={whatsappLink(t.whatsappMessage)}
               placement="hero-cta"
               locale={locale}
+              t={t}
               className={buttonClass("primary", "shine")}
             >
               {hero.ctaPrimary}

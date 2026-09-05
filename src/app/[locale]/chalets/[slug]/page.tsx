@@ -15,6 +15,7 @@ import ChaletGallery from "@/components/chalets/ChaletGallery";
 import TrackedLink from "@/components/TrackedLink";
 import Reveal from "@/components/Reveal";
 import { Wrap, buttonClass } from "@/components/ui";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const slugs = await getAllChaletSlugs();
@@ -30,10 +31,12 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const chalet = await getChaletBySlug(slug, locale);
   if (!chalet) return {};
-  return {
-    title: `${chalet.title} | Sahra`,
+  return pageMetadata({
+    locale,
+    title: chalet.title,
     description: chalet.summary,
-  };
+    path: `/chalets/${slug}`,
+  });
 }
 
 export default async function ChaletDetailPage({
@@ -82,11 +85,6 @@ export default async function ChaletDetailPage({
                         {t.chalets.fromOwner}
                       </span>
                     ) : null}
-                    {chalet.familyOnly ? (
-                      <span className="border border-gold/20 px-2.5 py-1 text-[0.75rem] text-sand-dim">
-                        {t.chalets.familyOnly}
-                      </span>
-                    ) : null}
                   </div>
 
                   <h1 className="font-display text-[clamp(1.8rem,4vw,2.6rem)] font-semibold leading-[1.25] text-sand">
@@ -131,6 +129,7 @@ export default async function ChaletDetailPage({
                     href={whatsappLink(waMessage)}
                     placement="chalet-detail"
                     locale={locale}
+                    t={t}
                     className={buttonClass("primary", "mt-8 w-full justify-center shine")}
                   >
                     {t.chalets.ctaWhatsapp}

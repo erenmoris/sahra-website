@@ -41,6 +41,19 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
       setReference(result.reservation.ref);
       setStatus("sent");
       form.reset();
+      // Persist for later click-tracking so the user can skip the modal next time.
+      try {
+        const savedName = String(data.name ?? "").trim();
+        const savedPhone = String(data.phone ?? "").trim();
+        if (savedName && savedPhone) {
+          localStorage.setItem(
+            "sahra:contact-capture",
+            JSON.stringify({ name: savedName, phone: savedPhone }),
+          );
+        }
+      } catch {
+        // ignore storage errors
+      }
     } catch {
       setStatus("error");
     }
@@ -61,6 +74,7 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
             href={whatsappLink(t.whatsappMessage)}
             placement="form-success"
             locale={locale}
+            t={t}
             className={buttonClass("whatsapp")}
           >
             <WhatsAppIcon /> {t.form.whatsappDirect}
@@ -146,6 +160,7 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
           href={whatsappLink(t.whatsappMessage)}
           placement="form-direct"
           locale={locale}
+          t={t}
           className={buttonClass("whatsapp", "w-full")}
         >
           <WhatsAppIcon /> {t.form.whatsappDirect}
@@ -155,6 +170,7 @@ export default function ReservationForm({ t, locale }: { t: Dictionary; locale: 
           href={SNAPCHAT_URL}
           placement="form-snapchat"
           locale={locale}
+          t={t}
           className={buttonClass("snapchat", "w-full")}
         >
           <SnapchatIcon /> {t.form.snapchatDirect}

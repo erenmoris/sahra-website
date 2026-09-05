@@ -43,7 +43,7 @@ export default function ChaletEntrance({
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-label={locale === "ar" ? "فيديو تقديمي للشاليهات" : "Chalets intro video"}
       />
       <div

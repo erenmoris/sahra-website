@@ -68,9 +68,14 @@ async function ensureSchema(): Promise<void> {
         locale      TEXT NOT NULL DEFAULT 'ar',
         page        TEXT NOT NULL DEFAULT '/',
         country     TEXT,
+        name        TEXT,
+        phone       TEXT,
         created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
       )
     `;
+    // Existing deployments may already have the table without name/phone.
+    await client()`ALTER TABLE whatsapp_clicks ADD COLUMN IF NOT EXISTS name TEXT`;
+    await client()`ALTER TABLE whatsapp_clicks ADD COLUMN IF NOT EXISTS phone TEXT`;
     await client()`
       CREATE INDEX IF NOT EXISTS whatsapp_clicks_created_at_idx
       ON whatsapp_clicks (created_at DESC)
@@ -166,8 +171,8 @@ export const postgresStore: ReservationStore = {
   async logClick(input: NewWhatsAppClick): Promise<void> {
     await ensureSchema();
     await client()`
-      INSERT INTO whatsapp_clicks (id, placement, locale, page, country)
-      VALUES (${newId()}, ${input.placement}, ${input.locale}, ${input.page}, ${input.country ?? null})
+      INSERT INTO whatsapp_clicks (id, placement, locale, page, country, name, phone)
+      VALUES (${newId()}, ${input.placement}, ${input.locale}, ${input.page}, ${input.country ?? null}, ${input.name ?? null}, ${input.phone ?? null})
     `;
   },
 
@@ -181,6 +186,8 @@ export const postgresStore: ReservationStore = {
       locale: string;
       page: string;
       country: string | null;
+      name: string | null;
+      phone: string | null;
       created_at: string | Date;
     }[];
 
@@ -190,6 +197,8 @@ export const postgresStore: ReservationStore = {
       locale: row.locale,
       page: row.page,
       country: row.country ?? undefined,
+      name: row.name ?? undefined,
+      phone: row.phone ?? undefined,
       createdAt: new Date(row.created_at).toISOString(),
     }));
   },

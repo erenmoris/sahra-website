@@ -19,10 +19,15 @@ export default function ChaletCard({
       <Link href={`/${locale}/chalets/${chalet.slug}`} className="relative block aspect-4/3 overflow-hidden">
         <Image
           src={chalet.coverImage}
-          alt={chalet.title}
+          alt={
+            locale === "ar"
+              ? `${chalet.title} — شالية سهر / إيجار في الساحل`
+              : `${chalet.title} — owner chalet on the North Coast`
+          }
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
           unoptimized={chalet.coverImage.startsWith("http")}
         />
       </Link>
@@ -31,11 +36,6 @@ export default function ChaletCard({
           {chalet.fromOwner ? (
             <span className="border border-gold/30 bg-gold/10 px-2 py-0.5 text-[0.72rem] text-gold-soft">
               {t.chalets.fromOwner}
-            </span>
-          ) : null}
-          {chalet.familyOnly ? (
-            <span className="border border-gold/20 px-2 py-0.5 text-[0.72rem] text-sand-dim">
-              {t.chalets.familyOnly}
             </span>
           ) : null}
         </div>

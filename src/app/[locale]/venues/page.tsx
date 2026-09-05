@@ -11,6 +11,7 @@ import Gallery from "@/components/Gallery";
 import VenuesEntrance from "@/components/venues/VenuesEntrance";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Divider, Wrap } from "@/components/ui";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -24,10 +25,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getSiteDictionary(locale);
-  return {
+  return pageMetadata({
+    locale,
     title: t.venues.metaTitle,
     description: t.venues.metaDescription,
-  };
+    path: "/venues",
+  });
 }
 
 export default async function VenuesPage({ params }: { params: Promise<{ locale: string }> }) {

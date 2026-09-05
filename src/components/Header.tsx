@@ -11,6 +11,7 @@ export function buildNavLinks(locale: Locale, t: Dictionary): NavLink[] {
   return [
     { href: `/${locale}#how`, label: t.nav.how },
     { href: `/${locale}/venues`, label: t.nav.venues },
+    { href: `/${locale}/guide`, label: t.nav.guide },
     { href: `/${locale}/chalets`, label: t.nav.chalets },
     { href: `/${locale}/trust`, label: t.nav.trust },
   ];

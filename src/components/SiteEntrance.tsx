@@ -124,7 +124,7 @@ export default function SiteEntrance({
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-hidden
       />
       <div className="absolute inset-0 bg-ink/40" aria-hidden />

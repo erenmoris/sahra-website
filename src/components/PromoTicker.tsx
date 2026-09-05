@@ -9,6 +9,7 @@ export default function PromoTicker({ t, locale }: { t: Dictionary; locale: Loca
       href={whatsappLink(t.whatsappMessage)}
       placement="promo-ticker"
       locale={locale}
+      t={t}
       ariaLabel={t.hero.ctaPrimary}
       // The track is laid out left-to-right in both locales; RTL would push it
       // out of the visible band.

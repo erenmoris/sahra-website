@@ -39,7 +39,7 @@ export default function VenuesEntrance({
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-label={locale === "ar" ? "فيديو تقديمي للسهرات" : "Nights intro video"}
       />
       <div

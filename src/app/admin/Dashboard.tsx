@@ -234,7 +234,9 @@ export default function Dashboard({
 
         {!ownerNotifyEnabled ? (
           <div className="mb-6 border border-gold/30 bg-gold/10 px-5 py-4 text-[0.85rem] leading-[1.7] text-gold-soft">
-            تنبيهات الإيميل مطفّية. حط <code>RESEND_API_KEY</code> على Vercel عشان توصلك إيميلات
+            تنبيهات الإيميل مطفّية. حط <code>RESEND_API_KEY</code> +{" "}
+            <code>RESEND_FROM</code> (domain موثّق) أو{" "}
+            <code>WEB3FORMS_ACCESS_KEY</code> على Vercel عشان توصل إيميلات
             الحجوزات الجديدة.
           </div>
         ) : (
@@ -285,14 +287,16 @@ export default function Dashboard({
         {tab === "clicks" ? (
           <>
             <p className="mt-5 text-[0.85rem] leading-[1.7] text-sand-dim">
-              كل مرة زائر يضغط زر واتساب أو سناب على الموقع بتتسجّل هنا — حتى لو ملأش الفورم —
-              عشان تشوف الاهتمام أول بأول.
+              When a visitor taps WhatsApp or Snapchat, a form opens first so we can reply with their
+              name and number. Returning visitors with a saved form skip the modal.
             </p>
             <div className="mt-4 overflow-x-auto border border-gold/20">
-              <table className="w-full min-w-[640px] border-collapse text-[0.88rem]">
+              <table className="w-full min-w-[720px] border-collapse text-[0.88rem]">
                 <thead>
                   <tr className="bg-ink-2 text-right text-[0.76rem] tracking-[0.04em] text-sand-dim">
                     <th className="px-4 py-3 font-medium">الوقت</th>
+                    <th className="px-4 py-3 font-medium">الاسم</th>
+                    <th className="px-4 py-3 font-medium">رقم الواتساب</th>
                     <th className="px-4 py-3 font-medium">الزر</th>
                     <th className="px-4 py-3 font-medium">الصفحة</th>
                     <th className="px-4 py-3 font-medium">اللغة</th>
@@ -302,7 +306,7 @@ export default function Dashboard({
                 <tbody>
                   {clicks.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-4 py-14 text-center text-sand-dim">
+                      <td colSpan={7} className="px-4 py-14 text-center text-sand-dim">
                         لسه مفيش ضغطات مسجّلة.
                       </td>
                     </tr>
@@ -311,6 +315,12 @@ export default function Dashboard({
                       <tr key={click.id} className="border-t border-gold/15 hover:bg-ink-2/60">
                         <td className="px-4 py-3 whitespace-nowrap text-sand-dim">
                           {formatDateTime(click.createdAt)}
+                        </td>
+                        <td className="px-4 py-3 text-sand">
+                          {click.name?.trim() ? click.name : "—"}
+                        </td>
+                        <td className="px-4 py-3 font-mono text-[0.8rem] text-sand-dim">
+                          {click.phone?.trim() ? click.phone : "—"}
                         </td>
                         <td className="px-4 py-3 text-sand">{click.placement}</td>
                         <td className="px-4 py-3 font-mono text-[0.8rem] text-sand-dim">

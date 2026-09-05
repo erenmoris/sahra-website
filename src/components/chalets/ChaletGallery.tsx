@@ -19,11 +19,12 @@ export default function ChaletGallery({
       <div className="relative aspect-4/3 overflow-hidden border border-gold/20 bg-ink-2">
         <Image
           src={current}
-          alt={`${title} — ${active + 1}`}
+          alt={`${title} — صورة ${active + 1}`}
           fill
           sizes="(max-width: 1024px) 100vw, 60vw"
           className="object-cover"
           priority
+          loading="eager"
           unoptimized={current.startsWith("http")}
         />
       </div>
@@ -41,10 +42,11 @@ export default function ChaletGallery({
             >
               <Image
                 src={src}
-                alt=""
+                alt={`${title} — صورة ${index + 1}`}
                 fill
                 sizes="80px"
                 className="object-cover"
+                loading="lazy"
                 unoptimized={src.startsWith("http")}
               />
             </button>

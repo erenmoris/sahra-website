@@ -4,7 +4,10 @@ import { getSiteContent } from "@/lib/content";
 import { blobConfigured } from "@/lib/content/media";
 import ContentEditor from "@/components/admin/ContentEditor";
 
-export const metadata = { title: "سهرة · إدارة المحتوى" };
+export const metadata = {
+  title: "سهرة · إدارة المحتوى",
+  robots: { index: false, follow: false },
+};
 export const dynamic = "force-dynamic";
 
 export default async function AdminContentPage() {

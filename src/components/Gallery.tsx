@@ -36,6 +36,7 @@ export default function Gallery({
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   priority={index < 3}
+                  loading={index < 3 ? "eager" : "lazy"}
                   unoptimized={item.src.startsWith("http")}
                 />
                 {item.caption ? (

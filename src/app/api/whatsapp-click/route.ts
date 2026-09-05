@@ -20,11 +20,19 @@ export async function POST(request: Request) {
     body = {};
   }
 
+  const name = typeof body.name === "string" ? clean(body.name, 80, "") : "";
+  const phone = typeof body.phone === "string" ? clean(body.phone, 30, "") : "";
+  if (!name || !phone) {
+    return new NextResponse(null, { status: 422 });
+  }
+
   await logWhatsAppClick({
     placement: clean(body.placement, 40, "unknown"),
     locale: clean(body.locale, 5, "ar"),
     page: clean(body.page, 200, "/"),
     country: request.headers.get("x-vercel-ip-country") ?? undefined,
+    name,
+    phone,
   });
 
   return new NextResponse(null, { status: 204 });

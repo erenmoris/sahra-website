@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "Sahra — Nightlife concierge in Egypt";
+export const alt = "Sahra — Book nightlife in Cairo and the North Coast";
 
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -27,7 +27,7 @@ export default function OpengraphImage() {
           Sahra · Nightlife Concierge
         </div>
         <div style={{ fontSize: 34, marginTop: 26, color: "#b9b0a0", maxWidth: 900 }}>
-          Rooftops, Nile boat parties, beach clubs and VIP tables — booked on WhatsApp within hours.
+          Book tables, parties and beach clubs on WhatsApp — Cairo &amp; the North Coast.
         </div>
         <div
           style={{

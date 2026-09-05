@@ -10,14 +10,31 @@ import { HowItWorks } from "@/components/Sections";
 import ReservationForm from "@/components/ReservationForm";
 import SiteEntrance from "@/components/SiteEntrance";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
-import StructuredData from "@/components/StructuredData";
 import SnapchatCard from "@/components/SnapchatCard";
 import { getSiteConfig, getSiteDictionary } from "@/lib/content";
 import Reveal from "@/components/Reveal";
 import { Accent, SectionHeading, Wrap } from "@/components/ui";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  const t = await getSiteDictionary(locale);
+  return pageMetadata({
+    locale,
+    title: t.meta.title,
+    description: t.meta.description,
+    path: "",
+    keywords: [...t.meta.keywords],
+  });
 }
 
 export default async function LandingPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -35,7 +52,6 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
   return (
     <>
       <SiteEntrance t={t} locale={locale} />
-      <StructuredData locale={locale} t={t} />
       <ScrollProgress />
       <Header locale={locale} t={t} logoSrc={logoUrl} />
       <main>

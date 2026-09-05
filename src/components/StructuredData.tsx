@@ -1,16 +1,25 @@
 import type { Locale } from "@/i18n/config";
 import { SNAPCHAT_URL, WHATSAPP_NUMBER, type Dictionary } from "@/i18n/dictionaries";
 import { venues, venueName } from "@/content/venues";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sahra-website.vercel.app";
+import { absoluteUrl, siteUrl } from "@/lib/seo";
 
 export default function StructuredData({ locale, t }: { locale: Locale; t: Dictionary }) {
-  const url = `${siteUrl}/${locale}`;
-
-  const graph = [
+  const url = absoluteUrl(`/${locale}`);
+  const businessId = `${siteUrl}#business`;
+  const graph: Record<string, unknown>[] = [
+    {
+      "@type": "Organization",
+      "@id": businessId,
+      name: t.meta.businessName,
+      url,
+      logo: `${siteUrl}/brand/logo-icon.png`,
+      sameAs: [SNAPCHAT_URL],
+      areaServed: t.meta.areaServed.map((name) => ({ "@type": "Place", name })),
+      knowsLanguage: ["ar", "en"],
+    },
     {
       "@type": "LocalBusiness",
-      "@id": `${siteUrl}#business`,
+      "@id": businessId,
       name: t.meta.businessName,
       description: t.meta.description,
       url,
@@ -57,7 +66,7 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
       "@id": `${siteUrl}#service`,
       serviceType: locale === "ar" ? "كونسييرج سهرات في مصر" : "Egypt nightlife concierge",
       description: t.meta.description,
-      provider: { "@id": `${siteUrl}#business` },
+      provider: { "@id": businessId },
       areaServed: t.meta.areaServed.map((name) => ({ "@type": "Place", name })),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
@@ -86,7 +95,16 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
       url: siteUrl,
       name: t.meta.businessName,
       inLanguage: locale,
-      publisher: { "@id": `${siteUrl}#business` },
+      publisher: { "@id": businessId },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+      url,
+      name: t.meta.title,
+      description: t.meta.description,
+      isPartOf: { "@id": `${siteUrl}#website` },
+      inLanguage: locale,
     },
     {
       "@type": "FAQPage",
@@ -104,7 +122,81 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
         })),
       ],
     },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${url}#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: locale === "ar" ? "الرئيسية" : "Home",
+          item: url,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: locale === "ar" ? "سهرات" : "Nights out",
+          item: absoluteUrl(`/${locale}/venues`),
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: locale === "ar" ? "دليل السهر" : "Nightlife guide",
+          item: absoluteUrl(`/${locale}/guide`),
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: locale === "ar" ? "شاليهات" : "Chalets",
+          item: absoluteUrl(`/${locale}/chalets`),
+        },
+      ],
+    },
   ];
+
+  // Event + Reservation for rich snippets (bookings / parties).
+  const event = {
+    "@type": "Event",
+    "@id": `${url}#event`,
+    name: locale === "ar" ? "حجز سهرات في مصر" : "Book nightlife in Egypt",
+    description: t.meta.description,
+    startDate: "2026-01-01",
+    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    organizer: { "@id": businessId },
+    location: {
+      "@type": "Place",
+      name: locale === "ar" ? "القاهرة · الساحل الشمالي" : "Cairo · North Coast",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "EG",
+        addressRegion: locale === "ar" ? "مصر" : "Egypt",
+      },
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${url}#reserve`,
+      price: "0",
+      priceCurrency: "EGP",
+      availability: "https://schema.org/InStock",
+      description: locale === "ar" ? "حجز على الواتساب" : "Book on WhatsApp",
+    },
+  };
+  graph.push(event);
+
+  const reservation = {
+    "@type": "Reservation",
+    "@id": `${url}#reservation`,
+    name: locale === "ar" ? "حجز حجز" : "Reservation",
+    url: `${url}#reserve`,
+    provider: { "@id": businessId },
+    result: {
+      "@type": "Event",
+      name: t.form.title,
+      description: t.form.lede,
+    },
+  };
+  graph.push(reservation);
 
   return (
     <script

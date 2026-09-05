@@ -22,6 +22,7 @@ export default function SnapchatCard({ locale, t }: { locale: Locale; t: Diction
         href={SNAPCHAT_URL}
         placement="snapchat-card"
         locale={locale}
+        t={t}
         className="inline-flex shrink-0 items-center gap-2.5 rounded-sm bg-[#FFFC00] px-6 py-3.5 text-[0.9rem] font-bold text-ink transition-transform hover:-translate-y-px"
       >
         <SnapchatIcon className="h-5 w-5" />

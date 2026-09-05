@@ -7,9 +7,9 @@ export const SNAPCHAT_URL = `https://www.snapchat.com/add/${SNAPCHAT_USERNAME}`;
 
 const ar = {
   meta: {
-    title: "أفضل سهرات في مصر · أماكن سهر ونايت كلوب · حجز ترابيزة | سهرة",
+    title: "حجز سهرات في مصر | روفتوب · بيتش · VIP | سهرة",
     description:
-      "أفضل سهرات في مصر — أماكن سهر في القاهرة والساحل الشمالي والجونة: روفتوبات، ديسكو، نايت كلوب، بيتش كلوبز وحفلات مراكب. احجز ليلتك على الواتساب في ساعتين وتدخل من غير انتظار.",
+      "حجز سهرات في مصر: حفلات، روفتوبات، مراكب، بيتش كلوبز ونايت كلوب. حجز طاولات ونايت سهر في القاهرة والساحل الشمالي — اطلب على الواتساب.",
     keywords: [
       "أفضل سهرات في مصر",
       "أماكن سهر في مصر",
@@ -39,6 +39,7 @@ const ar = {
   nav: {
     how: "طريقة الحجز",
     venues: "سهرات",
+    guide: "دليل السهر",
     trust: "ليه تختارنا",
     reserve: "احجز مكانك",
     chalets: "شاليهات",
@@ -438,6 +439,8 @@ const ar = {
     or: "أو",
     whatsappDirect: "افتح الواتساب مباشرة ←",
     close: "إغلاق",
+    requiredName: "اسمك مطلوب",
+    requiredPhone: "رقم الواتساب مطلوب",
   },
   entrance: {
     brand: "سهرة",
@@ -473,7 +476,7 @@ const ar = {
       {
         id: "whatsapp-clicks",
         title: "تسجيل النقر على أزرار واتساب",
-        body: "عند الضغط على زر واتساب في الموقع نسجّل وقوع النقرة فقط: موضع الزر، الصفحة، اللغة، والدولة بشكل عام. لا نسجّل رقمك ولا محتوى المحادثة. المحادثة نفسها تتم عبر تطبيق واتساب وتخضع لسياسة خصوصيته.",
+        body: "عند الضغط على زر واتساب أو سناب شات نطلب اسمك ورقم الواتساب ونحفظهم. المحادثة نفسها تتم عبر التطبيق وتخضع لسياسة خصوصيتها.",
       },
       {
         id: "use-of-data",
@@ -521,6 +524,7 @@ const ar = {
     links: {
       whatsapp: "واتساب",
       venues: "سهرات",
+      guide: "دليل السهر",
       reserve: "اطلب ترابيزة",
       chalets: "شاليهات للإيجار",
       dashboard: "لوحة التحكم",
@@ -619,9 +623,9 @@ const ar = {
 
 const en = {
   meta: {
-    title: "Best Nightlife in Egypt · Nightclubs & Party Booking | Sahra",
+    title: "Book Nightlife in Egypt | Cairo & North Coast | Sahra",
     description:
-      "Best nightlife in Egypt — nightclubs, discos, rooftops and beach clubs in Cairo and the North Coast. Book your table on WhatsApp in hours and skip the queue.",
+      "Book nightlife in Egypt — Cairo and the North Coast. Rooftops, Nile boats, beach clubs and VIP tables. Reserve a table on WhatsApp.",
     keywords: [
       "best nightlife in Egypt",
       "nightlife places in Egypt",
@@ -639,6 +643,8 @@ const en = {
       "Sharm El Sheikh nightlife",
       "Egypt nightlife concierge",
       "book a table Cairo",
+      "book nightlife Cairo",
+      "book north coast nightlife",
     ],
     areaServed: ["North Coast", "Cairo", "El Gouna", "Sharm El Sheikh", "Hurghada"],
     businessName: "Sahra — Nightlife Concierge in Egypt",
@@ -646,6 +652,7 @@ const en = {
   nav: {
     how: "How it works",
     venues: "Nights out",
+    guide: "Nightlife guide",
     trust: "Why us",
     reserve: "Book my table",
     chalets: "Chalets",
@@ -1033,13 +1040,16 @@ const en = {
   },
   modal: {
     eyebrow: "Before you keep browsing",
-    title: "Leave your name and WhatsApp — I will send you tonight's options myself",
+    title: "Leave your name and WhatsApp",
+    body: "I need your name and WhatsApp number so I can reply.",
     submit: "Send",
     successTitle: "Sent.",
     successBody: "You will get a WhatsApp message in a moment.",
     or: "or",
     whatsappDirect: "Open WhatsApp directly →",
     close: "Close",
+    requiredName: "Name is required",
+    requiredPhone: "Phone is required",
   },
   entrance: {
     brand: "Sahra",
@@ -1075,7 +1085,7 @@ const en = {
       {
         id: "whatsapp-clicks",
         title: "WhatsApp button logging",
-        body: "When you tap a WhatsApp button on the site we log only that a tap occurred: button placement, page, language, and country at a general level. We do not log your number or chat content. The conversation itself happens in WhatsApp and is governed by their privacy policy.",
+        body: "When you tap WhatsApp or Snapchat we capture your name and phone number so we can reply. The conversation itself happens in WhatsApp and is governed by their privacy policy.",
       },
       {
         id: "use-of-data",
@@ -1123,6 +1133,7 @@ const en = {
     links: {
       whatsapp: "WhatsApp",
       venues: "Nights out",
+      guide: "Nightlife guide",
       reserve: "Request a table",
       chalets: "Chalets for rent",
       dashboard: "Dashboard",

@@ -8,6 +8,8 @@ export type WhatsAppClick = {
   locale: string;
   page: string;
   country?: string;
+  name?: string;
+  phone?: string;
   createdAt: string;
 };
 

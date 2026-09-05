@@ -175,6 +175,7 @@ export function Testimonials({
   t: Dictionary;
   locale?: Locale;
 }) {
+  // locale defaults to Arabic for alt text when not provided.
   const items = t.testimonials.items.filter(
     (item) => item.image || (item.messages && item.messages.length > 0),
   );
@@ -201,12 +202,17 @@ export function Testimonials({
                         src={item.image}
                         alt={
                           item.name || item.who
-                            ? `واتساب — ${[item.name, item.who].filter(Boolean).join(" · ")}`
-                            : "سكرين شات واتساب من عميل"
+                            ? locale === "ar"
+                              ? `واتساب — ${[item.name, item.who].filter(Boolean).join(" · ")}`
+                              : `WhatsApp — ${[item.name, item.who].filter(Boolean).join(" · ")}`
+                            : locale === "ar"
+                              ? "لقطة شات واتساب من عميل"
+                              : "WhatsApp chat screenshot from a guest"
                         }
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover object-top"
+                        loading={index < 4 ? "eager" : "lazy"}
                         unoptimized={item.image.startsWith("http")}
                       />
                     </div>

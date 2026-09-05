@@ -2,7 +2,8 @@ import type { Reservation } from "@/lib/types";
 
 const OWNER_EMAIL = process.env.OWNER_NOTIFY_EMAIL ?? "erenmoris5@gmail.com";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const RESEND_FROM = process.env.RESEND_FROM ?? "Sahra Bookings <onboarding@resend.dev>";
+const RESEND_FROM = process.env.RESEND_FROM?.trim();
+const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY?.trim() || undefined;
 
 function customerWhatsAppUrl(phone: string): string {
   const digits = phone.replace(/[^\d]/g, "");
@@ -76,8 +77,27 @@ function buildEmail(r: Reservation): { subject: string; html: string; text: stri
   return { subject, html, text: textLines.join("\n") };
 }
 
+function isResendTestDomain(from: string | undefined): boolean {
+  if (!from) return true;
+  return /onboarding@resend\.dev/i.test(from) || /@resend\.dev$/i.test(from);
+}
+
 async function sendViaResend(subject: string, html: string, text: string): Promise<boolean> {
   if (!RESEND_API_KEY) return false;
+  if (!RESEND_FROM) {
+    console.warn(
+      "[notify-owner] RESEND_FROM missing — set e.g. Sahra Bookings <bookings@yourdomain.com>",
+    );
+    return false;
+  }
+
+  // onboarding@resend.dev only works for the account owner's testing inbox — not production.
+  if (isResendTestDomain(RESEND_FROM)) {
+    console.warn(
+      "[notify-owner] RESEND_FROM is the Resend test domain — set a verified domain for production",
+    );
+    return false;
+  }
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -102,26 +122,53 @@ async function sendViaResend(subject: string, html: string, text: string): Promi
   return true;
 }
 
+async function sendViaWeb3Forms(subject: string, text: string): Promise<boolean> {
+  if (!WEB3FORMS_ACCESS_KEY) return false;
+
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject,
+      from_name: "Sahra Booking",
+      email: OWNER_EMAIL,
+      message: text,
+    }),
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    console.error("[notify-owner] Web3Forms HTTP", res.status, await res.text().catch(() => ""));
+    return false;
+  }
+  return true;
+}
+
 /** Email alert to owner. Never throws — reservation must still succeed. */
 export async function notifyOwnerNewReservation(reservation: Reservation): Promise<void> {
-  if (!RESEND_API_KEY) {
+  const { subject, html, text } = buildEmail(reservation);
+
+  const resendOk = await sendViaResend(subject, html, text);
+  if (resendOk) return;
+
+  const web3Ok = await sendViaWeb3Forms(subject, text);
+  if (web3Ok) return;
+
+  if (!RESEND_API_KEY && !WEB3FORMS_ACCESS_KEY) {
     if (process.env.NODE_ENV === "development") {
-      console.warn("[notify-owner] RESEND_API_KEY not set — skipping email alert");
+      console.warn(
+        "[notify-owner] No email alert configured (set RESEND_API_KEY or WEB3FORMS_ACCESS_KEY)",
+      );
     }
     return;
   }
 
-  try {
-    const { subject, html, text } = buildEmail(reservation);
-    const ok = await sendViaResend(subject, html, text);
-    if (!ok) console.error("[notify-owner] email failed for ref", reservation.ref);
-  } catch (err) {
-    console.error("[notify-owner] error:", err);
-  }
+  console.error("[notify-owner] email failed for ref", reservation.ref);
 }
 
 export function isOwnerNotifyConfigured(): boolean {
-  return Boolean(RESEND_API_KEY);
+  return Boolean(RESEND_API_KEY || WEB3FORMS_ACCESS_KEY);
 }
 
 export function ownerNotifyEmail(): string {

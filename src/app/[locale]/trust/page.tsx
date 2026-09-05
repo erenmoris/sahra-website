@@ -7,6 +7,7 @@ import Footer, { WhatsAppFloat } from "@/components/Footer";
 import { Coverage, Testimonials, Trust } from "@/components/Sections";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Divider, Wrap } from "@/components/ui";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -20,10 +21,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getSiteDictionary(locale);
-  return {
+  return pageMetadata({
+    locale,
     title: t.trust.metaTitle,
     description: t.trust.metaDescription,
-  };
+    path: "/trust",
+  });
 }
 
 export default async function TrustPage({ params }: { params: Promise<{ locale: string }> }) {

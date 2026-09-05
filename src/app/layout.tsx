@@ -4,6 +4,8 @@ import { Cairo, El_Messiri, IBM_Plex_Mono } from "next/font/google";
 import { defaultLocale, dir, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { venueKeywords } from "@/content/venues";
+import { absoluteOgImage, siteUrl } from "@/lib/seo";
+import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
 const elMessiri = El_Messiri({
@@ -24,8 +26,6 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sahra-website.vercel.app";
-
 async function currentLocale(): Promise<Locale> {
   const pathname = (await headers()).get("x-pathname") ?? "";
   const segment = pathname.split("/")[1] ?? "";
@@ -35,23 +35,48 @@ async function currentLocale(): Promise<Locale> {
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await currentLocale();
   const t = getDictionary(locale);
+  const title = t.meta.title;
+  const description = t.meta.description;
+  const url = `${siteUrl}/${locale}`;
+  const image = absoluteOgImage(locale);
+
   return {
     metadataBase: new URL(siteUrl),
-    title: t.meta.title,
-    description: t.meta.description,
+    title: {
+      default: title,
+      template: `%s · ${locale === "ar" ? "سهرة" : "Sahra"}`,
+    },
+    description,
     keywords: [...t.meta.keywords, ...venueKeywords],
     robots: { index: true, follow: true },
     alternates: {
       canonical: `/${locale}`,
-      languages: { ar: "/ar", en: "/en" },
+      languages: {
+        ar: "/ar",
+        en: "/en",
+      },
     },
     openGraph: {
-      title: t.meta.title,
-      description: t.meta.description,
+      title,
+      description,
       type: "website",
-      url: `${siteUrl}/${locale}`,
+      url,
       locale: locale === "ar" ? "ar_EG" : "en_US",
-      images: [{ url: "/brand/logo-horizontal.png", width: 1637, height: 630, alt: "Sahra" }],
+      siteName: "Sahra",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
     },
     icons: {
       icon: [{ url: "/brand/logo-icon.png", type: "image/png" }],
@@ -70,6 +95,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await currentLocale();
+  const t = getDictionary(locale);
 
   return (
     <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
@@ -84,6 +110,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body
         className={`${elMessiri.variable} ${cairo.variable} ${plexMono.variable} bg-ink text-sand antialiased`}
       >
+        <StructuredData locale={locale} t={t} />
         {children}
       </body>
     </html>
