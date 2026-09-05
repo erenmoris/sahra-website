@@ -6,23 +6,28 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { venueKeywords } from "@/content/venues";
 import { absoluteOgImage, absoluteUrl, siteUrl } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
+import Analytics from "@/components/Analytics";
 import "./globals.css";
 
 const elMessiri = El_Messiri({
   subsets: ["arabic", "latin"],
   weight: ["400", "500", "600", "700"],
+  // Keep LCP readable on mid-range mobile devices.
+  display: "swap",
   variable: "--font-el-messiri",
 });
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
   variable: "--font-cairo",
 });
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
+  display: "swap",
   variable: "--font-plex-mono",
 });
 
@@ -63,6 +68,7 @@ export async function generateMetadata(): Promise<Metadata> {
       url,
       locale: locale === "ar" ? "ar_EG" : "en_US",
       siteName: "Sahra",
+      // WhatsApp + Facebook share previews — large image for cards.
       images: [
         {
           url: image,
@@ -96,6 +102,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const locale = await currentLocale();
   const t = getDictionary(locale);
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || undefined;
+  const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID?.trim() || undefined;
 
   return (
     <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
@@ -111,6 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         className={`${elMessiri.variable} ${cairo.variable} ${plexMono.variable} bg-ink text-sand antialiased`}
       >
         <StructuredData locale={locale} t={t} />
+        <Analytics gaId={gaId} fbPixelId={fbPixelId} />
         {children}
       </body>
     </html>

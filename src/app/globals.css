@@ -57,6 +57,26 @@
     background: var(--color-gold);
     color: var(--color-ink);
   }
+
+  /* Prefer-reduced-motion: skip scroll/reveal animations for a11y + LCP. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .reveal,
+    .entrance-line,
+    .chat-bubble,
+    .scroll-progress-bar {
+      animation: none !important;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
 }
 
 @utility lattice {

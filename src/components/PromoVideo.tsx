@@ -30,7 +30,8 @@ export default function PromoVideo({
         poster={poster}
         controls
         playsInline
-        preload="metadata"
+        preload="none"
+        fetchPriority="low"
         className="aspect-video w-full bg-black"
         aria-label={title}
       >
