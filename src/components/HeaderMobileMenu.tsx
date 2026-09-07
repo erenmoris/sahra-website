@@ -1,13 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useId, useState } from "react";
 import type { Locale } from "@/i18n/config";
-import type { Dictionary } from "@/i18n/dictionaries";
+import {
+  INSTAGRAM_URL,
+  SNAPCHAT_URL,
+  whatsappLink,
+  type Dictionary,
+} from "@/i18n/dictionaries";
 import LanguageSwitch from "./LanguageSwitch";
-import { buttonClass } from "./ui";
+import { InstagramIcon, SnapchatIcon } from "./Icons";
+import TrackedLink from "./TrackedLink";
 
-type NavLink = { href: string; label: string };
+type NavLink = { href: string; label: string; testId?: string };
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -32,6 +38,22 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
+const NAV_TESTIDS: Record<string, string> = {
+  home: "mobile-nav-home",
+  venues: "mobile-nav-nightlife",
+  beaches: "mobile-nav-beaches",
+  chalets: "mobile-nav-accommodation",
+  about: "mobile-nav-about",
+  trust: "mobile-nav-trust",
+};
+
+function testIdForHref(href: string): string {
+  const path = href.replace(/\/(ar|en)\/?/, "/").replace(/^\//, "");
+  const key = path.split("/")[0] || "home";
+  if (!path || path === "") return NAV_TESTIDS.home;
+  return NAV_TESTIDS[key] ?? `mobile-nav-${key}`;
+}
+
 export default function HeaderMobileMenu({
   locale,
   t,
@@ -43,6 +65,8 @@ export default function HeaderMobileMenu({
 }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
+  const overlayId = useId();
+  const other: Locale = locale === "ar" ? "en" : "ar";
 
   useEffect(() => {
     if (!open) return;
@@ -57,17 +81,14 @@ export default function HeaderMobileMenu({
     };
   }, [open, close]);
 
-  const langClass =
-    "block rounded-full border-2 border-gold/60 bg-ink py-3.5 text-center text-[0.9rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold";
-  const other: Locale = locale === "ar" ? "en" : "ar";
-
   return (
     <div className="relative md:hidden">
       <button
         type="button"
+        data-testid="mobile-menu-trigger"
         className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 text-gold"
         aria-expanded={open}
-        aria-controls="mobile-nav"
+        aria-controls={overlayId}
         aria-label={
           open
             ? locale === "ar"
@@ -82,59 +103,115 @@ export default function HeaderMobileMenu({
         <MenuIcon open={open} />
       </button>
 
-      {open ? (
-        <>
+      <div
+        id={overlayId}
+        data-testid="mobile-menu-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!open}
+        className={`fixed inset-0 z-[80] flex flex-col bg-[#0B101E]/90 backdrop-blur-2xl transition-all duration-500 ${
+          open
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+      >
+        <div className="flex items-center justify-between px-5 pt-5 sm:px-7">
+          <p className="font-display text-[1.15rem] font-bold tracking-[0.04em] text-gold">
+            {locale === "ar" ? "سهرة" : "Sahra"}
+          </p>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm"
-            aria-label={locale === "ar" ? "إغلاق" : "Close"}
+            data-testid="mobile-close-btn"
             onClick={close}
-          />
-          <nav
-            id="mobile-nav"
-            className="absolute end-0 top-[calc(100%+0.75rem)] z-50 w-[min(100vw-1.5rem,320px)] max-h-[70dvh] overflow-y-auto rounded-2xl border-2 border-gold/40 bg-ink-2 px-5 py-5 shadow-xl"
-            aria-label={locale === "ar" ? "قائمة الموبايل" : "Mobile menu"}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-gold/50 text-gold transition-all duration-300 hover:border-gold hover:bg-gold/10 hover:shadow-[0_0_20px_-4px_rgba(201,162,75,0.6)]"
+            aria-label={locale === "ar" ? "إغلاق" : "Close"}
           >
-            <ul className="flex flex-col gap-1">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="block border-b border-gold/15 py-4 text-[1.05rem] font-semibold text-sand transition-colors hover:text-gold"
-                    onClick={close}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+              <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
 
-            <div className="mt-6 flex flex-col gap-3">
-              <Link
-                href={`/${locale}#reserve`}
-                className={buttonClass("primary", "w-full justify-center py-3.5 text-[0.95rem]")}
-                onClick={close}
-              >
-                {t.nav.reserve}
-              </Link>
-              <Suspense
-                fallback={
-                  <Link href={`/${other}`} className={langClass} onClick={close} hrefLang={other}>
-                    {t.langSwitch}
-                  </Link>
-                }
-              >
-                <LanguageSwitch
-                  locale={locale}
-                  label={t.langSwitch}
-                  className={langClass}
-                  onNavigate={close}
-                />
-              </Suspense>
-            </div>
-          </nav>
-        </>
-      ) : null}
+        <nav
+          className="flex flex-1 flex-col items-center justify-center px-6"
+          aria-label={locale === "ar" ? "قائمة الموبايل" : "Mobile menu"}
+        >
+          <ul className="flex w-full max-w-md flex-col items-center gap-1">
+            {links.map((link) => (
+              <li key={link.href} className="w-full text-center">
+                <Link
+                  href={link.href}
+                  data-testid={link.testId ?? testIdForHref(link.href)}
+                  className="block py-3.5 font-display text-[clamp(1.65rem,7vw,2.35rem)] font-bold text-sand transition-all duration-300 hover:scale-[1.04] hover:text-gold hover:drop-shadow-[0_0_18px_rgba(201,162,75,0.45)] active:scale-[1.04] active:text-gold"
+                  onClick={close}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="px-6 pb-10 pt-4 sm:px-8">
+          <TrackedLink
+            href={whatsappLink(t.whatsappMessage)}
+            placement="mobile-menu-whatsapp"
+            locale={locale}
+            t={t}
+            testId="mobile-whatsapp-btn"
+            className="flex w-full items-center justify-center rounded-full bg-gold px-6 py-4 text-[1rem] font-bold text-night shadow-[0_12px_40px_-16px_rgba(201,162,75,0.7)] transition-transform duration-300 hover:scale-[1.01] hover:bg-gold-soft"
+          >
+            {t.footer.bookWhatsapp}
+          </TrackedLink>
+
+          <div className="mt-6 flex items-center justify-center gap-5">
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="mobile-social-instagram"
+              aria-label={t.footer.links.instagram}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-gold transition-all duration-300 hover:border-gold hover:shadow-[0_0_20px_-4px_rgba(201,162,75,0.65)]"
+              onClick={close}
+            >
+              <InstagramIcon className="h-5 w-5" />
+            </a>
+            <TrackedLink
+              href={SNAPCHAT_URL}
+              placement="mobile-menu-snapchat"
+              locale={locale}
+              t={t}
+              testId="mobile-social-snapchat"
+              ariaLabel={t.footer.links.snapchat}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-gold transition-all duration-300 hover:border-gold hover:shadow-[0_0_20px_-4px_rgba(201,162,75,0.65)]"
+            >
+              <SnapchatIcon className="h-5 w-5" />
+            </TrackedLink>
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <Suspense
+              fallback={
+                <Link
+                  href={`/${other}`}
+                  className="text-[0.85rem] font-semibold text-sand-dim underline-offset-4 hover:text-gold hover:underline"
+                  onClick={close}
+                  hrefLang={other}
+                >
+                  {t.langSwitch}
+                </Link>
+              }
+            >
+              <LanguageSwitch
+                locale={locale}
+                label={t.langSwitch}
+                className="text-[0.85rem] font-semibold text-sand-dim underline-offset-4 transition-colors hover:text-gold hover:underline"
+                onNavigate={close}
+              />
+            </Suspense>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

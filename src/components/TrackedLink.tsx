@@ -17,6 +17,8 @@ type Props = {
   dir?: "ltr" | "rtl";
   /** Dictionary for bilingual capture copy (defaults to Arabic-friendly fallbacks). */
   t?: Dictionary;
+  /** QA automation hook */
+  testId?: string;
   children: React.ReactNode;
 };
 
@@ -48,6 +50,7 @@ export default function TrackedLink({
   ariaLabel,
   dir,
   t,
+  testId,
   children,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -155,6 +158,7 @@ export default function TrackedLink({
         aria-label={ariaLabel}
         dir={dir}
         className={className}
+        data-testid={testId}
         onClick={openCapture}
       >
         {children}

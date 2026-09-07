@@ -1,11 +1,17 @@
 import type { Locale } from "@/i18n/config";
-import { SNAPCHAT_URL, WHATSAPP_NUMBER, type Dictionary } from "@/i18n/dictionaries";
+import {
+  INSTAGRAM_URL,
+  SNAPCHAT_URL,
+  WHATSAPP_NUMBER,
+  type Dictionary,
+} from "@/i18n/dictionaries";
 import { venues, venueName } from "@/content/venues";
 import { absoluteUrl, siteUrl } from "@/lib/seo";
 
 export default function StructuredData({ locale, t }: { locale: Locale; t: Dictionary }) {
   const url = absoluteUrl(`/${locale}`);
   const businessId = `${siteUrl}#business`;
+  const sameAs = [SNAPCHAT_URL, INSTAGRAM_URL];
   const graph: Record<string, unknown>[] = [
     {
       "@type": "Organization",
@@ -13,7 +19,7 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
       name: t.meta.businessName,
       url,
       logo: `${siteUrl}/brand/logo-icon.png`,
-      sameAs: [SNAPCHAT_URL],
+      sameAs,
       areaServed: t.meta.areaServed.map((name) => ({ "@type": "Place", name })),
       knowsLanguage: ["ar", "en"],
     },
@@ -24,7 +30,7 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
       description: t.meta.description,
       url,
       telephone: `+${WHATSAPP_NUMBER}`,
-      sameAs: [SNAPCHAT_URL],
+      sameAs,
       priceRange: "$$–$$$",
       image: `${siteUrl}/brand/logo-horizontal.png`,
       address: {

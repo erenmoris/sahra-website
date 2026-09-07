@@ -43,10 +43,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
+      url: absoluteUrl(`/${locale}/about`),
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    },
+    {
       url: absoluteUrl(`/${locale}/privacy`),
       lastModified,
       changeFrequency: "yearly" as const,
       priority: 0.35,
+    },
+    {
+      url: absoluteUrl(`/${locale}/terms`),
+      lastModified,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
     },
     ...chaletSlugs.map((slug) => ({
       url: absoluteUrl(`/${locale}/chalets/${slug}`),
