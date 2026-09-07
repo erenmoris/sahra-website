@@ -54,13 +54,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     keywords: [...t.meta.keywords, ...venueKeywords],
     robots: { index: true, follow: true },
-    alternates: {
-      canonical: url,
-      languages: {
-        ar: absoluteUrl("/ar"),
-        en: absoluteUrl("/en"),
-      },
-    },
+    // Canonical + hreflang live ONLY on each page (pageMetadata) so Google
+    // does not see duplicate conflicting tags from the root layout.
     openGraph: {
       title,
       description,
@@ -68,7 +63,6 @@ export async function generateMetadata(): Promise<Metadata> {
       url,
       locale: locale === "ar" ? "ar_EG" : "en_US",
       siteName: "Sahra",
-      // WhatsApp + Facebook share previews — large image for cards.
       images: [
         {
           url: image,

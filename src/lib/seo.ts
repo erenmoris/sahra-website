@@ -36,7 +36,8 @@ export function pageMetadata(options: {
   const image = ogImage ?? absoluteOgImage(locale);
 
   // Keep hreflang paths in sync with the current route (nested pages included).
-  // Prefer absolute URLs for Google's duplicate detection (not relative paths).
+  // Absolute URLs + x-default (Arabic) so Google does not pick / or /en as the
+  // primary for Arabic pages.
   const siblingPath = path === "" ? "" : path;
   const arPath = `/ar${siblingPath}`;
   const enPath = `/en${siblingPath}`;
@@ -50,6 +51,7 @@ export function pageMetadata(options: {
       languages: {
         ar: absoluteUrl(arPath),
         en: absoluteUrl(enPath),
+        "x-default": absoluteUrl(arPath),
       },
     },
     openGraph: {

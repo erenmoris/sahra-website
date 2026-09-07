@@ -12,7 +12,7 @@ export default function proxy(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = target;
       // Permanent redirect so Google does not soft-duplicate /admin and /ar/admin.
-      return NextResponse.redirect(url, 301);
+      return NextResponse.redirect(url, { status: 308 });
     }
   }
 
@@ -20,13 +20,19 @@ export default function proxy(request: NextRequest) {
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
 
-  // Arabic is the site's primary language, so every visitor starts there and
-  // switches to English deliberately from the header.
-  // Permanent 301: Google treats / and /ar as soft-duplicates if / is 307.
-  if (!hasLocale && pathname === "/") {
+  // Arabic is the primary locale. Prefer 308 (permanent) — Next/Vercel often
+  // force 307 on "/" in middleware alone; vercel.json + next.config also redirect.
+  if (!hasLocale && (pathname === "/" || pathname === "")) {
     const url = request.nextUrl.clone();
     url.pathname = `/${defaultLocale}`;
-    return NextResponse.redirect(url, 301);
+    return NextResponse.redirect(url, { status: 308 });
+  }
+
+  // Collapse trailing-slash duplicates: /ar/ → /ar
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(/\/+$/, "") || `/${defaultLocale}`;
+    return NextResponse.redirect(url, { status: 308 });
   }
 
   const headers = new Headers(request.headers);
