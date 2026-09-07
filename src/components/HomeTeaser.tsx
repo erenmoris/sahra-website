@@ -64,7 +64,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
               >
                 <Link
                   href={`/${locale}/${card.href}`}
-                  className={`group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-gold/20 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-gold/55 hover:shadow-[0_24px_55px_-28px_rgba(201,162,75,0.28)] ${
+                  className={`group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-gold/35 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-gold/70 hover:shadow-[0_24px_55px_-28px_rgba(201,162,75,0.28)] ${
                     featured ? "p-7 sm:p-8 md:p-9" : "p-5 sm:p-6"
                   }`}
                 >
@@ -79,21 +79,26 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
                     />
                   ) : null}
 
+                  {/* night token stays dark in light mode — ink flips to cream */}
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/35"
+                    className="theme-scrim absolute inset-0 bg-gradient-to-t from-night via-night/80 to-night/45"
                   />
                   <div
                     aria-hidden
-                    className="absolute inset-0 bg-gradient-to-br from-gold/[0.12] via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_20%,rgba(11,15,26,0.55)_100%)]"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-br from-gold/[0.1] via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-100"
                   />
 
-                  <span className="relative mb-2 text-[0.7rem] font-bold tracking-[0.12em] text-gold uppercase">
+                  <span className="theme-scrim-muted relative mb-2 text-[0.7rem] font-bold tracking-[0.12em] text-gold-soft uppercase">
                     {card.tag}
                   </span>
 
                   <h3
-                    className={`relative font-display font-bold leading-snug text-on-dark transition-colors duration-300 group-hover:text-gold-soft ${
+                    className={`theme-scrim-text relative font-display font-bold leading-snug text-on-dark transition-colors duration-300 group-hover:text-gold-soft ${
                       featured
                         ? "mb-4 text-[clamp(1.55rem,2.4vw,2.15rem)]"
                         : "mb-2.5 text-[1.2rem] md:text-[1.25rem]"
@@ -103,7 +108,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
                   </h3>
 
                   <p
-                    className={`relative flex-1 leading-[1.75] text-on-dark/75 ${
+                    className={`theme-scrim-muted relative flex-1 leading-[1.75] text-on-dark-muted ${
                       featured ? "mb-8 max-w-[36ch] text-[1rem]" : "mb-5 text-[0.88rem]"
                     }`}
                   >
@@ -111,7 +116,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
                   </p>
 
                   <span
-                    className={`relative mt-auto inline-flex items-center justify-center rounded-full border-2 border-gold/55 bg-ink/40 font-bold text-on-dark backdrop-blur-sm transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-night ${
+                    className={`relative mt-auto inline-flex items-center justify-center rounded-full border-2 border-gold/70 bg-night/75 font-bold text-on-dark shadow-[0_8px_24px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-night ${
                       featured
                         ? "w-full max-w-[240px] px-6 py-3.5 text-[0.9rem]"
                         : "w-full px-4 py-2.5 text-[0.8rem]"
