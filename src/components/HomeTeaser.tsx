@@ -1,71 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
 import { Accent, Wrap } from "./ui";
 
-type CardIcon = "venues" | "beaches" | "chalets" | "trust" | string;
-
-function CategoryIcon({ kind, large = false }: { kind: CardIcon; large?: boolean }) {
-  const common = {
-    className: large ? "h-12 w-12" : "h-9 w-9",
-    viewBox: "0 0 40 40",
-    fill: "none",
-    "aria-hidden": true as const,
-  };
-  const stroke = {
-    stroke: "#C9A24B",
-    strokeWidth: 1.5,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-  };
-
-  if (kind === "venues") {
-    return (
-      <svg {...common}>
-        <path d="M14 28c0-6 4-8 6-12 2 4 6 6 6 12" {...stroke} />
-        <path d="M14 28h12" {...stroke} />
-        <circle cx="20" cy="12" r="3.2" {...stroke} />
-        <path d="M12 16c2-1 4-1 8 0s6 1 8 0" {...stroke} strokeWidth={1.2} />
-      </svg>
-    );
-  }
-
-  if (kind === "beaches") {
-    return (
-      <svg {...common}>
-        <path d="M8 24c3 3 6-3 9 0s6-3 9 0 6-3 9 0" {...stroke} />
-        <path d="M8 29c3 3 6-3 9 0s6-3 9 0 6-3 9 0" {...stroke} strokeWidth={1.2} />
-        <path d="M20 8v10" {...stroke} />
-        <path d="M20 10c4 1 7 4 8 8" {...stroke} />
-      </svg>
-    );
-  }
-
-  if (kind === "chalets") {
-    return (
-      <svg {...common}>
-        <path d="M12 18h16v12H12z" {...stroke} />
-        <path d="M10 18l10-8 10 8" {...stroke} />
-        <circle cx="26" cy="25" r="1.8" fill="#C9A24B" />
-        <path d="M16 30v-6h5v6" {...stroke} />
-      </svg>
-    );
-  }
-
-  return (
-    <svg {...common}>
-      <path d="M20 6l10 4v8c0 7-4.5 11.5-10 13-5.5-1.5-10-6-10-13V10l10-4z" {...stroke} />
-      <path d="M15 20l3.5 3.5L26 16" {...stroke} />
-    </svg>
-  );
-}
-
 const BENTO_LAYOUT: Record<string, string> = {
   venues: "md:col-span-2 md:row-span-2 min-h-[240px] md:min-h-[380px]",
   beaches: "md:col-span-2 min-h-[160px]",
   chalets: "md:col-span-1 min-h-[160px]",
   trust: "md:col-span-1 min-h-[160px]",
+};
+
+const BENTO_IMAGE: Record<string, { src: string; sizes: string }> = {
+  venues: { src: "/home/bento-venues.png", sizes: "(max-width: 768px) 100vw, 50vw" },
+  beaches: { src: "/home/bento-beaches.png", sizes: "(max-width: 768px) 100vw, 50vw" },
+  chalets: { src: "/home/bento-chalets.png", sizes: "(max-width: 768px) 100vw, 25vw" },
+  trust: { src: "/home/bento-trust.png", sizes: "(max-width: 768px) 100vw, 25vw" },
 };
 
 export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Locale }) {
@@ -103,6 +54,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
           {t.home.cards.map((card, index) => {
             const featured = card.href === "venues";
             const layout = BENTO_LAYOUT[card.href] ?? "md:col-span-1 min-h-[180px]";
+            const image = BENTO_IMAGE[card.href];
 
             return (
               <Reveal
@@ -112,35 +64,36 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
               >
                 <Link
                   href={`/${locale}/${card.href}`}
-                  className={`lux-panel group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-gold/20 bg-ink-2/90 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-500 ease-out hover:-translate-y-1 hover:border-gold/55 hover:shadow-[0_24px_55px_-28px_rgba(201,162,75,0.28)] ${
-                    featured
-                      ? "bg-gradient-to-br from-ink-2 via-ink-2 to-gold/[0.07] p-7 sm:p-8 md:p-9"
-                      : "p-5 sm:p-6"
+                  className={`group relative flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-gold/20 shadow-[0_20px_50px_-30px_rgba(0,0,0,0.55)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-gold/55 hover:shadow-[0_24px_55px_-28px_rgba(201,162,75,0.28)] ${
+                    featured ? "p-7 sm:p-8 md:p-9" : "p-5 sm:p-6"
                   }`}
                 >
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-gold/[0.07] via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-                  />
-                  <div
-                    aria-hidden
-                    className="pointer-events-none absolute -end-10 -top-10 h-36 w-36 rounded-full bg-gold/10 blur-3xl transition-transform duration-700 group-hover:scale-125"
-                  />
+                  {image ? (
+                    <Image
+                      src={image.src}
+                      alt=""
+                      fill
+                      sizes={image.sizes}
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      priority={featured}
+                    />
+                  ) : null}
 
                   <div
-                    className={`relative inline-flex items-center justify-center rounded-2xl border border-gold/25 bg-ink-3 shadow-[inset_0_1px_0_rgba(228,200,120,0.12)] transition-all duration-500 group-hover:border-gold/50 group-hover:scale-105 ${
-                      featured ? "mb-6 h-16 w-16" : "mb-4 h-12 w-12"
-                    }`}
-                  >
-                    <CategoryIcon kind={card.href} large={featured} />
-                  </div>
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-t from-ink via-ink/75 to-ink/35"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-gradient-to-br from-gold/[0.12] via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100"
+                  />
 
                   <span className="relative mb-2 text-[0.7rem] font-bold tracking-[0.12em] text-gold uppercase">
                     {card.tag}
                   </span>
 
                   <h3
-                    className={`relative font-display font-bold leading-snug text-sand transition-colors duration-300 group-hover:text-gold-soft ${
+                    className={`relative font-display font-bold leading-snug text-on-dark transition-colors duration-300 group-hover:text-gold-soft ${
                       featured
                         ? "mb-4 text-[clamp(1.55rem,2.4vw,2.15rem)]"
                         : "mb-2.5 text-[1.2rem] md:text-[1.25rem]"
@@ -150,7 +103,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
                   </h3>
 
                   <p
-                    className={`relative flex-1 leading-[1.75] text-sand-dim ${
+                    className={`relative flex-1 leading-[1.75] text-on-dark/75 ${
                       featured ? "mb-8 max-w-[36ch] text-[1rem]" : "mb-5 text-[0.88rem]"
                     }`}
                   >
@@ -158,7 +111,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
                   </p>
 
                   <span
-                    className={`relative mt-auto inline-flex items-center justify-center rounded-full border-2 border-gold/50 font-bold text-sand transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-night ${
+                    className={`relative mt-auto inline-flex items-center justify-center rounded-full border-2 border-gold/55 bg-ink/40 font-bold text-on-dark backdrop-blur-sm transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-night ${
                       featured
                         ? "w-full max-w-[240px] px-6 py-3.5 text-[0.9rem]"
                         : "w-full px-4 py-2.5 text-[0.8rem]"
