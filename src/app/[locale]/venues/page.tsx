@@ -2,15 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales } from "@/i18n/config";
 import { getSiteConfig, getSiteDictionary } from "@/lib/content";
-import { getGalleryItems } from "@/lib/gallery";
-import { getVenueLogoMap } from "@/lib/venue-logos";
+import { getVenueCoverMap, getVenueLogoMap } from "@/lib/venue-logos";
 import Header from "@/components/Header";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
-import { Venues } from "@/components/Sections";
-import Gallery from "@/components/Gallery";
 import VenuesEntrance from "@/components/venues/VenuesEntrance";
+import VenueDirectory from "@/components/venues/VenueDirectory";
 import ScrollProgress from "@/components/ScrollProgress";
-import { Divider, Wrap } from "@/components/ui";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -37,14 +34,14 @@ export default async function VenuesPage({ params }: { params: Promise<{ locale:
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const [t, config, galleryItems, venueLogos] = await Promise.all([
+  const [t, config, venueLogos, venueCovers] = await Promise.all([
     getSiteDictionary(locale),
     getSiteConfig(),
-    getGalleryItems(),
     getVenueLogoMap(),
+    getVenueCoverMap(),
   ]);
 
-  const { sections, logoUrl } = config;
+  const { logoUrl } = config;
 
   return (
     <>
@@ -53,20 +50,16 @@ export default async function VenuesPage({ params }: { params: Promise<{ locale:
       <main>
         <VenuesEntrance
           locale={locale}
-          title={t.venues.title}
-          titleAccent={t.venues.titleAccent}
+          title={t.venues.directoryTitle}
+          titleAccent=""
           lede={t.venues.metaDescription}
         />
-
-        {sections.venues ? <Venues t={t} locale={locale} venueLogos={venueLogos} /> : null}
-
-        {sections.venues && sections.gallery && galleryItems.length > 0 ? (
-          <Wrap>
-            <Divider />
-          </Wrap>
-        ) : null}
-
-        {sections.gallery ? <Gallery items={galleryItems} locale={locale} t={t} /> : null}
+        <VenueDirectory
+          locale={locale}
+          t={t}
+          venueLogos={venueLogos}
+          venueCovers={venueCovers}
+        />
       </main>
       <Footer locale={locale} t={t} logoSrc={logoUrl} />
       <WhatsAppFloat t={t} locale={locale} />

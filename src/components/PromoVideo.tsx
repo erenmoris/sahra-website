@@ -31,7 +31,6 @@ export default function PromoVideo({
         controls
         playsInline
         preload="none"
-        fetchPriority="low"
         className="aspect-video w-full bg-black"
         aria-label={title}
       >

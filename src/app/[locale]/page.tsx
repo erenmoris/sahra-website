@@ -6,7 +6,6 @@ import HomeTeaser from "@/components/HomeTeaser";
 import PromoTicker from "@/components/PromoTicker";
 import PromoVideo from "@/components/PromoVideo";
 import ScrollProgress from "@/components/ScrollProgress";
-import { HowItWorks } from "@/components/Sections";
 import ReservationForm from "@/components/ReservationForm";
 import SiteEntrance from "@/components/SiteEntrance";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
@@ -76,8 +75,6 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         {sections.promoTicker ? <PromoTicker t={t} locale={locale} /> : null}
 
         <HomeTeaser t={t} locale={locale} />
-
-        {sections.how ? <HowItWorks t={t} /> : null}
 
         {sections.reserve ? (
           <section id="reserve" className="scroll-mt-24 py-24">

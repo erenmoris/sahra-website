@@ -7,7 +7,7 @@ export default function SnapchatCard({ locale, t }: { locale: Locale; t: Diction
   return (
     <div className="flex flex-col items-start gap-6 border border-gold/20 bg-ink-2 px-7 py-8 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-start gap-4">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FFFC00] text-ink">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#FFFC00] text-night">
           <SnapchatIcon className="h-7 w-7" />
         </span>
         <div>
@@ -23,7 +23,7 @@ export default function SnapchatCard({ locale, t }: { locale: Locale; t: Diction
         placement="snapchat-card"
         locale={locale}
         t={t}
-        className="inline-flex shrink-0 items-center gap-2.5 rounded-sm bg-[#FFFC00] px-6 py-3.5 text-[0.9rem] font-bold text-ink transition-transform hover:-translate-y-px"
+        className="inline-flex shrink-0 items-center gap-2.5 rounded-sm bg-[#FFFC00] px-6 py-3.5 text-[0.9rem] font-bold text-night transition-transform hover:-translate-y-px"
       >
         <SnapchatIcon className="h-5 w-5" />
         {t.social.snapchat}

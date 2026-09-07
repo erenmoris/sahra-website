@@ -27,10 +27,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
-      url: absoluteUrl(`/${locale}/guide`),
+      url: absoluteUrl(`/${locale}/beaches`),
       lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.8,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
     },
     {
       url: absoluteUrl(`/${locale}/trust`),

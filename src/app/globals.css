@@ -11,10 +11,32 @@
   --color-sand-dim: #b9b0a0;
   --color-teal: #123638;
   --color-line: rgba(201, 162, 75, 0.22);
+  /* Always-dark ink for text on gold / bright CTAs (does not flip in light mode). */
+  --color-night: #0b0f1a;
 
   --font-display: var(--font-el-messiri), serif;
   --font-body: var(--font-cairo), sans-serif;
   --font-mono: var(--font-plex-mono), monospace;
+}
+
+/* Light theme — remaps surface/text tokens used across the site. */
+html.light {
+  --color-ink: #f5f0e6;
+  --color-ink-2: #ebe4d6;
+  --color-ink-3: #e0d7c5;
+  --color-gold: #a8842e;
+  --color-gold-soft: #8a6b1f;
+  --color-ruby: #9b3345;
+  --color-sand: #141820;
+  --color-sand-dim: #5c564c;
+  --color-teal: #2a5c5e;
+  --color-line: rgba(168, 132, 46, 0.28);
+  --color-night: #0b0f1a;
+  color-scheme: light;
+}
+
+html:not(.light) {
+  color-scheme: dark;
 }
 
 @layer base {
@@ -36,7 +58,7 @@
     position: fixed;
     inset: 0;
     z-index: 9998;
-    background: #07090f;
+    background: var(--color-ink);
     pointer-events: all;
   }
 
@@ -370,7 +392,12 @@
 }
 
 /* Dark form controls keep native pickers legible */
-input[type="date"]::-webkit-calendar-picker-indicator {
+html:not(.light) input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0.8) sepia(1) saturate(3) hue-rotate(5deg);
+  cursor: pointer;
+}
+
+html.light input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
   cursor: pointer;
 }

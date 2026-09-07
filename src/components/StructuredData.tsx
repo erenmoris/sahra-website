@@ -141,8 +141,8 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
         {
           "@type": "ListItem",
           position: 3,
-          name: locale === "ar" ? "دليل السهر" : "Nightlife guide",
-          item: absoluteUrl(`/${locale}/guide`),
+          name: locale === "ar" ? "الشواطئ" : "Beaches",
+          item: absoluteUrl(`/${locale}/beaches`),
         },
         {
           "@type": "ListItem",

@@ -102,6 +102,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(localStorage.getItem("sahra:theme")==="light")document.documentElement.classList.add("light")}catch(e){}})();`,
+          }}
+        />
         {/* Covers the homepage before React hydrates so content never flashes first. */}
         <script
           dangerouslySetInnerHTML={{

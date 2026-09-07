@@ -208,7 +208,7 @@ export default function TrackedLink({
                 type="button"
                 onClick={submitCapture}
                 disabled={busy}
-                className="flex-1 rounded-sm bg-gold px-4 py-2.5 text-[0.9rem] font-semibold text-ink hover:bg-gold/90 disabled:opacity-60"
+                className="flex-1 rounded-sm bg-gold px-4 py-2.5 text-[0.9rem] font-semibold text-night hover:bg-gold/90 disabled:opacity-60"
               >
                 {busy ? (t?.modal.submit ?? "…") : copy.submit}
               </button>

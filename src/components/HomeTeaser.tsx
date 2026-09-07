@@ -14,7 +14,7 @@ export default function HomeTeaser({ t, locale }: { t: Dictionary; locale: Local
           </SectionHeading>
         </Reveal>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {t.home.cards.map((card, index) => (
             <Reveal key={card.href} delay={index * 90}>
               <Link

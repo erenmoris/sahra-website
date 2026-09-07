@@ -3,15 +3,15 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import HeaderMobileMenu from "./HeaderMobileMenu";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 import { Wrap, buttonClass } from "./ui";
 
 type NavLink = { href: string; label: string };
 
 export function buildNavLinks(locale: Locale, t: Dictionary): NavLink[] {
   return [
-    { href: `/${locale}#how`, label: t.nav.how },
     { href: `/${locale}/venues`, label: t.nav.venues },
-    { href: `/${locale}/guide`, label: t.nav.guide },
+    { href: `/${locale}/beaches`, label: t.nav.beaches },
     { href: `/${locale}/chalets`, label: t.nav.chalets },
     { href: `/${locale}/trust`, label: t.nav.trust },
   ];
@@ -34,7 +34,7 @@ export default function Header({
       <Wrap className="flex h-[88px] items-center justify-between gap-4 sm:gap-6 md:gap-9">
         <Logo locale={locale} className="shrink-0" src={logoSrc} />
 
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-9">
+        <div className="flex items-center gap-3 sm:gap-5 md:gap-7">
           <nav className="hidden items-center gap-9 md:flex" aria-label={locale === "ar" ? "التنقل" : "Main"}>
             {links.map((link) => (
               <Link
@@ -46,6 +46,8 @@ export default function Header({
               </Link>
             ))}
           </nav>
+
+          <ThemeToggle locale={locale} />
 
           <Link
             href={`/${other}`}

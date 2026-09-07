@@ -67,6 +67,7 @@ export function mergeDictionary(
   if (content.nav) {
     next.nav.how = applyLocalized(next.nav.how, content.nav.how, locale);
     next.nav.venues = applyLocalized(next.nav.venues, content.nav.venues, locale);
+    next.nav.beaches = applyLocalized(next.nav.beaches, content.nav.beaches, locale);
     next.nav.trust = applyLocalized(next.nav.trust, content.nav.trust, locale);
     next.nav.reserve = applyLocalized(next.nav.reserve, content.nav.reserve, locale);
     next.nav.chalets = applyLocalized(next.nav.chalets, content.nav.chalets, locale);

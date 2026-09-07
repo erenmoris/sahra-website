@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { Locale } from "@/i18n/config";
-import { cairoVenues, sahelVenues, venueName, type Venue } from "@/content/venues";
+import { cairoVenues, sahelVenues, venueLogoKey, venueName, type Venue } from "@/content/venues";
 
 type Props = {
   locale: Locale;
@@ -50,7 +50,7 @@ function Row({
   locale: Locale;
   venueLogos: Record<string, string>;
 }) {
-  const hasLogos = items.some((v) => venueLogos[v.slug]);
+  const hasLogos = items.some((v) => venueLogos[venueLogoKey(v)]);
 
   return (
     <div className="marquee relative overflow-hidden py-4">
@@ -65,7 +65,7 @@ function Row({
                 key={`${copy}-${venue.slug}`}
                 className="flex items-center gap-8 px-8"
               >
-                <LogoMark venue={venue} locale={locale} src={venueLogos[venue.slug]} />
+                <LogoMark venue={venue} locale={locale} src={venueLogos[venueLogoKey(venue)]} />
                 {!hasLogos ? (
                   <span className="spin-slow text-[0.8rem] text-gold">✦</span>
                 ) : null}
@@ -102,7 +102,7 @@ function TickerStrip({
 }
 
 function withLogos(venues: Venue[], venueLogos: Record<string, string>) {
-  return venues.filter((v) => venueLogos[v.slug]);
+  return venues.filter((v) => venueLogos[venueLogoKey(v)]);
 }
 
 /** Scrolling strips of North Coast and Cairo venue logos. */
@@ -112,24 +112,28 @@ export default function VenueTicker({ locale, venueLogos, labels }: Props) {
 
   return (
     <div className="space-y-6" dir="ltr">
-      <div>
-        <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
-          {labels.sahel}
-        </p>
-        <TickerStrip items={sahelItems} locale={locale} venueLogos={venueLogos} />
-      </div>
+      {sahelItems.length > 0 ? (
+        <div>
+          <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
+            {labels.sahel}
+          </p>
+          <TickerStrip items={sahelItems} locale={locale} venueLogos={venueLogos} />
+        </div>
+      ) : null}
 
-      <div>
-        <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
-          {labels.cairo}
-        </p>
-        <TickerStrip
-          items={cairoItems}
-          reverse
-          locale={locale}
-          venueLogos={venueLogos}
-        />
-      </div>
+      {cairoItems.length > 0 ? (
+        <div>
+          <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
+            {labels.cairo}
+          </p>
+          <TickerStrip
+            items={cairoItems}
+            reverse
+            locale={locale}
+            venueLogos={venueLogos}
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

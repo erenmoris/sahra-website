@@ -43,8 +43,8 @@ export default function Footer({
             <Link href={`/${locale}/venues`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.venues}
             </Link>
-            <Link href={`/${locale}/guide`} className="transition-colors hover:text-gold-soft">
-              {t.footer.links.guide}
+            <Link href={`/${locale}/beaches`} className="transition-colors hover:text-gold-soft">
+              {t.footer.links.beaches}
             </Link>
             <Link href={`/${locale}/chalets`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.chalets}
@@ -60,8 +60,8 @@ export default function Footer({
             </Link>
           </div>
         </div>
-        <p className="mt-7 text-[0.76rem] leading-[1.8] text-[#6b6455]">{t.footer.note}</p>
-        <p className="mt-2 text-[0.76rem] text-[#6b6455]">
+        <p className="mt-7 text-[0.76rem] leading-[1.8] text-sand-dim/80">{t.footer.note}</p>
+        <p className="mt-2 text-[0.76rem] text-sand-dim/80">
           © {new Date().getFullYear()} {locale === "ar" ? "سهرة" : "Sahra"} — {t.footer.rights}
         </p>
       </Wrap>

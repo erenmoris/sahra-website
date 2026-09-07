@@ -18,6 +18,7 @@ export type LocalizedString = {
 export type NavOverrides = {
   how?: LocalizedString;
   venues?: LocalizedString;
+  beaches?: LocalizedString;
   trust?: LocalizedString;
   reserve?: LocalizedString;
   chalets?: LocalizedString;
@@ -478,7 +479,7 @@ export const DEFAULT_CHALETS: ChaletListing[] = [
 export const DEFAULT_SECTIONS: Record<SectionKey, boolean> = {
   hero: true,
   promoTicker: true,
-  how: true,
+  how: false,
   trust: true,
   venues: true,
   gallery: true,

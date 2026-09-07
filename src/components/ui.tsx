@@ -52,10 +52,10 @@ const buttonBase =
   "inline-flex cursor-pointer items-center justify-center gap-2.5 rounded-sm border px-7 py-4 text-[0.9rem] font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants = {
-  primary: "border-transparent bg-gold font-bold text-ink hover:-translate-y-px hover:bg-gold-soft",
+  primary: "border-transparent bg-gold font-bold text-night hover:-translate-y-px hover:bg-gold-soft",
   ghost: "border-gold/25 text-sand hover:border-gold hover:text-gold-soft",
   whatsapp: "border-transparent bg-[#1d7a52] font-bold text-white hover:bg-[#22935f]",
-  snapchat: "border-transparent bg-[#f5f000] font-bold text-ink hover:bg-[#fffc00]",
+  snapchat: "border-transparent bg-[#f5f000] font-bold text-night hover:bg-[#fffc00]",
 } as const;
 
 type Variant = keyof typeof variants;

@@ -114,7 +114,7 @@ export default function Hero({
             <div className="absolute -top-px left-1/2 h-[22px] w-[120px] -translate-x-1/2 rounded-b-[14px] bg-ink" />
 
             <div className="flex items-center gap-2.5 border-b border-gold/20 px-2 pt-3.5 pb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-bold text-ink">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-bold text-night">
                 {hero.chat.name.charAt(0)}
               </div>
               <div>
@@ -132,7 +132,7 @@ export default function Hero({
                   key={message.text}
                   className={`chat-bubble max-w-[82%] rounded-[14px] px-4 py-2.5 text-[0.88rem] leading-[1.6] ${
                     message.side === "out"
-                      ? "self-end rounded-br-[3px] bg-teal text-[#dff2ea]"
+                      ? "self-end rounded-br-[3px] bg-[#1a4f52] text-[#e8f6f2]"
                       : "self-start rounded-bl-[3px] bg-ink-3 text-sand"
                   }`}
                   style={{ animationDelay: `${0.3 + index * 0.8}s` }}
