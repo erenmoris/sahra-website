@@ -648,7 +648,7 @@ const ar = {
   footer: {
     slogan: "ليلتك متظبطة قبل ما توصل.",
     discoverTitle: "اكتشف",
-    legalTitle: "الشفافية",
+    legalTitle: "خصوصيتك",
     connectTitle: "تواصل معنا",
     chaletsStay: "شاليهات وإقامة",
     bookWhatsapp: "احجز على الواتساب",
@@ -674,7 +674,7 @@ const ar = {
   terms: {
     metaTitle: "الشروط والأحكام | سهرة",
     metaDescription: "شروط استخدام خدمة كونسييرج سهرة — وضوح، شفافية، والتزام تجاه عملاء الـ VIP.",
-    eyebrow: "الشفافية",
+    eyebrow: "خصوصيتك",
     title: "الشروط والأحكام",
     updated: "سارية من أغسطس ٢٠٢٦",
     intro:
