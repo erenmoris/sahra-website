@@ -9,10 +9,10 @@ import { SnapchatIcon, WhatsAppIcon } from "./Icons";
 import TrackedLink from "./TrackedLink";
 
 const fieldClass =
-  "w-full rounded-xl border border-gold/25 bg-ink/80 px-4 py-3.5 text-[0.95rem] text-sand shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 placeholder:text-sand-dim/70 focus:border-gold focus:outline-none focus:shadow-[0_0_0_3px_rgba(201,162,75,0.18),inset_0_0_12px_rgba(201,162,75,0.08)]";
+  "w-full rounded-xl border border-gold/35 bg-ink-2 px-4 py-3.5 text-[0.95rem] text-sand shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 placeholder:text-sand-dim focus:border-gold focus:outline-none focus:shadow-[0_0_0_3px_rgba(201,162,75,0.18)]";
 
 const quickActionClass =
-  "group inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-gold/25 bg-ink/55 px-5 py-3.5 text-[0.9rem] font-bold text-sand backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/50 hover:bg-ink/80";
+  "group inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-gold/35 bg-ink-3 px-5 py-3.5 text-[0.9rem] font-bold text-sand backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 hover:bg-ink-2";
 
 function Label({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
   return (
@@ -24,10 +24,10 @@ function Label({ htmlFor, children }: { htmlFor: string; children: React.ReactNo
 
 function FormShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-gold/30 bg-ink-2/50 px-6 py-10 shadow-[0_30px_80px_-36px_rgba(0,0,0,0.85),0_0_40px_-20px_rgba(201,162,75,0.25)] backdrop-blur-md sm:px-12 sm:py-12">
+    <div className="lux-panel relative overflow-hidden rounded-3xl border border-gold/30 bg-ink-2/90 px-6 py-10 shadow-[0_30px_80px_-36px_rgba(0,0,0,0.35),0_0_40px_-20px_rgba(201,162,75,0.2)] backdrop-blur-md sm:px-12 sm:py-12">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-gold/8 via-transparent to-black/20"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-gold/8 via-transparent to-transparent"
       />
       <div className="relative">{children}</div>
     </div>

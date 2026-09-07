@@ -124,7 +124,7 @@ export default function Hero({
             {trustItems.map((item, index) => (
               <li
                 key={item.value}
-                className="rounded-2xl border border-gold/25 bg-ink-2/80 p-4 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.55)] backdrop-blur-md"
+                className="rounded-2xl border border-gold/25 bg-ink-2 p-4 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.25)] backdrop-blur-md lux-panel"
               >
                 <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-ink-3 text-gold">
                   <TrustSvg name={TRUST_ICONS[index] ?? "shield"} />
@@ -148,7 +148,7 @@ export default function Hero({
             />
           ) : (
             <article
-              className="relative overflow-hidden rounded-[28px] border border-gold/30 bg-ink-2/90 p-4 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.75)] backdrop-blur-2xl sm:p-5"
+              className="lux-panel relative overflow-hidden rounded-[28px] border border-gold/30 bg-ink-2/90 p-4 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.35)] backdrop-blur-2xl sm:p-5"
               aria-label={locale === "ar" ? "معاينة محادثة الحجز" : "Booking chat preview"}
             >
               <div
@@ -192,7 +192,7 @@ export default function Hero({
                         className={`rounded-[18px] px-3.5 py-2.5 text-[0.88rem] leading-[1.55] shadow-sm ${
                           outgoing
                             ? "rounded-se-md bg-ink-3 text-sand"
-                            : "rounded-ss-md bg-sand text-night"
+                            : "rounded-ss-md bg-on-dark text-night"
                         }`}
                       >
                         {message.text}
@@ -205,7 +205,7 @@ export default function Hero({
                 })}
 
                 <div
-                  className="chat-bubble flex items-center gap-1 self-start rounded-[18px] rounded-ss-md bg-sand px-3.5 py-3"
+                  className="chat-bubble flex items-center gap-1 self-start rounded-[18px] rounded-ss-md bg-on-dark px-3.5 py-3"
                   style={{ animationDelay: `${0.25 + hero.chat.messages.length * 0.55}s` }}
                   aria-hidden
                 >
