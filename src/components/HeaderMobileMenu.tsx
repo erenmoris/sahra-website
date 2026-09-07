@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import { Suspense, useCallback, useEffect, useId, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Locale } from "@/i18n/config";
 import {
-  INSTAGRAM_URL,
   SNAPCHAT_URL,
   whatsappLink,
   type Dictionary,
 } from "@/i18n/dictionaries";
 import LanguageSwitch from "./LanguageSwitch";
-import { InstagramIcon, SnapchatIcon } from "./Icons";
+import { SnapchatIcon } from "./Icons";
 import TrackedLink from "./TrackedLink";
 
 type NavLink = { href: string; label: string; testId?: string };
@@ -50,7 +50,7 @@ const NAV_TESTIDS: Record<string, string> = {
 function testIdForHref(href: string): string {
   const path = href.replace(/\/(ar|en)\/?/, "/").replace(/^\//, "");
   const key = path.split("/")[0] || "home";
-  if (!path || path === "") return NAV_TESTIDS.home;
+  if (!path) return NAV_TESTIDS.home;
   return NAV_TESTIDS[key] ?? `mobile-nav-${key}`;
 }
 
@@ -64,9 +64,14 @@ export default function HeaderMobileMenu({
   links: NavLink[];
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const close = useCallback(() => setOpen(false), []);
   const overlayId = useId();
   const other: Locale = locale === "ar" ? "en" : "ar";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -81,39 +86,14 @@ export default function HeaderMobileMenu({
     };
   }, [open, close]);
 
-  return (
-    <div className="relative md:hidden">
-      <button
-        type="button"
-        data-testid="mobile-menu-trigger"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 text-gold"
-        aria-expanded={open}
-        aria-controls={overlayId}
-        aria-label={
-          open
-            ? locale === "ar"
-              ? "إغلاق القائمة"
-              : "Close menu"
-            : locale === "ar"
-              ? "فتح القائمة"
-              : "Open menu"
-        }
-        onClick={() => setOpen((v) => !v)}
-      >
-        <MenuIcon open={open} />
-      </button>
-
+  const overlay =
+    mounted && open ? (
       <div
         id={overlayId}
         data-testid="mobile-menu-overlay"
         role="dialog"
         aria-modal="true"
-        aria-hidden={!open}
-        className={`fixed inset-0 z-[80] flex flex-col bg-[#0B101E]/90 backdrop-blur-2xl transition-all duration-500 ${
-          open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        }`}
+        className="fixed inset-0 z-[100] flex flex-col bg-[#0B101E]/90 backdrop-blur-2xl"
       >
         <div className="flex items-center justify-between px-5 pt-5 sm:px-7">
           <p className="font-display text-[1.15rem] font-bold tracking-[0.04em] text-gold">
@@ -165,17 +145,6 @@ export default function HeaderMobileMenu({
           </TrackedLink>
 
           <div className="mt-6 flex items-center justify-center gap-5">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid="mobile-social-instagram"
-              aria-label={t.footer.links.instagram}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 text-gold transition-all duration-300 hover:border-gold hover:shadow-[0_0_20px_-4px_rgba(201,162,75,0.65)]"
-              onClick={close}
-            >
-              <InstagramIcon className="h-5 w-5" />
-            </a>
             <TrackedLink
               href={SNAPCHAT_URL}
               placement="mobile-menu-snapchat"
@@ -212,6 +181,31 @@ export default function HeaderMobileMenu({
           </div>
         </div>
       </div>
+    ) : null;
+
+  return (
+    <div className="relative md:hidden">
+      <button
+        type="button"
+        data-testid="mobile-menu-trigger"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 text-gold"
+        aria-expanded={open}
+        aria-controls={open ? overlayId : undefined}
+        aria-label={
+          open
+            ? locale === "ar"
+              ? "إغلاق القائمة"
+              : "Close menu"
+            : locale === "ar"
+              ? "فتح القائمة"
+              : "Open menu"
+        }
+        onClick={() => setOpen((v) => !v)}
+      >
+        <MenuIcon open={open} />
+      </button>
+
+      {mounted && overlay ? createPortal(overlay, document.body) : null}
     </div>
   );
 }

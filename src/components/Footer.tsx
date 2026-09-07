@@ -25,7 +25,7 @@ export default function Footer({
   t: Dictionary;
   logoSrc?: string;
 }) {
-  const year = new Date().getFullYear();
+  const year = 2026;
   const brand = locale === "ar" ? "سهرة" : "Sahra";
 
   return (

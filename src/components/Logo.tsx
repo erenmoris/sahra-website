@@ -38,7 +38,6 @@ export default function Logo({
       unoptimized
       className={`${sizeClass} w-auto object-contain object-center drop-shadow-[0_0_12px_rgba(201,162,75,0.45)] transition-transform duration-300 group-hover:scale-[1.03]`}
       priority={size === "md" || size === "lg"}
-      loading={size === "sm" ? "lazy" : "eager"}
     />
   );
 
@@ -51,6 +50,7 @@ export default function Logo({
       href={`/${locale}`}
       className={`group inline-flex shrink-0 items-center ${className}`}
       aria-label={locale === "ar" ? "سهرة — الرئيسية" : "Sahra — Home"}
+      suppressHydrationWarning
     >
       {image}
     </Link>

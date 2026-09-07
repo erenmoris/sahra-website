@@ -1,17 +1,12 @@
 import type { Locale } from "@/i18n/config";
-import {
-  INSTAGRAM_URL,
-  SNAPCHAT_URL,
-  WHATSAPP_NUMBER,
-  type Dictionary,
-} from "@/i18n/dictionaries";
+import { SNAPCHAT_URL, WHATSAPP_NUMBER, type Dictionary } from "@/i18n/dictionaries";
 import { venues, venueName } from "@/content/venues";
 import { absoluteUrl, siteUrl } from "@/lib/seo";
 
 export default function StructuredData({ locale, t }: { locale: Locale; t: Dictionary }) {
   const url = absoluteUrl(`/${locale}`);
   const businessId = `${siteUrl}#business`;
-  const sameAs = [SNAPCHAT_URL, INSTAGRAM_URL];
+  const sameAs = [SNAPCHAT_URL];
   const graph: Record<string, unknown>[] = [
     {
       "@type": "Organization",

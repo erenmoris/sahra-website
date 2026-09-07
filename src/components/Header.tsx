@@ -66,6 +66,7 @@ export default function Header({
                 key={link.href}
                 href={link.href}
                 className="nav-link relative py-1 text-[0.88rem] font-semibold text-sand transition-colors hover:text-gold"
+                suppressHydrationWarning
               >
                 {link.label}
               </Link>
