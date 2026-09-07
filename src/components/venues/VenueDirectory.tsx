@@ -1,15 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
 import { venues, venueArea, venueLogoKey, venueName, type Venue, type VenueRegion } from "@/content/venues";
 import TrackedLink from "@/components/TrackedLink";
 import { Wrap } from "@/components/ui";
-
-const FAVORITES_KEY = "sahra:venue-favorites";
 
 type AreaFilterId = keyof Dictionary["venues"]["areaFilters"];
 
@@ -63,25 +62,6 @@ function initials(name: string): string {
     .join("");
 }
 
-function loadFavorites(): Set<string> {
-  try {
-    const raw = localStorage.getItem(FAVORITES_KEY);
-    if (!raw) return new Set();
-    const parsed = JSON.parse(raw) as unknown;
-    return Array.isArray(parsed) ? new Set(parsed.filter((x) => typeof x === "string")) : new Set();
-  } catch {
-    return new Set();
-  }
-}
-
-function saveFavorites(slugs: Set<string>) {
-  try {
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify([...slugs]));
-  } catch {
-    // ignore quota / private mode
-  }
-}
-
 function matchesQuery(venue: Venue, q: string, locale: Locale, t: Dictionary): boolean {
   if (!q) return true;
   const hay = [
@@ -106,46 +86,30 @@ function matchesArea(venue: Venue, areaId: AreaFilterId | null): boolean {
 export default function VenueDirectory({ locale, t, venueLogos, venueCovers }: Props) {
   const [query, setQuery] = useState("");
   const [areaFilter, setAreaFilter] = useState<AreaFilterId | null>(null);
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    setFavorites(loadFavorites());
-  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return venues.filter(
-      (v) => matchesQuery(v, q, locale, t) && matchesArea(v, areaFilter),
-    );
+    return venues.filter((v) => matchesQuery(v, q, locale, t) && matchesArea(v, areaFilter));
   }, [query, areaFilter, locale, t]);
-
-  function toggleFavorite(slug: string) {
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (next.has(slug)) next.delete(slug);
-      else next.add(slug);
-      saveFavorites(next);
-      return next;
-    });
-  }
 
   function toggleArea(id: AreaFilterId) {
     setAreaFilter((prev) => (prev === id ? null : id));
   }
 
   return (
-    <section id="venues" className="scroll-mt-24 pb-20 pt-6 md:pt-8">
-      <Wrap className="max-w-[960px]">
-        <h1 className="mb-5 text-center font-display text-[clamp(1.75rem,4vw,2.25rem)] font-semibold text-sand">
-          {t.venues.directoryTitle}
-        </h1>
+    <section id="venues" className="relative scroll-mt-24 overflow-hidden pb-24 pt-8 md:pt-12">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,162,75,0.07),transparent_55%)]"
+        aria-hidden
+      />
 
-        <label className="relative mb-5 block">
+      <Wrap className="relative max-w-[1040px]">
+        <label className="group relative mb-6 block">
           <span className="sr-only">{t.venues.searchPlaceholder}</span>
-          <span className="pointer-events-none absolute inset-y-0 start-3.5 flex items-center text-gold-soft">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.6" />
-              <path d="M16.5 16.5L21 21" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+          <span className="pointer-events-none absolute inset-y-0 start-4 z-10 flex items-center text-gold-soft/80 transition-colors group-focus-within:text-gold">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M16.5 16.5L21 21" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </span>
           <input
@@ -153,12 +117,12 @@ export default function VenueDirectory({ locale, t, venueLogos, venueCovers }: P
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t.venues.searchPlaceholder}
-            className="w-full rounded-2xl border border-gold/25 bg-ink-2 py-3.5 pe-4 ps-11 text-[0.95rem] text-sand placeholder:text-sand-dim/70 focus:border-gold focus:outline-none"
+            className="w-full rounded-2xl border border-gold/25 bg-ink-2/90 py-4 pe-4 ps-12 text-[0.95rem] text-sand shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl placeholder:text-sand-dim transition-[border-color,box-shadow] duration-300 focus:border-gold/70 focus:outline-none focus:shadow-[0_0_0_1px_rgba(201,162,75,0.35),0_0_28px_-4px_rgba(201,162,75,0.55)]"
           />
         </label>
 
-        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-          <p className="shrink-0 text-[0.85rem] font-semibold text-gold-soft">
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <p className="shrink-0 text-[0.82rem] font-semibold tracking-wide text-gold-soft">
             {t.venues.popularAreas}
           </p>
           <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
@@ -170,13 +134,13 @@ export default function VenueDirectory({ locale, t, venueLogos, venueCovers }: P
                   type="button"
                   onClick={() => toggleArea(id)}
                   aria-pressed={active}
-                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[0.8rem] transition-colors ${
+                  className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-[0.8rem] font-semibold tracking-wide transition-all duration-300 ${
                     active
-                      ? "border-gold bg-gold/20 text-gold-soft"
-                      : "border-gold/25 bg-ink-2 text-sand-dim hover:border-gold/50 hover:text-sand"
+                      ? "border-gold/60 bg-gold/20 text-gold-soft shadow-[0_0_20px_-8px_rgba(201,162,75,0.7)]"
+                      : "border-gold/20 bg-ink-2/90 text-sand hover:border-gold/55 hover:bg-ink-3 hover:text-gold-soft"
                   }`}
                 >
-                  <span aria-hidden className="text-[0.85rem] text-ruby">
+                  <span aria-hidden className="text-[0.75rem] opacity-80">
                     📍
                   </span>
                   {t.venues.areaFilters[id]}
@@ -186,94 +150,97 @@ export default function VenueDirectory({ locale, t, venueLogos, venueCovers }: P
           </div>
         </div>
 
-        <p className="mb-6 text-[0.82rem] text-sand-dim">
+        <p className="mb-7 text-[0.84rem] text-sand-dim">
           {t.venues.resultsCount.replace("{n}", String(filtered.length))}
         </p>
 
         {filtered.length === 0 ? (
-          <p className="py-16 text-center text-[0.95rem] text-sand-dim">{t.venues.emptySearch}</p>
+          <p className="py-20 text-center text-[0.95rem] text-sand-dim">{t.venues.emptySearch}</p>
         ) : (
-          <ul className="flex flex-col gap-5">
+          <ul className="flex flex-col gap-6">
             {filtered.map((venue) => {
               const name = venueName(venue, locale);
               const cover = venueCovers[venue.slug];
               const logo = venueLogos[venueLogoKey(venue)];
               const image = cover ?? logo;
               const isCover = Boolean(cover);
-              const saved = favorites.has(venue.slug);
               const tags = venueTags(venue.regions, t);
               const location = venueArea(venue, locale);
               const waMessage = `${t.venues.whatsappBookPrefix} ${name}`;
+              const detailHref = `/${locale}/venues/${venue.slug}`;
 
               return (
                 <li key={venue.slug}>
-                  <article className="overflow-hidden rounded-2xl border border-gold/20 bg-ink-2/80 shadow-[0_18px_40px_-28px_rgba(0,0,0,0.85)]">
-                    <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-start sm:gap-5 sm:p-5">
-                      <div className="relative mx-auto aspect-square w-full max-w-[200px] shrink-0 overflow-hidden rounded-xl border border-gold/15 bg-ink sm:mx-0 sm:w-[160px] sm:max-w-none">
-                        {image ? (
-                          <Image
-                            src={image}
-                            alt={name}
-                            fill
-                            sizes="200px"
-                            className={isCover ? "object-cover" : "object-contain p-3"}
-                          />
-                        ) : (
-                          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ink-3 to-ink">
-                            <span className="font-display text-3xl font-semibold text-gold-soft">
-                              {initials(venue.name)}
-                            </span>
-                          </div>
-                        )}
-                        <button
-                          type="button"
-                          onClick={() => toggleFavorite(venue.slug)}
-                          aria-label={t.venues.savePlace}
-                          aria-pressed={saved}
-                          className={`absolute end-2 top-2 flex h-9 w-9 items-center justify-center rounded-full border border-gold/20 bg-ink/85 text-[1.05rem] shadow-md backdrop-blur-sm transition-colors hover:border-gold/50 ${
-                            saved ? "text-[#e85d6a]" : "text-sand-dim"
-                          }`}
+                  <article className="lux-panel group relative overflow-hidden rounded-[1.35rem] border border-gold/20 bg-ink-2/90 shadow-[0_24px_60px_-36px_rgba(0,0,0,0.45)] backdrop-blur-lg transition-all duration-500 hover:border-gold/35 hover:bg-ink-3 hover:shadow-[0_28px_70px_-32px_rgba(201,162,75,0.25)]">
+                    <div className="flex flex-col sm:flex-row sm:items-stretch">
+                      <div className="relative isolate shrink-0 overflow-hidden sm:w-[240px] md:w-[280px]">
+                        <Link
+                          href={detailHref}
+                          className="relative block aspect-[4/3] sm:aspect-auto sm:h-full sm:min-h-[220px]"
+                          aria-label={name}
                         >
-                          {saved ? "♥" : "♡"}
-                        </button>
+                          {image ? (
+                            <Image
+                              src={image}
+                              alt={name}
+                              fill
+                              sizes="(max-width: 640px) 100vw, 280px"
+                              className={`${
+                                isCover ? "object-cover" : "object-contain bg-ink p-6"
+                              } transition-transform duration-500 ease-out group-hover:scale-105`}
+                            />
+                          ) : (
+                            <div className="flex h-full min-h-[200px] w-full items-center justify-center bg-gradient-to-br from-ink-3 to-ink transition-transform duration-500 group-hover:scale-105">
+                              <span className="font-display text-4xl font-semibold text-gold-soft">
+                                {initials(venue.name)}
+                              </span>
+                            </div>
+                          )}
+                          <div
+                            className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10"
+                            aria-hidden
+                          />
+                        </Link>
                       </div>
 
-                      <div className="min-w-0 flex-1 text-center sm:text-start">
-                        <p className="text-[0.78rem] tracking-[0.04em] text-gold-soft">
-                          {t.venues.categoryNightlife}
-                        </p>
-                        <h2 className="mt-1 font-display text-[1.35rem] font-semibold leading-snug text-sand">
-                          {name}
-                        </h2>
-                        <p className="mt-1.5 flex items-center justify-center gap-1.5 text-[0.86rem] text-sand-dim sm:justify-start">
-                          <span aria-hidden className="text-ruby">
-                            📍
-                          </span>
-                          {location}
-                        </p>
-                        <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
-                          {tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded-full border border-gold/20 bg-gold/10 px-2.5 py-1 text-[0.72rem] text-gold-soft"
-                            >
-                              {tag}
+                      <div className="flex min-w-0 flex-1 flex-col justify-between gap-5 p-5 sm:p-6 md:p-7">
+                        <Link href={detailHref} className="block text-start outline-none">
+                          <p className="text-[0.72rem] font-medium tracking-[0.16em] text-gold-soft uppercase">
+                            {t.venues.categoryNightlife}
+                          </p>
+                          <h3 className="mt-1.5 font-display text-[clamp(1.35rem,2.8vw,1.85rem)] font-bold leading-snug text-sand transition-colors duration-300 group-hover:text-gold-soft">
+                            {name}
+                          </h3>
+                          <p className="mt-2 flex items-center gap-1.5 text-[0.88rem] text-sand-dim">
+                            <span aria-hidden className="text-ruby/90">
+                              📍
                             </span>
-                          ))}
+                            {location}
+                          </p>
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="rounded-md border border-gold/15 bg-gold/[0.08] px-2.5 py-1 text-[0.68rem] font-medium tracking-wide text-gold-soft/90"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </Link>
+
+                        <div className="flex items-center justify-end">
+                          <TrackedLink
+                            href={whatsappLink(waMessage)}
+                            placement={`venue-book-${venue.slug}`}
+                            locale={locale}
+                            t={t}
+                            className="inline-flex items-center justify-center rounded-full bg-gold px-7 py-2.5 text-[0.92rem] font-bold text-night shadow-[0_0_0_0_rgba(201,162,75,0)] transition-all duration-300 hover:scale-105 hover:bg-[#d4ae55] hover:shadow-[0_0_28px_-2px_rgba(201,162,75,0.75)] active:scale-100"
+                          >
+                            {t.venues.book}
+                          </TrackedLink>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="border-t border-gold/10 px-4 pb-4 pt-3 sm:px-5">
-                      <TrackedLink
-                        href={whatsappLink(waMessage)}
-                        placement={`venue-book-${venue.slug}`}
-                        locale={locale}
-                        t={t}
-                        className="mx-auto flex w-full max-w-[220px] items-center justify-center rounded-full bg-gradient-to-r from-gold to-gold-soft px-6 py-3 text-[0.95rem] font-bold text-night shadow-[0_10px_24px_-12px_rgba(201,162,75,0.9)] transition-transform hover:-translate-y-px"
-                      >
-                        {t.venues.book}
-                      </TrackedLink>
                     </div>
                   </article>
                 </li>
@@ -282,9 +249,7 @@ export default function VenueDirectory({ locale, t, venueLogos, venueCovers }: P
           </ul>
         )}
 
-        <p className="mt-10 text-center text-[0.78rem] leading-[1.8] text-[#6b6455]">
-          {t.venues.namesNote}
-        </p>
+        <p className="mt-12 text-center text-[0.78rem] leading-[1.8] text-sand-dim">{t.venues.namesNote}</p>
       </Wrap>
     </section>
   );

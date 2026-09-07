@@ -30,17 +30,20 @@ export default function Header({
   const links = buildNavLinks(locale, t);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 overflow-visible border-b border-gold/20 bg-ink/85 backdrop-blur-md">
-      <Wrap className="flex h-[88px] items-center justify-between gap-4 sm:gap-6 md:gap-9">
+    <header className="relative z-50 border-b border-gold/35 bg-ink/95">
+      <Wrap className="flex h-[80px] items-center justify-between gap-4 sm:gap-6 md:gap-9">
         <Logo locale={locale} className="shrink-0" src={logoSrc} />
 
-        <div className="flex items-center gap-3 sm:gap-5 md:gap-7">
-          <nav className="hidden items-center gap-9 md:flex" aria-label={locale === "ar" ? "التنقل" : "Main"}>
+        <div className="flex items-center gap-2.5 sm:gap-4 md:gap-6">
+          <nav
+            className="hidden items-center gap-7 md:flex"
+            aria-label={locale === "ar" ? "التنقل" : "Main"}
+          >
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[0.86rem] text-sand-dim transition-colors hover:text-gold-soft"
+                className="nav-link relative py-1 text-[0.88rem] font-semibold text-sand transition-colors hover:text-gold"
               >
                 {link.label}
               </Link>
@@ -51,14 +54,14 @@ export default function Header({
 
           <Link
             href={`/${other}`}
-            className="hidden border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft sm:inline-block"
+            className="hidden rounded-full border-2 border-gold/60 bg-ink-2 px-3.5 py-2 text-[0.78rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold sm:inline-block"
           >
             {t.langSwitch}
           </Link>
 
           <Link
             href={`/${locale}#reserve`}
-            className={`${buttonClass("ghost", "px-4 py-2.5 text-[0.82rem]")} hidden sm:inline-flex`}
+            className={`${buttonClass("primary", "hidden px-5 py-2.5 text-[0.84rem] sm:inline-flex")}`}
           >
             {t.nav.reserve}
           </Link>

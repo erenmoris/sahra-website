@@ -160,6 +160,13 @@ const ar = {
     popularAreas: "مناطق شائعة",
     resultsCount: "{n} نتيجة",
     whatsappBookPrefix: "مرحبًا، عايز أحجز في",
+    backToList: "كل السهرات",
+    aboutTitle: "نبذة",
+    locationTitle: "الموقع",
+    openMaps: "افتح في خرائط جوجل",
+    detailsCta: "احجز على الواتساب",
+    fallbackAbout:
+      "بنحجزلك في المكان ده عبر واتساب — ترابيزة أو دخول ومتابعة لحد ما توصل.",
     tags: {
       vip: "طاولات VIP",
       dj: "دي جي مباشر",
@@ -228,6 +235,13 @@ const ar = {
     whatsappBookPrefix: "مرحبًا، عايز أحجز في",
     namesNote:
       "بنحجز دخول وأكواخ في أشهر بيتش كلوبز وأكوا بارك الساحل الشمالي. سهرة خدمة كونسييرج مستقلة وغير تابعة للأماكن دي، والأسماء التجارية ملك أصحابها وبنذكرها للتوضيح بس.",
+    backToList: "كل الشواطئ",
+    aboutTitle: "نبذة",
+    locationTitle: "الموقع",
+    openMaps: "افتح في خرائط جوجل",
+    detailsCta: "احجز على الواتساب",
+    fallbackAbout:
+      "بنحجزلك دخول أو أكواخ في الشاطئ ده عبر واتساب — ومتابعة لحد ما توصل.",
     tags: {
       dayPass: "تذكرة يومية",
       cabana: "أكواخ خاصة",
@@ -593,7 +607,7 @@ const ar = {
       beaches: "الشواطئ",
       guide: "دليل السهر",
       reserve: "اطلب ترابيزة",
-      chalets: "شاليهات للإيجار",
+      chalets: "شاليهات",
       dashboard: "لوحة التحكم",
       privacy: "سياسة الخصوصية",
       snapchat: "سناب شات",
@@ -842,6 +856,12 @@ const en = {
     popularAreas: "Popular areas",
     resultsCount: "{n} results",
     whatsappBookPrefix: "Hi, I want to book at",
+    backToList: "All nights out",
+    aboutTitle: "About",
+    locationTitle: "Location",
+    openMaps: "Open in Google Maps",
+    detailsCta: "Book on WhatsApp",
+    fallbackAbout: "We book this spot for you on WhatsApp — table or entry, with follow-through until you arrive.",
     tags: {
       vip: "VIP Tables",
       dj: "Live DJ",
@@ -910,6 +930,12 @@ const en = {
     whatsappBookPrefix: "Hi, I want to book at",
     namesNote:
       "We arrange day access and cabanas at the best-known North Coast beach clubs and water parks. Sahra is an independent concierge service and is not affiliated with these venues; trade names belong to their owners and are listed for identification only.",
+    backToList: "All beaches",
+    aboutTitle: "About",
+    locationTitle: "Location",
+    openMaps: "Open in Google Maps",
+    detailsCta: "Book on WhatsApp",
+    fallbackAbout: "We book day access or cabanas here on WhatsApp — with follow-through until you arrive.",
     tags: {
       dayPass: "Day pass",
       cabana: "Private cabanas",
@@ -1275,7 +1301,7 @@ const en = {
       beaches: "Beaches",
       guide: "Nightlife guide",
       reserve: "Request a table",
-      chalets: "Chalets for rent",
+      chalets: "Chalets",
       dashboard: "Dashboard",
       privacy: "Privacy Policy",
       snapchat: "Snapchat",

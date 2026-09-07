@@ -7,11 +7,12 @@ export type ThemeMode = "light" | "dark";
 
 const STORAGE_KEY = "sahra:theme";
 
+/** Cream luxury is default; dark only when explicitly chosen. */
 export function getStoredTheme(): ThemeMode {
   try {
-    return localStorage.getItem(STORAGE_KEY) === "light" ? "light" : "dark";
+    return localStorage.getItem(STORAGE_KEY) === "dark" ? "dark" : "light";
   } catch {
-    return "dark";
+    return "light";
   }
 }
 
@@ -52,10 +53,14 @@ function MoonIcon() {
 }
 
 export default function ThemeToggle({ locale }: { locale: Locale }) {
-  const [mode, setMode] = useState<ThemeMode>("dark");
+  const [mode, setMode] = useState<ThemeMode>("light");
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setMode(getStoredTheme());
+    const stored = getStoredTheme();
+    applyTheme(stored);
+    setMode(stored);
+    setReady(true);
   }, []);
 
   function toggle() {
@@ -79,9 +84,10 @@ export default function ThemeToggle({ locale }: { locale: Locale }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-gold/25 text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
+      suppressHydrationWarning
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 text-gold transition-colors hover:border-gold hover:bg-gold/15"
     >
-      {mode === "dark" ? <SunIcon /> : <MoonIcon />}
+      {!ready || mode === "dark" ? <SunIcon /> : <MoonIcon />}
     </button>
   );
 }

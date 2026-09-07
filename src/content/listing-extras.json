@@ -1,0 +1,453 @@
+{
+  "venues": {
+    "lemon-tree": {
+      "about": "The Lemon Tree & Co. Hacienda White is a stylish North Coast beach club and restaurant known for combining upscale dining, live entertainment, and a vibrant nightlife experience. It offers Mediterranean-inspired cuisine, signature cocktails, and a relaxed yet sophisticated coastal atmosphere. The venue hosts live DJs, sunset events, and social gatherings throughout the summer season, blending polished hospitality with memorable seaside experiences.",
+      "mapsUrl": "https://maps.app.goo.gl/tB8mMkCf4kzaEZ4u5",
+      "gallery": [
+        "/venues/covers/lemon-tree.webp"
+      ]
+    },
+    "lucida": {
+      "about": "Lucida is a stylish restaurant and nightlife destination on Egypt's North Coast, offering a vibrant atmosphere that transforms from a relaxed dining venue into a lively evening hotspot. Its Mediterranean-inspired menu features fresh seafood, sushi, gourmet pizzas, and a variety of international dishes. Guests can enjoy live music, DJs, and entertainment in a modern open-air setting, making it a popular choice for summer nights. Lucida is known for combining excellent cuisine, energetic entertainment, and a sophisticated social experience.",
+      "mapsUrl": "https://maps.app.goo.gl/JPKezGSF41mhoGvM9",
+      "gallery": [
+        "/venues/covers/lucida.webp"
+      ]
+    },
+    "galambo": {
+      "about": "Galambo is a renowned seafood restaurant on Egypt's North Coast, celebrated for serving fresh fish, shrimp, crab, and other Mediterranean specialties in a relaxed beachfront setting. Its menu highlights high-quality seafood prepared with authentic flavors, making it a favorite destination for seafood lovers. The restaurant's elegant outdoor atmosphere and coastal views provide a memorable dining experience for families and groups. Galambo has earned a strong reputation as one of the North Coast's top seafood destinations, combining fresh cuisine with a welcoming seaside ambiance.",
+      "mapsUrl": "https://maps.app.goo.gl/zd16HtkXtHezQRUm9",
+      "gallery": [
+        "/venues/covers/galambo.webp"
+      ]
+    },
+    "kikis": {
+      "about": "Kiki's is a popular beachfront restaurant and beach club in Hacienda White, offering a relaxed atmosphere with beautiful views of the Mediterranean Sea. It serves a Mediterranean-inspired menu featuring fresh seafood, grilled dishes, salads, and refreshing beverages made with high-quality ingredients. Guests can enjoy stylish outdoor seating, live music, and a lively social atmosphere throughout the summer season. Kiki's has become one of the North Coast's favorite destinations for combining great food, beachfront relaxation, and vibrant entertainment.",
+      "mapsUrl": "https://maps.app.goo.gl/3CodR6SoVJD1BBbC6",
+      "gallery": [
+        "/venues/covers/kikis.webp"
+      ]
+    },
+    "rituals": {
+      "about": "Rituals is a modern beach club and dining destination in Marassi, offering a luxurious atmosphere with stunning views of the Mediterranean Sea. Guests can enjoy international cuisine, refreshing beverages, and premium beach services while relaxing on stylish sunbeds or private cabanas. The venue is known for its live DJs, sunset events, and vibrant social scene that attracts visitors throughout the summer. Rituals combines upscale hospitality, entertainment, and beachfront luxury, making it one of the North Coast's most popular lifestyle destinations.",
+      "mapsUrl": "https://maps.app.goo.gl/nedzLCBhEMNKggmg8",
+      "gallery": [
+        "/venues/covers/rituals.webp"
+      ]
+    },
+    "pier-88": {
+      "about": "Pier 88 Marassi is a stylish waterfront restaurant and lounge located at Marassi Marina on Egypt's North Coast. It offers a Mediterranean-inspired menu featuring fresh seafood, grilled specialties, sushi, and signature drinks in a sophisticated setting. Guests can enjoy panoramic marina views, live music, and a vibrant atmosphere that becomes especially lively during the summer evenings. Pier 88 is one of Marassi's most popular destinations for upscale dining, sunset gatherings, and nightlife.",
+      "mapsUrl": "https://maps.app.goo.gl/sGA2pMNtFDXPU1WTA",
+      "gallery": [
+        "/venues/covers/pier-88.webp"
+      ]
+    },
+    "esca": {
+      "about": "Esca is a modern seafood restaurant at Marassi Marina, offering a refined dining experience with stunning waterfront views. The menu features fresh Mediterranean seafood, sushi, oysters, and signature dishes prepared with high-quality ingredients. Its elegant indoor and outdoor seating creates a relaxed yet sophisticated atmosphere, making it an ideal spot for lunch or dinner by the marina. Esca has become one of Marassi's most popular dining destinations, known for its exceptional seafood, stylish ambiance, and outstanding service.",
+      "mapsUrl": "https://maps.app.goo.gl/SzdcQXtHJ7iDTtsG8",
+      "gallery": [
+        "/venues/covers/esca.webp"
+      ]
+    },
+    "gar-alamar": {
+      "about": "Gar Alamar is a popular seafood restaurant on Egypt's North Coast, known for serving freshly caught fish and authentic Mediterranean dishes in a relaxed seaside setting. Its menu includes grilled and fried seafood, shrimp, calamari, and traditional Egyptian seafood specialties prepared with fresh ingredients. The restaurant's welcoming atmosphere and generous portions make it a favorite choice for families and visitors during the summer season. Gar Alamar has built a strong reputation for its quality seafood, friendly service, and enjoyable coastal dining experience.",
+      "mapsUrl": "https://maps.app.goo.gl/Z2sGTPQfkGYQRRhM9",
+      "gallery": [
+        "/venues/covers/gar-alamar.webp"
+      ]
+    },
+    "el-barrio": {
+      "about": "El Barrio is a vibrant Latin-inspired restaurant and nightlife destination on Egypt's North Coast, known for its colorful atmosphere, energetic music, and stylish design. The menu features a fusion of Mexican and Latin American flavors, including tacos, grilled meats, fresh seafood, and handcrafted cocktails. Guests can enjoy live DJs, themed entertainment, and a lively open-air setting that creates an unforgettable summer experience. El Barrio has become one of the North Coast's favorite spots for dining, socializing, and enjoying exciting nightlife.",
+      "mapsUrl": "https://maps.app.goo.gl/tFJZuAg2nHAmC74R9",
+      "gallery": [
+        "/venues/covers/el-barrio.webp"
+      ]
+    },
+    "surf-club": {
+      "about": "Surf Club North Coast is a luxury beachfront destination in June by Sodic on Egypt's North Coast, combining a beach club, restaurant, bar, and boutique in one vibrant location. It offers Mediterranean-inspired cuisine, fresh seafood, and open-air dining with breathtaking views of the Mediterranean Sea. Guests can relax on the beach during the day or enjoy live music, entertainment, and a lively nightlife atmosphere after sunset. Surf Club is one of the North Coast's premier lifestyle destinations, offering a perfect blend of relaxation, dining, and unforgettable summer experiences.",
+      "mapsUrl": "https://maps.app.goo.gl/TAhPBt1miPu6r3jt8",
+      "gallery": [
+        "/venues/covers/surf-club.webp"
+      ]
+    },
+    "baia": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/LyPDuaC9p3NPCxFu5",
+      "gallery": [
+        "/venues/covers/baia.webp"
+      ]
+    },
+    "sass": {
+      "about": "Sass Beach Club is a luxury beach club on Egypt's North Coast, offering an elegant beachfront setting with breathtaking Mediterranean views. It features premium sunbeds, private cabanas, fine dining, signature cocktails, and live DJ performances that create a vibrant summer atmosphere. Guests can relax by the sea during the day and enjoy stylish entertainment and social events after sunset. Sass Beach Club is one of the North Coast's top lifestyle destinations, combining luxury, exceptional service, and unforgettable beach experiences.",
+      "mapsUrl": "https://maps.app.goo.gl/E3H3puPFnxA6pLoDA",
+      "gallery": [
+        "/venues/covers/sass.webp"
+      ]
+    },
+    "sol-beach": {
+      "about": "Sol Beach is a vibrant beachfront destination in Marassi, offering a unique blend of relaxation, music, and Mediterranean-inspired dining. The beach features a stylish restaurant and beach bar where guests can enjoy fresh cuisine, signature cocktails, and panoramic sea views. With its lively atmosphere and premium beachfront setting, Sol Beach is a popular spot for both daytime relaxation and sunset gatherings. It is one of Marassi's signature beach experiences, combining luxury, entertainment, and exceptional hospitality.",
+      "mapsUrl": "https://maps.app.goo.gl/JhWvT2UzqkwGC2SS8",
+      "gallery": [
+        "/venues/covers/sol-beach.webp"
+      ]
+    },
+    "the-smokery-beach": {
+      "about": "The Smokery Beach is a luxury beachfront restaurant and beach club on Egypt's North Coast, offering a relaxed atmosphere with stunning Mediterranean views. The menu features fresh seafood, premium grilled meats, sushi, pizzas, pasta, and The Smokery's signature smoked salmon dishes. Guests can enjoy beachside dining, refreshing drinks, and a vibrant social atmosphere that transitions from daytime relaxation to lively summer evenings. The Smokery Beach is one of the North Coast's premier lifestyle destinations, combining exceptional cuisine, beachfront luxury, and world-class hospitality.",
+      "mapsUrl": "https://maps.app.goo.gl/jyWTotZiWNhZQPZ18",
+      "gallery": [
+        "/venues/covers/the-smokery-beach.webp"
+      ]
+    },
+    "cocoon": {
+      "about": "Cocoon North Coast is a stylish beachfront destination designed to offer a relaxed and laid-back summer experience on Egypt's North Coast. It combines comfortable beachside lounging, quality dining, and a welcoming atmosphere where guests can unwind by the Mediterranean Sea. By day, visitors can enjoy a peaceful coastal escape, while the evenings offer a vibrant social setting with music and entertainment. Cocoon has quickly become one of the North Coast's newest lifestyle destinations, blending relaxation with modern beach culture.",
+      "mapsUrl": "https://maps.app.goo.gl/5cigkwFp8uBz9USCA",
+      "gallery": [
+        "/venues/covers/cocoon.webp"
+      ]
+    },
+    "maasoom": {
+      "about": "Maa'soom offers a Mediterranean dining experience centered on fresh ingredients and rich, layered flavors. The menu is created by Chef Mirette Aly, with Chef Hattem Mattar specializing in open-fire cooking and Chef Michalis Nourloglou adding Greek influences. Instead of traditional mezze, the restaurant focuses on generous sharing platters designed for groups. This approach creates a warm, relaxed, and communal dining experience.",
+      "mapsUrl": "https://maps.app.goo.gl/Ukx1bm9h65vbtaak7",
+      "gallery": [
+        "/venues/covers/maasoom.webp"
+      ]
+    },
+    "at-9": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/QWjyx7nvvXsNQd5E9?g_st=ic",
+      "gallery": [
+        "/venues/covers/at-9.webp"
+      ]
+    },
+    "amelia-beirut": {
+      "about": "Amelia By The Sea is a beachfront destination on the shores of Marassi, inspired by the Amelia Earhart. A journey of bold flavors, crafted cocktails, and vibrant nightlife featuring commercial music, and unforgettable seaside experiences.",
+      "mapsUrl": "https://maps.app.goo.gl/61PBY99NiV1MpP448",
+      "gallery": [
+        "/venues/covers/amelia-beirut.webp"
+      ]
+    },
+    "la-casa": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/rn5ETJAjvTUpbwmGA",
+      "gallery": [
+        "/venues/covers/la-casa.webp"
+      ]
+    },
+    "o-by-michel": {
+      "about": "O by Michel Fadel is a luxury live music venue that first opened in Beirut in 2018 and has expanded across the Middle East. Inspired by the elegance of opera, it offers a sophisticated atmosphere with stylish interiors. Guests enjoy performances by talented artists across a variety of musical genres. Every visit is designed to deliver a memorable evening of fine entertainment and luxury.",
+      "mapsUrl": "https://maps.app.goo.gl/uLnJy88h4TkCkV2YA",
+      "gallery": [
+        "/venues/covers/o-by-michel.webp"
+      ]
+    },
+    "greeka": {
+      "about": "Greeka North Coast is a Greek-inspired beachfront restaurant that brings the flavors and atmosphere of the Mediterranean to Egypt's North Coast. Its menu features authentic Greek dishes, fresh seafood, grilled meats, and traditional mezze prepared with high-quality ingredients. The stylish seaside setting and relaxed ambiance make it an ideal destination for lunch, dinner, or sunset dining. Greeka is a popular choice for visitors seeking a blend of authentic cuisine, warm hospitality, and beautiful coastal views.",
+      "mapsUrl": "https://maps.app.goo.gl/T4gaBJHYhaTks1V36",
+      "gallery": [
+        "/venues/covers/greeka.webp"
+      ]
+    },
+    "taratsa": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/7FYqGd4Ryp77TTZP8",
+      "gallery": [
+        "/venues/covers/taratsa.webp"
+      ]
+    },
+    "sky-20": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/jeJdsizgjnrewZUa9",
+      "gallery": [
+        "/venues/covers/sky-20.webp"
+      ]
+    },
+    "perle": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/5cigkwFp8uBz9USCA",
+      "gallery": [
+        "/venues/covers/perle.webp"
+      ]
+    },
+    "sangria-restaurant": {
+      "about": "Vibes are excellent for evenings out, Where the Mediterranean breeze meets fine dining & electric nights by the sea, under the stars.",
+      "mapsUrl": "https://maps.app.goo.gl/dVVbjY6dofHMjPUr9",
+      "gallery": [
+        "/venues/covers/sangria-restaurant.webp"
+      ]
+    },
+    "bar-du-port": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/n9K77FekJ4h8akxw9?g_st=ic",
+      "gallery": [
+        "/venues/covers/bar-du-port.webp"
+      ]
+    },
+    "cocoya": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/MTUJw61xe6kmY1nb7",
+      "gallery": [
+        "/venues/covers/cocoya.webp"
+      ]
+    },
+    "iris": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/2oftBcaxkLpCtEEK6",
+      "gallery": [
+        "/venues/covers/iris.webp"
+      ]
+    },
+    "charl": {
+      "about": "Charl Telal is an upscale, Mediterranean-Egyptian seaside restaurant, it features an international menu, live music, and sweeping sea views.",
+      "mapsUrl": "https://maps.app.goo.gl/BDjqpHVpUe49ytrr8",
+      "gallery": [
+        "/venues/covers/charl.webp"
+      ]
+    },
+    "moon-deck": {
+      "about": "Rooftop nightlife with city views — we book your table on WhatsApp.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "ava": {
+      "about": "Cairo nightlife spot — VIP tables and guest list arranged by Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "esca-cueva": {
+      "about": "Esca Cueva in Cairo — book your night with Sahra on WhatsApp.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "the-origin": {
+      "about": "Origin Cairo — nightlife booking via Sahra concierge.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "rovi": {
+      "about": "Rovi Cairo — table reservation through Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "me-bar": {
+      "about": "Me Bar Cairo — book with Sahra on WhatsApp.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "sangria": {
+      "about": "Sangria Cairo — nightlife table booking via Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "idol": {
+      "about": "Idol Cairo — VIP table booking with Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "outdoor": {
+      "about": "Outdoor Cairo — book your night through Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "mood-bar": {
+      "about": "Mood Bar Cairo — table reservation via Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "anzu-rooftop": {
+      "about": "Anzu Rooftop Cairo — book with Sahra on WhatsApp.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "tap-east": {
+      "about": "Tap East Cairo — nightlife booking via Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "opia": {
+      "about": "Opia Cairo — table reservation through Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "little-lexies": {
+      "about": "Little Lexie's Cairo — book with Sahra on WhatsApp.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "kazoku": {
+      "about": "Kazoku Cairo — nightlife table via Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "riverside": {
+      "about": "Riverside Cairo — book your table with Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "lucida-cairo": {
+      "about": "Lucida Cairo — VIP nightlife booking via Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    },
+    "sachi": {
+      "about": "Sachi — dining and nightlife booking through Sahra.",
+      "mapsUrl": "",
+      "gallery": []
+    }
+  },
+  "beaches": {
+    "noya-beach": {
+      "about": "",
+      "mapsUrl": "",
+      "gallery": [
+        "/beaches/covers/noya-beach.webp"
+      ]
+    },
+    "karl-beach-club": {
+      "about": "Karl Beach Club is a luxury beachfront destination on Egypt's North Coast, known for its crystal-clear waters, soft white sand, and vibrant summer atmosphere. The club offers premium sunbeds, private cabanas, swimming pools, gourmet dining, and live entertainment, creating a high-end beach experience.",
+      "mapsUrl": "",
+      "gallery": [
+        "/beaches/covers/karl-beach-club.webp"
+      ]
+    },
+    "massimo-beach-club": {
+      "about": "Massimo Beach Club is a modern beach destination on Egypt's North Coast, offering a stylish atmosphere with crystal-clear waters, comfortable loungers, and premium beach services. Guests can enjoy food and beverages, live DJ performances, and relaxing seaside lounges throughout the day.",
+      "mapsUrl": "",
+      "gallery": [
+        "/beaches/covers/massimo-beach-club.webp"
+      ]
+    },
+    "kyma-beach": {
+      "about": "Kyma Beach is a luxury Greek-inspired beach club on Egypt's North Coast, offering a unique blend of beachfront relaxation, fine dining, and vibrant entertainment. Designed with elegant Mediterranean aesthetics, it features private cabanas, premium sunbeds, an infinity pool, and direct access to the crystal-clear sea. Guests can enjoy authentic Greek cuisine, signature cocktails, and live DJ performances in a stylish seaside setting. Kyma Beach has become one of the North Coast's premier summer destinations, combining luxury, exceptional hospitality, and an energetic social atmosphere.",
+      "mapsUrl": "https://maps.app.goo.gl/Pi9SH3mT7JkQApDx5",
+      "gallery": [
+        "/beaches/covers/kyma-beach.webp"
+      ]
+    },
+    "marassi-water-world": {
+      "about": "Marassi Water World is the largest water park on Egypt's Mediterranean coast, offering a wide variety of attractions for families, children, and thrill-seekers. The park features exciting water slides, wave pools, splash zones, a lazy river, and the country's first FlowRider surfing simulator. With modern facilities, food outlets, and entertainment throughout the day, it provides a fun and comfortable experience for visitors of all ages. Marassi Water World is one of the North Coast's top summer attractions, combining adventure, relaxation, and family-friendly entertainment.",
+      "mapsUrl": "https://maps.app.goo.gl/8bxTQ7Qtb41pgpuY7",
+      "gallery": [
+        "/beaches/covers/marassi-water-world.webp"
+      ]
+    },
+    "sass": {
+      "about": "SASS Beach Bar is a luxury beach club in Hacienda Bay on Egypt's North Coast, offering a stylish beachfront experience with premium dining and entertainment. Guests can enjoy Mediterranean cuisine, signature cocktails, and relaxing beachside lounges during the day. As the sun sets, the venue transforms into one of the North Coast's most vibrant nightlife destinations with live DJs and performances. SASS Beach Bar is renowned for combining upscale hospitality, lively events, and a sophisticated seaside atmosphere.",
+      "mapsUrl": "https://maps.app.goo.gl/fk58hfsXG3yFrexc7",
+      "gallery": [
+        "/beaches/covers/sass.webp"
+      ]
+    },
+    "esca": {
+      "about": "ESCÄ Beach Club is a luxury beachfront destination on Egypt's North Coast, offering a sophisticated blend of fine dining, entertainment, and seaside relaxation. Guests can enjoy Mediterranean-inspired cuisine, signature cocktails, and premium beach services in a stylish open-air setting. The venue combines elegant design with curated music and vibrant social events, creating an upscale beach club experience. ESCÄ Beach Club is one of the signature concepts of ESCÄ Hospitality, known for delivering immersive dining and lifestyle experiences.",
+      "mapsUrl": "https://maps.app.goo.gl/mvXoJNEnAT8qw3wg6",
+      "gallery": [
+        "/beaches/covers/esca.webp"
+      ]
+    },
+    "kikis": {
+      "about": "Kiki's is a popular beachfront restaurant and beach club in Marassi, offering a relaxed atmosphere with beautiful views of the Mediterranean Sea. It serves a Mediterranean-inspired menu featuring fresh seafood, grilled dishes, salads, and refreshing beverages made with high-quality ingredients. Guests can enjoy stylish outdoor seating, live music, and a lively social atmosphere throughout the summer season. Kiki's has become one of the North Coast's favorite destinations for combining great food, beachfront relaxation, and vibrant entertainment.",
+      "mapsUrl": "https://maps.app.goo.gl/3CodR6SoVJD1BBbC6",
+      "gallery": [
+        "/beaches/covers/kikis.webp"
+      ]
+    },
+    "baia": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/LyPDuaC9p3NPCxFu5",
+      "gallery": [
+        "/beaches/covers/baia.webp"
+      ]
+    },
+    "sol-beach": {
+      "about": "Sol Beach is a vibrant beachfront destination in Marassi, offering a unique blend of relaxation, music, and Mediterranean-inspired dining. The beach features a stylish restaurant and beach bar where guests can enjoy fresh cuisine, signature cocktails, and panoramic sea views. With its lively atmosphere and premium beachfront setting, Sol Beach is a popular spot for both daytime relaxation and sunset gatherings. It is one of Marassi's signature beach experiences, combining luxury, entertainment, and exceptional hospitality.",
+      "mapsUrl": "https://maps.app.goo.gl/JhWvT2UzqkwGC2SS8",
+      "gallery": [
+        "/beaches/covers/sol-beach.webp"
+      ]
+    },
+    "the-smokery-beach": {
+      "about": "The Smokery Beach is a luxury beachfront restaurant and beach club on Egypt's North Coast, offering a relaxed atmosphere with stunning Mediterranean views. The menu features fresh seafood, premium grilled meats, sushi, pizzas, pasta, and The Smokery's signature smoked salmon dishes. Guests can enjoy beachside dining, refreshing drinks, and a vibrant social atmosphere that transitions from daytime relaxation to lively summer evenings. The Smokery Beach is one of the North Coast's premier lifestyle destinations, combining exceptional cuisine, beachfront luxury, and world-class hospitality.",
+      "mapsUrl": "https://maps.app.goo.gl/jyWTotZiWNhZQPZ18",
+      "gallery": [
+        "/beaches/covers/the-smokery-beach.webp"
+      ]
+    },
+    "cocoon": {
+      "about": "Cocoon North Coast is a stylish beachfront destination designed to offer a relaxed and laid-back summer experience on Egypt's North Coast. It combines comfortable beachside lounging, quality dining, and a welcoming atmosphere where guests can unwind by the Mediterranean Sea. By day, visitors can enjoy a peaceful coastal escape, while the evenings offer a vibrant social setting with music and entertainment. Cocoon has quickly become one of the North Coast's newest lifestyle destinations, blending relaxation with modern beach culture.",
+      "mapsUrl": "https://maps.app.goo.gl/5cigkwFp8uBz9USCA",
+      "gallery": [
+        "/beaches/covers/cocoon.webp"
+      ]
+    },
+    "maasoom": {
+      "about": "Maa'soom offers a Mediterranean dining experience centered on fresh ingredients and rich, layered flavors. The menu is created by Chef Mirette Aly, with Chef Hattem Mattar specializing in open-fire cooking and Chef Michalis Nourloglou adding Greek influences. Instead of traditional mezze, the restaurant focuses on generous sharing platters designed for groups. This approach creates a warm, relaxed, and communal dining experience.",
+      "mapsUrl": "https://maps.app.goo.gl/Ukx1bm9h65vbtaak7",
+      "gallery": [
+        "/beaches/covers/maasoom.webp"
+      ]
+    },
+    "bar-du-port": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/n9K77FekJ4h8akxw9?g_st=ic",
+      "gallery": [
+        "/beaches/covers/bar-du-port.webp"
+      ]
+    },
+    "trope-beach-club": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/MTUJw61xe6kmY1nb6",
+      "gallery": [
+        "/beaches/covers/trope-beach-club.webp"
+      ]
+    },
+    "babbos-taverna": {
+      "about": "Feet in the sand dining Beach for the soul, learn how Babbo's founder combines family traditions, athletic experience, and love for Egypt to create healthy Egyptian cuisine.",
+      "mapsUrl": "https://maps.app.goo.gl/qLHShntebKTdVagRA",
+      "gallery": [
+        "/beaches/covers/babbos-taverna.webp"
+      ]
+    },
+    "kokomo": {
+      "about": "Known for its wood-fired kitchen and laid-back beachside atmosphere, it is highly popular for slow lunches, sunset gatherings, and coastal dining. Kokomoâs Sidi Heneish location captures the spirit of summer dining with laid-back design, communal tables, and a focus on atmosphere. Set against a backdrop of sand and sea, itâs a place where music, nature, and open-flame cooking come together. Whether youâre stopping by for a slow lunch, a sundown gathering, or a late-night session.",
+      "mapsUrl": "https://maps.app.goo.gl/eSJuAYmnkwsfRoko8",
+      "gallery": [
+        "/beaches/covers/kokomo.webp"
+      ]
+    },
+    "one-beachouse": {
+      "about": "",
+      "mapsUrl": "https://maps.app.goo.gl/okemX2unssUj5G668",
+      "gallery": [
+        "/beaches/covers/one-beachouse.webp"
+      ]
+    },
+    "la-femme-ladies-beach": {
+      "about": "La Femme Ladies Beach established since 2005, enjoy the privacy and the sea the perfect joy combination to all ladies.",
+      "mapsUrl": "https://maps.app.goo.gl/iuCNSJXg61JA1j4RA",
+      "gallery": [
+        "/beaches/covers/la-femme-ladies-beach.webp"
+      ]
+    },
+    "gitana-ladies-beach": {
+      "about": "Exclusive ladies-only beach at Bungalows North Coast, kilo 74, Relax, unwind, and enjoy private beach vibes.",
+      "mapsUrl": "https://maps.app.goo.gl/tEC4JuTdaaK2QFcC8",
+      "gallery": [
+        "/beaches/covers/gitana-ladies-beach.webp"
+      ]
+    },
+    "al-yashmak-ladies-beach": {
+      "about": "Ladies Beach in El Rawda km 71 Sahel 1. Only ladies are allowed entrance. 2. All our staff are ladies, no men at all. 3. Mobiles are allowed, but you cant take any photos with people in the background. See less",
+      "mapsUrl": "https://maps.app.goo.gl/1xbLCZ5WzuxNU5sx7",
+      "gallery": [
+        "/beaches/covers/al-yashmak-ladies-beach.webp"
+      ]
+    },
+    "la-taiga-beach-resort": {
+      "about": "",
+      "mapsUrl": "",
+      "gallery": [
+        "/beaches/covers/la-taiga-beach-resort.webp"
+      ]
+    }
+  }
+}

@@ -52,19 +52,25 @@ export default async function ChaletsPage({ params }: { params: Promise<{ locale
           priceBadge={t.chalets.priceBadge}
         />
 
-        <section id="chalet-list" className="scroll-mt-24 py-20">
-          <Wrap>
-            <div className="mb-10 max-w-2xl border-s-2 border-gold/50 ps-5">
-              <p className="text-[0.78rem] tracking-[0.14em] text-gold-soft uppercase">
+        <section id="chalet-list" className="relative scroll-mt-24 overflow-hidden py-20 md:py-24">
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,162,75,0.07),transparent_50%)]"
+            aria-hidden
+          />
+          <Wrap className="relative">
+            <header className="mb-12 max-w-2xl text-center sm:text-start md:mb-14">
+              <p className="text-[0.95rem] font-semibold tracking-[0.08em] text-gold-soft drop-shadow-[0_0_18px_rgba(201,162,75,0.45)] md:text-[1.05rem]">
                 {t.chalets.priceBadge}
               </p>
-              <p className="mt-2 text-[1.05rem] leading-[1.85] text-sand-dim">{t.chalets.priceTeaser}</p>
-            </div>
+              <p className="mt-3 text-[1.05rem] leading-[1.9] text-sand-dim md:text-[1.1rem]">
+                {t.chalets.priceTeaser}
+              </p>
+            </header>
 
             {chalets.length === 0 ? (
-              <p className="text-sand-dim">{t.chalets.empty}</p>
+              <p className="text-center text-sand-dim">{t.chalets.empty}</p>
             ) : (
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
                 {chalets.map((chalet, index) => (
                   <Reveal key={chalet.id} delay={(index % 3) * 80}>
                     <ChaletCard chalet={chalet} locale={locale} t={t} />

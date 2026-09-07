@@ -9,10 +9,9 @@ import ScrollProgress from "@/components/ScrollProgress";
 import ReservationForm from "@/components/ReservationForm";
 import SiteEntrance from "@/components/SiteEntrance";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
-import SnapchatCard from "@/components/SnapchatCard";
 import { getSiteConfig, getSiteDictionary } from "@/lib/content";
 import Reveal from "@/components/Reveal";
-import { Accent, SectionHeading, Wrap } from "@/components/ui";
+import { Accent, Wrap } from "@/components/ui";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -77,20 +76,30 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         <HomeTeaser t={t} locale={locale} />
 
         {sections.reserve ? (
-          <section id="reserve" className="scroll-mt-24 py-24">
+          <section id="reserve" className="relative scroll-mt-8 overflow-hidden py-20 sm:py-24">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/35 to-transparent"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute end-[-10%] top-1/4 h-80 w-80 rounded-full bg-gold/10 blur-[110px]"
+            />
             <Wrap>
               <Reveal>
-                <SectionHeading eyebrow={t.form.eyebrow} lede={t.form.lede}>
-                  {t.form.title} <Accent>{t.form.titleAccent}</Accent>
-                </SectionHeading>
-              </Reveal>
-              <Reveal>
-                <ReservationForm t={t} locale={locale} />
-              </Reveal>
-              <Reveal>
-                <div className="mt-6">
-                  <SnapchatCard locale={locale} t={t} />
+                <div className="mb-10 max-w-[640px] md:mb-12">
+                  <div className="mb-4 flex items-center gap-3 text-[0.82rem] font-semibold tracking-[0.04em] text-gold">
+                    <span className="inline-block h-px w-7 bg-gold" />
+                    {t.form.eyebrow}
+                  </div>
+                  <h2 className="font-display text-[clamp(2.1rem,4vw,3.2rem)] leading-[1.2] font-bold text-sand">
+                    {t.form.title} <Accent>{t.form.titleAccent}</Accent>
+                  </h2>
+                  <p className="mt-4 max-w-[46ch] text-[1.05rem] leading-[1.8] text-sand-dim">{t.form.lede}</p>
                 </div>
+              </Reveal>
+              <Reveal delay={80}>
+                <ReservationForm t={t} locale={locale} />
               </Reveal>
             </Wrap>
           </section>

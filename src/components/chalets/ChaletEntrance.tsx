@@ -47,7 +47,7 @@ export default function ChaletEntrance({
         aria-label={locale === "ar" ? "فيديو تقديمي للشاليهات" : "Chalets intro video"}
       />
       <div
-        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25"
+        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25 theme-scrim"
         aria-hidden
       />
       <div
@@ -57,21 +57,21 @@ export default function ChaletEntrance({
 
       <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-14 pt-[100px] md:px-10 md:pb-16">
         <div className="mx-auto w-full max-w-[1100px]">
-          <p className="mb-3 text-[0.78rem] tracking-[0.18em] text-gold-soft uppercase">
+          <p className="mb-3 text-[0.78rem] tracking-[0.18em] text-[#e4c878] uppercase">
             {locale === "ar" ? "إيجار شاليهات" : "Chalet rentals"}
           </p>
-          <h1 className="font-display text-[clamp(2.2rem,5vw,3.6rem)] leading-[1.15] text-sand">
-            {title} <span className="text-gold-soft">{titleAccent}</span>
+          <h1 className="font-display text-[clamp(2.2rem,5vw,3.6rem)] leading-[1.15] text-[#efe6d0]">
+            {title} <span className="text-[#e4c878]">{titleAccent}</span>
           </h1>
-          <p className="mt-4 max-w-xl text-[1.05rem] leading-[1.85] text-sand-dim">{lede}</p>
-          <p className="mt-5 inline-flex border border-gold/45 bg-gold/10 px-4 py-2 text-[0.88rem] font-semibold tracking-wide text-gold-soft">
+          <p className="mt-4 max-w-xl text-[1.05rem] leading-[1.85] text-[#c9bfae]">{lede}</p>
+          <p className="mt-5 inline-flex border-2 border-[#e4c878]/70 bg-black/35 px-4 py-2 text-[0.88rem] font-semibold tracking-wide text-[#e4c878]">
             {priceBadge}
           </p>
           <div className="mt-8">
             <button
               type="button"
               onClick={scrollToList}
-              className="cursor-pointer border border-gold/40 bg-ink/40 px-6 py-3 text-[0.9rem] text-sand backdrop-blur-sm transition-colors hover:border-gold hover:text-gold-soft"
+              className="cursor-pointer border-2 border-[#e4c878]/70 bg-black/40 px-6 py-3 text-[0.9rem] font-medium text-[#efe6d0] backdrop-blur-sm transition-colors hover:border-[#e4c878]"
             >
               {locale === "ar" ? "شوف الشاليهات ↓" : "Browse chalets ↓"}
             </button>

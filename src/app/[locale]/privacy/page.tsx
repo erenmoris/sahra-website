@@ -42,7 +42,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
       <Header locale={locale} t={t} />
       <main className="pb-28">
         {/* Document header */}
-        <section className="border-b border-gold/15 bg-gradient-to-b from-ink-2/80 to-ink pt-[120px] pb-14 md:pt-[132px]">
+        <section className="border-b border-gold/15 bg-gradient-to-b from-ink-2/80 to-ink pt-14 pb-14 md:pt-16">
           <Wrap className="max-w-[880px]">
             <p className="mb-4 text-[0.78rem] tracking-[0.18em] text-gold-soft uppercase">
               {t.privacy.eyebrow}

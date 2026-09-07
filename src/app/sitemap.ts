@@ -1,11 +1,15 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/config";
+import { getAllBeachSlugs } from "@/content/beaches";
+import { getAllVenueSlugs } from "@/content/venues";
 import { getAllChaletSlugs } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
   const chaletSlugs = await getAllChaletSlugs();
+  const venueSlugs = getAllVenueSlugs();
+  const beachSlugs = getAllBeachSlugs();
 
   return locales.flatMap((locale) => [
     {
@@ -49,6 +53,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.75,
+    })),
+    ...venueSlugs.map((slug) => ({
+      url: absoluteUrl(`/${locale}/venues/${slug}`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
+    ...beachSlugs.map((slug) => ({
+      url: absoluteUrl(`/${locale}/beaches/${slug}`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
     })),
   ]);
 }

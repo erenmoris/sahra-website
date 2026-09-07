@@ -40,7 +40,7 @@ export default async function TrustPage({ params }: { params: Promise<{ locale: 
     <>
       <ScrollProgress />
       <Header locale={locale} t={t} logoSrc={logoUrl} />
-      <main className="pt-[88px]">
+      <main className="pt-0">
         {sections.trust ? <Trust t={t} /> : null}
 
         {sections.trust && sections.testimonials ? (

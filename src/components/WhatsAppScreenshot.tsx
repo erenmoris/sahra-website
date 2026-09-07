@@ -42,13 +42,13 @@ function BlurStrip({
       <span className="select-none blur-[6px]">{children}</span>
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-sm bg-[#1f2c34]/25 backdrop-blur-[2px]"
+        className="pointer-events-none absolute inset-0 rounded-sm bg-[#0d1f24]/30 backdrop-blur-[2px]"
       />
     </span>
   );
 }
 
-/** WhatsApp dark chat mock — starts at blurred contact header (no status bar). */
+/** Premium floating WhatsApp glass mock — dark teal + emerald bubbles. */
 export default function WhatsAppScreenshot({
   chat,
   caption,
@@ -63,40 +63,39 @@ export default function WhatsAppScreenshot({
   const dayLabel = chat.dayLabel ?? labels.today;
 
   return (
-    <div className="overflow-hidden rounded-[22px] border border-[#25D366]/35 bg-[#0b141a] p-1.5 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.85)]">
+    <div className="lux-dark-chrome overflow-hidden rounded-[1.5rem] border border-white/12 bg-[#0d1a1f] p-2 shadow-[0_28px_70px_-30px_rgba(0,0,0,0.95),0_0_40px_-20px_rgba(16,185,129,0.25)] backdrop-blur-xl transition-shadow duration-500 hover:shadow-[0_32px_80px_-28px_rgba(0,0,0,0.95),0_0_48px_-16px_rgba(201,162,75,0.22)]">
       <div
-        className="flex flex-col overflow-hidden rounded-[16px] text-[13px] leading-[1.45]"
+        className="flex flex-col overflow-hidden rounded-[1.15rem] text-[13px] leading-[1.45]"
         dir={locale === "ar" ? "rtl" : "ltr"}
-        style={{ backgroundColor: "#0b141a" }}
+        style={{ backgroundColor: "#0d1a1f" }}
       >
-        {/* Header first — blurred name / last seen */}
-        <div className="flex items-center gap-2.5 border-b border-black/25 bg-[#1f2c34] px-2.5 py-3">
-          <span className="text-[20px] leading-none text-[#aebac1]">{locale === "ar" ? "‹" : "›"}</span>
-          <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full bg-[#627884]">
-            <span className="absolute inset-0 bg-gradient-to-br from-[#7a8f9a] to-[#3d4f58]" />
+        <div className="flex items-center gap-2.5 border-b border-white/8 bg-[#12252c]/95 px-2.5 py-3 backdrop-blur-md">
+          <span className="text-[20px] leading-none text-[#9fb0b8]">{locale === "ar" ? "‹" : "›"}</span>
+          <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/10 bg-[#2a3f48]">
+            <span className="absolute inset-0 bg-gradient-to-br from-[#4a6570] to-[#1c2d34]" />
           </div>
           <div className="min-w-0 flex-1">
-            <div className="truncate text-[15px] font-semibold text-[#e9edef]">
+            <div className="truncate text-[15px] font-semibold text-white">
               <BlurStrip>{chat.contact}</BlurStrip>
             </div>
-            <div className="mt-0.5 text-[11px] text-[#8696a0]">
+            <div className="mt-0.5 text-[11px] text-white/45">
               <BlurStrip>{lastSeen}</BlurStrip>
             </div>
           </div>
-          <div className="flex items-center gap-3.5 text-[15px] text-[#aebac1]">
+          <div className="flex items-center gap-3.5 text-[15px] text-[#9fb0b8]">
             <span aria-hidden>⋮</span>
           </div>
         </div>
 
         <div
-          className="flex flex-col gap-[5px] px-2 py-3"
+          className="flex min-h-[220px] flex-col gap-[6px] px-2.5 py-3.5"
           style={{
-            backgroundColor: "#0b141a",
+            backgroundColor: "#0d1a1f",
             backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h60M30 0v60' stroke='%23ffffff' stroke-opacity='0.02'/%3E%3C/svg%3E\")",
+              "radial-gradient(circle at 20% 10%, rgba(16,185,129,0.06), transparent 40%), url(\"data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h60M30 0v60' stroke='%23ffffff' stroke-opacity='0.025'/%3E%3C/svg%3E\")",
           }}
         >
-          <div className="mb-1 self-center rounded-md bg-[#182229] px-3 py-1 text-[11px] text-[#8696a0]">
+          <div className="mb-1.5 self-center rounded-full border border-white/8 bg-[#15262d]/90 px-3.5 py-1 text-[11px] text-white/45 backdrop-blur-sm">
             {dayLabel}
           </div>
           {chat.messages.map((msg, i) => {
@@ -104,28 +103,30 @@ export default function WhatsAppScreenshot({
             const side = ours ? "self-end" : "self-start";
             const radius = ours
               ? locale === "ar"
-                ? "rounded-lg rounded-bl-sm"
-                : "rounded-lg rounded-br-sm"
+                ? "rounded-2xl rounded-bl-md"
+                : "rounded-2xl rounded-br-md"
               : locale === "ar"
-                ? "rounded-lg rounded-br-sm"
-                : "rounded-lg rounded-bl-sm";
+                ? "rounded-2xl rounded-br-md"
+                : "rounded-2xl rounded-bl-md";
 
             return (
-              <div key={`${msg.time}-${i}`} className={`flex max-w-[86%] ${side}`}>
+              <div key={`${msg.time}-${i}`} className={`flex max-w-[88%] ${side}`}>
                 <div
-                  className={`relative px-2.5 pt-1.5 pb-1 shadow-[0_1px_0.5px_rgba(0,0,0,0.35)] ${radius} ${
-                    ours ? "bg-[#005c4b]" : "bg-[#202c33]"
+                  className={`relative px-3 pt-2 pb-1.5 shadow-[0_4px_14px_-6px_rgba(0,0,0,0.55)] ${radius} ${
+                    ours
+                      ? "border border-emerald-400/20 bg-[#0f766e] bg-gradient-to-br from-[#10b981]/90 to-[#0d9488]"
+                      : "border border-white/8 bg-[#1e2d35]"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap text-[#e9edef]">{msg.text}</p>
+                  <p className="whitespace-pre-wrap text-[0.92rem] text-white/95">{msg.text}</p>
                   <div
-                    className={`mt-0.5 flex items-center justify-end gap-1 text-[10px] ${
-                      ours ? "text-[#99beb7]" : "text-[#8696a0]"
+                    className={`mt-1 flex items-center justify-end gap-1 text-[10px] ${
+                      ours ? "text-emerald-100/70" : "text-white/40"
                     }`}
                   >
                     <span>{msg.time}</span>
                     {ours ? (
-                      <span className="text-[11px] leading-none tracking-tighter text-[#53bdeb]">
+                      <span className="text-[11px] leading-none tracking-tighter text-[#7dd3fc]">
                         ✓✓
                       </span>
                     ) : null}
@@ -136,12 +137,12 @@ export default function WhatsAppScreenshot({
           })}
         </div>
 
-        <div className="flex items-center gap-1.5 bg-[#1f2c34] px-1.5 py-1.5">
-          <div className="flex h-10 flex-1 items-center gap-2 rounded-full bg-[#2a3942] px-3 text-[13px] text-[#8696a0]">
+        <div className="flex items-center gap-1.5 border-t border-white/6 bg-[#12252c]/95 px-1.5 py-2 backdrop-blur-md">
+          <div className="flex h-10 flex-1 items-center gap-2 rounded-full border border-white/8 bg-[#1a2c33] px-3 text-[13px] text-white/40">
             <span className="text-[16px]">☺</span>
             <span>{labels.placeholder}</span>
           </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00a884] text-white">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#0d9488] text-white shadow-[0_0_16px_-4px_rgba(16,185,129,0.7)]">
             <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden>
               <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-2.08c3.39-.49 6-3.39 6-6.92h-2z" />
             </svg>

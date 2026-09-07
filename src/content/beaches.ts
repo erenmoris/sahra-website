@@ -213,3 +213,11 @@ export function beachName(beach: Beach, locale: string): string {
 export function beachArea(beach: Beach, locale: string): string {
   return locale === "ar" ? beach.areaAr : beach.area;
 }
+
+export function getBeachBySlug(slug: string): Beach | undefined {
+  return beaches.find((b) => b.slug === slug);
+}
+
+export function getAllBeachSlugs(): string[] {
+  return beaches.map((b) => b.slug);
+}

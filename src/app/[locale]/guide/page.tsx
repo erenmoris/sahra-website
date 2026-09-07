@@ -46,7 +46,7 @@ export default async function GuidePage({
   return (
     <>
       <Header locale={locale} t={t} />
-      <main className="pt-[88px]">
+      <main className="pt-0">
         <section className="py-16 md:py-20">
           <Wrap className="max-w-[800px]">
             <p className="text-[0.78rem] tracking-[0.18em] text-gold-soft uppercase">

@@ -459,6 +459,14 @@ export function venueCoverPath(venue: Venue): string {
   return `/venues/covers/${venue.slug}.webp`;
 }
 
+export function getVenueBySlug(slug: string): Venue | undefined {
+  return venues.find((v) => v.slug === slug);
+}
+
+export function getAllVenueSlugs(): string[] {
+  return venues.map((v) => v.slug);
+}
+
 /** Every spelling of every venue, for metadata keywords. */
 export const venueKeywords: string[] = venues.flatMap((venue) => [
   venue.name,

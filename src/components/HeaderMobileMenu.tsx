@@ -59,10 +59,10 @@ export default function HeaderMobileMenu({
   }, [open, close]);
 
   return (
-    <>
+    <div className="relative md:hidden">
       <button
         type="button"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-sm border border-gold/25 md:hidden"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 text-gold"
         aria-expanded={open}
         aria-controls="mobile-nav"
         aria-label={
@@ -83,13 +83,13 @@ export default function HeaderMobileMenu({
         <>
           <button
             type="button"
-            className="fixed inset-0 top-[88px] z-40 bg-ink/70 md:hidden"
+            className="fixed inset-0 z-40 bg-ink/60 backdrop-blur-sm"
             aria-label={locale === "ar" ? "إغلاق" : "Close"}
             onClick={close}
           />
           <nav
             id="mobile-nav"
-            className="fixed inset-x-0 top-[88px] z-50 max-h-[calc(100dvh-88px)] overflow-y-auto border-b border-gold/20 bg-ink px-6 py-6 md:hidden"
+            className="absolute end-0 top-[calc(100%+0.75rem)] z-50 w-[min(100vw-1.5rem,320px)] max-h-[70dvh] overflow-y-auto rounded-2xl border-2 border-gold/40 bg-ink-2 px-5 py-5 shadow-xl"
             aria-label={locale === "ar" ? "قائمة الموبايل" : "Mobile menu"}
           >
             <ul className="flex flex-col gap-1">
@@ -97,7 +97,7 @@ export default function HeaderMobileMenu({
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="block border-b border-gold/10 py-4 text-[1.05rem] text-sand transition-colors hover:text-gold-soft"
+                    className="block border-b border-gold/15 py-4 text-[1.05rem] font-semibold text-sand transition-colors hover:text-gold"
                     onClick={close}
                   >
                     {link.label}
@@ -109,14 +109,14 @@ export default function HeaderMobileMenu({
             <div className="mt-6 flex flex-col gap-3">
               <Link
                 href={`/${locale}#reserve`}
-                className={buttonClass("ghost", "w-full justify-center py-3.5 text-[0.95rem]")}
+                className={buttonClass("primary", "w-full justify-center py-3.5 text-[0.95rem]")}
                 onClick={close}
               >
                 {t.nav.reserve}
               </Link>
               <Link
                 href={`/${other}`}
-                className="block border border-gold/25 py-3.5 text-center text-[0.9rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
+                className="block rounded-full border-2 border-gold/60 bg-ink py-3.5 text-center text-[0.9rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold"
                 onClick={close}
               >
                 {t.langSwitch}
@@ -125,6 +125,6 @@ export default function HeaderMobileMenu({
           </nav>
         </>
       ) : null}
-    </>
+    </div>
   );
 }

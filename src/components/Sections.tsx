@@ -39,27 +39,30 @@ export function HowItWorks({ t }: { t: Dictionary }) {
 
 export function Trust({ t }: { t: Dictionary }) {
   return (
-    <section id="trust" className="py-24">
-      <Wrap>
+    <section id="trust" className="relative overflow-hidden py-24 md:py-28">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,162,75,0.07),transparent_55%)]"
+        aria-hidden
+      />
+      <Wrap className="relative">
         <Reveal>
           <SectionHeading eyebrow={t.trust.eyebrow} lede={t.trust.lede}>
             {t.trust.title} <Accent>{t.trust.titleAccent}</Accent>
           </SectionHeading>
         </Reveal>
 
-        <div className="grid gap-px border border-gold/20 bg-gold/20 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
           {t.trust.items.map((item, index) => (
             <Reveal key={item.title} delay={index * 90}>
-              <div className="group h-full bg-ink px-8 py-10 transition-colors duration-300 hover:bg-ink-2">
-                <TrustIcon
-                  name={item.icon}
-                  className="mb-4 h-9 w-9 transition-transform duration-300 group-hover:scale-110"
-                />
-                <h3 className="mb-3 font-display text-[1.4rem] font-semibold text-sand">
+              <article className="lux-panel group h-full rounded-[1.25rem] border border-gold/20 bg-ink-2/90 px-7 py-9 shadow-[0_20px_50px_-36px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:border-gold/35 hover:bg-ink-3 hover:shadow-[0_28px_60px_-28px_rgba(201,162,75,0.35)] md:px-8 md:py-10">
+                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/25 bg-gold/10 transition-transform duration-500 group-hover:scale-110">
+                  <TrustIcon name={item.icon} className="h-8 w-8 text-gold" />
+                </div>
+                <h3 className="mb-3 font-display text-[1.35rem] font-bold leading-snug text-sand md:text-[1.45rem]">
                   {item.title}
                 </h3>
-                <p className="text-[0.94rem] leading-[1.75] text-sand-dim">{item.body}</p>
-              </div>
+                <p className="text-[0.94rem] leading-[1.8] text-sand-dim">{item.body}</p>
+              </article>
             </Reveal>
           ))}
         </div>
@@ -119,7 +122,7 @@ export function Venues({
                 cairo: t.venues.tickerCairo,
               }}
             />
-            <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-[#6b6455]">
+            <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-sand-dim">
               {t.venues.namesNote}
             </p>
           </div>
@@ -129,40 +132,116 @@ export function Venues({
   );
 }
 
+const SEO_GOLD_PHRASES = [
+  "أفضل سهرات",
+  "ترابيزات VIP",
+  "دخول مباشر",
+  "بيتش كلوبز",
+  "نايت كلوب",
+  "الساحل الشمالي",
+  "الواتساب",
+  "best nightlife",
+  "VIP tables",
+  "beach clubs",
+  "nightclubs",
+  "North Coast",
+  "WhatsApp",
+  "straight entry",
+];
+
+function highlightSeoPhrases(text: string) {
+  const pattern = new RegExp(
+    `(${SEO_GOLD_PHRASES.map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+    "gi",
+  );
+  const parts = text.split(pattern);
+  return parts.map((part, index) => {
+    const isGold = SEO_GOLD_PHRASES.some((p) => p.toLowerCase() === part.toLowerCase());
+    if (isGold) {
+      return (
+        <span key={`${part}-${index}`} className="font-semibold text-gold-soft">
+          {part}
+        </span>
+      );
+    }
+    return <span key={`${part}-${index}`}>{part}</span>;
+  });
+}
+
+function FaqIcon() {
+  return (
+    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/35 bg-gold/10 text-gold-soft">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+        <path
+          d="M9.5 9.5a2.5 2.5 0 1 1 3.7 2.2c-.7.4-1.2.9-1.2 1.8"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <circle cx="12" cy="16.5" r="0.9" fill="currentColor" />
+      </svg>
+    </span>
+  );
+}
+
 export function Coverage({ t }: { t: Dictionary }) {
   return (
-    <section id="coverage" className="py-24">
-      <Wrap>
+    <section id="coverage" className="relative overflow-hidden py-24 md:py-28">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(201,162,75,0.06),transparent_50%)]"
+        aria-hidden
+      />
+      <Wrap className="relative">
         <Reveal>
           <SectionHeading eyebrow={t.seo.eyebrow}>
             {t.seo.title} <Accent>{t.seo.titleAccent}</Accent>
           </SectionHeading>
         </Reveal>
-        <Reveal>
-          <div className="grid gap-6 md:grid-cols-3">
-            {t.seo.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="text-[0.96rem] leading-[1.9] text-sand-dim">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </Reveal>
 
         <Reveal>
-          <div className="mt-16">
-            <h3 className="mb-6 font-display text-[1.5rem] font-semibold text-sand">
-              {t.seo.faqTitle}
-            </h3>
-            <div className="grid gap-6 md:grid-cols-2">
-              {t.seo.faq.map((item) => (
-                <div key={item.q} className="border border-gold/15 bg-ink-2/40 px-6 py-6">
-                  <h4 className="mb-2.5 text-[1.02rem] font-semibold text-gold-soft">{item.q}</h4>
-                  <p className="text-[0.92rem] leading-[1.85] text-sand-dim">{item.a}</p>
-                </div>
+          <div className="lux-panel rounded-[1.5rem] border border-gold/20 bg-ink-2/90 p-6 shadow-[0_24px_60px_-40px_rgba(0,0,0,0.35)] backdrop-blur-md md:p-9 lg:p-10">
+            <div className="grid gap-8 md:grid-cols-3 md:gap-9 lg:gap-10">
+              {t.seo.paragraphs.map((paragraph, index) => (
+                <p
+                  key={paragraph}
+                  className="relative text-[0.98rem] leading-[1.95] text-sand-dim first:md:ps-0"
+                >
+                  <span
+                    className="mb-4 block font-mono text-[0.72rem] tracking-[0.18em] text-gold/70"
+                    aria-hidden
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {highlightSeoPhrases(paragraph)}
+                </p>
               ))}
             </div>
           </div>
         </Reveal>
+
+        <div className="mt-20 md:mt-24">
+          <Reveal>
+            <h3 className="mb-8 font-display text-[clamp(1.45rem,3vw,1.85rem)] font-bold text-sand md:mb-10">
+              {t.seo.faqTitle}
+            </h3>
+          </Reveal>
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+            {t.seo.faq.map((item, index) => (
+              <Reveal key={item.q} delay={(index % 2) * 80}>
+                <article className="lux-panel group h-full rounded-[1.25rem] border border-gold/20 bg-ink-2/90 p-6 shadow-[0_18px_48px_-36px_rgba(0,0,0,0.35)] backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/30 hover:bg-ink-3 hover:shadow-[0_24px_55px_-28px_rgba(201,162,75,0.28),0_0_40px_-24px_rgba(45,120,140,0.2)] md:p-7">
+                  <div className="mb-3.5 flex items-start gap-3">
+                    <FaqIcon />
+                    <h4 className="pt-1 font-display text-[1.05rem] font-bold leading-snug text-gold-soft md:text-[1.1rem]">
+                      {item.q}
+                    </h4>
+                  </div>
+                  <p className="ps-12 text-[0.92rem] leading-[1.85] text-sand-dim">{item.a}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </Wrap>
     </section>
   );
@@ -175,15 +254,23 @@ export function Testimonials({
   t: Dictionary;
   locale?: Locale;
 }) {
-  // locale defaults to Arabic for alt text when not provided.
-  const items = t.testimonials.items.filter(
-    (item) => item.image || (item.messages && item.messages.length > 0),
+  // Prefer HTML chat mockups; fall back to screenshot images.
+  const messageItems = t.testimonials.items.filter(
+    (item) => item.messages && item.messages.length > 0,
   );
+  const imageOnlyItems = t.testimonials.items.filter(
+    (item) => item.image && !(item.messages && item.messages.length > 0),
+  );
+  const items = [...messageItems, ...imageOnlyItems];
   if (items.length === 0) return null;
 
   return (
-    <section className="py-24">
-      <Wrap>
+    <section className="relative overflow-hidden py-24 md:py-28">
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(16,185,129,0.06),transparent_50%),radial-gradient(ellipse_at_top,rgba(201,162,75,0.05),transparent_55%)]"
+        aria-hidden
+      />
+      <Wrap className="relative">
         <Reveal>
           <SectionHeading eyebrow={t.testimonials.eyebrow} lede={t.testimonials.lede}>
             {t.testimonials.title} <Accent>{t.testimonials.titleAccent}</Accent>{" "}
@@ -191,57 +278,70 @@ export function Testimonials({
           </SectionHeading>
         </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {items.map((item, index) => (
-            <Reveal key={item.image ?? item.contact ?? item.who} delay={(index % 4) * 80}>
-              <figure className="flex flex-col">
-                {item.image ? (
-                  <div className="overflow-hidden rounded-[22px] border border-[#25D366]/35 bg-[#0b141a] p-1.5 shadow-[0_24px_50px_-28px_rgba(0,0,0,0.85)]">
-                    <div className="relative aspect-9/16 overflow-hidden rounded-[16px] bg-[#111b21]">
-                      <Image
-                        src={item.image}
-                        alt={
-                          item.name || item.who
-                            ? locale === "ar"
-                              ? `واتساب — ${[item.name, item.who].filter(Boolean).join(" · ")}`
-                              : `WhatsApp — ${[item.name, item.who].filter(Boolean).join(" · ")}`
-                            : locale === "ar"
-                              ? "لقطة شات واتساب من عميل"
-                              : "WhatsApp chat screenshot from a guest"
-                        }
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover object-top"
-                        loading={index < 4 ? "eager" : "lazy"}
-                        unoptimized={item.image.startsWith("http")}
+        <div className="grid items-end gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:gap-8">
+          {items.map((item, index) => {
+            const stagger =
+              index % 3 === 1
+                ? "lg:-translate-y-10"
+                : index % 3 === 0
+                  ? "lg:translate-y-3"
+                  : "lg:translate-y-6";
+            const floatDelay =
+              index % 3 === 0 ? "chat-float" : index % 3 === 1 ? "chat-float chat-float-delay-1" : "chat-float chat-float-delay-2";
+
+            return (
+              <Reveal key={`${item.contact ?? item.who ?? item.image}-${index}`} delay={(index % 3) * 80}>
+                <figure className={`flex flex-col ${stagger}`}>
+                  <div className={floatDelay}>
+                    {item.messages && item.messages.length > 0 ? (
+                      <WhatsAppScreenshot
+                        chat={{
+                          contact: item.contact ?? "عميل",
+                          messages: item.messages,
+                          clock: item.clock,
+                          battery: item.battery,
+                          signal: item.signal,
+                          lastSeen: item.lastSeen,
+                          dayLabel: item.dayLabel,
+                        }}
+                        caption={item.who}
+                        locale={locale}
                       />
-                    </div>
+                    ) : item.image ? (
+                      <div className="overflow-hidden rounded-[1.5rem] border border-gold/20 bg-ink-2/90 p-2 shadow-[0_28px_60px_-32px_rgba(0,0,0,0.9)] backdrop-blur-md">
+                        <div className="relative aspect-9/16 overflow-hidden rounded-[1.1rem] bg-[#0d1a1f]">
+                          <Image
+                            src={item.image}
+                            alt={
+                              item.name || item.who
+                                ? locale === "ar"
+                                  ? `واتساب — ${[item.name, item.who].filter(Boolean).join(" · ")}`
+                                  : `WhatsApp — ${[item.name, item.who].filter(Boolean).join(" · ")}`
+                                : locale === "ar"
+                                  ? "لقطة شات واتساب من عميل"
+                                  : "WhatsApp chat screenshot from a guest"
+                            }
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover object-top"
+                            loading={index < 3 ? "eager" : "lazy"}
+                            unoptimized={item.image.startsWith("http")}
+                          />
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
-                ) : item.messages ? (
-                  <WhatsAppScreenshot
-                    chat={{
-                      contact: item.contact ?? "عميل",
-                      messages: item.messages,
-                      clock: item.clock,
-                      battery: item.battery,
-                      signal: item.signal,
-                      lastSeen: item.lastSeen,
-                      dayLabel: item.dayLabel,
-                    }}
-                    caption={item.who}
-                    locale={locale}
-                  />
-                ) : null}
-                {item.who ? (
-                  <figcaption className="mt-3 flex items-center gap-1.5 text-[0.8rem] text-sand-dim">
-                    <span className="text-[0.85rem] text-[#63c2a3]">✓✓</span>
-                    {item.name ? <span className="text-sand">{item.name}</span> : null}
-                    {item.who}
-                  </figcaption>
-                ) : null}
-              </figure>
-            </Reveal>
-          ))}
+                  {item.who ? (
+                    <figcaption className="mt-4 flex items-center justify-center gap-1.5 text-[0.82rem] text-sand-dim">
+                      <span className="text-[0.9rem] tracking-tighter text-[#53bdeb]">✓✓</span>
+                      {item.name ? <span className="text-sand">{item.name}</span> : null}
+                      {item.who}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              </Reveal>
+            );
+          })}
         </div>
       </Wrap>
     </section>

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/*
+  Sahra classic: bold gold on deep black.
+*/
+
 @theme {
   --color-ink: #0b0f1a;
   --color-ink-2: #131a29;
@@ -9,34 +13,128 @@
   --color-ruby: #8a2a3b;
   --color-sand: #efe6d0;
   --color-sand-dim: #b9b0a0;
-  --color-teal: #123638;
+  --color-teal: #1c2438;
   --color-line: rgba(201, 162, 75, 0.22);
-  /* Always-dark ink for text on gold / bright CTAs (does not flip in light mode). */
   --color-night: #0b0f1a;
+  --color-on-dark: #efe6d0;
+  --color-on-dark-muted: #b9b0a0;
 
   --font-display: var(--font-el-messiri), serif;
   --font-body: var(--font-cairo), sans-serif;
   --font-mono: var(--font-plex-mono), monospace;
+
+  --spacing-ds-1: 0.25rem;
+  --spacing-ds-2: 0.5rem;
+  --spacing-ds-3: 0.75rem;
+  --spacing-ds-4: 1rem;
+  --spacing-ds-5: 1.25rem;
+  --spacing-ds-6: 1.5rem;
+  --spacing-ds-8: 2rem;
+  --radius-ds: 4px;
 }
 
-/* Light theme — remaps surface/text tokens used across the site. */
+/* Light: cream paper + gold (no green) */
 html.light {
-  --color-ink: #f5f0e6;
-  --color-ink-2: #ebe4d6;
-  --color-ink-3: #e0d7c5;
-  --color-gold: #a8842e;
-  --color-gold-soft: #8a6b1f;
-  --color-ruby: #9b3345;
-  --color-sand: #141820;
-  --color-sand-dim: #5c564c;
-  --color-teal: #2a5c5e;
-  --color-line: rgba(168, 132, 46, 0.28);
+  --color-ink: #f6f2e9;
+  --color-ink-2: #ffffff;
+  --color-ink-3: #ebe4d4;
+  --color-gold: #c9a24b;
+  --color-gold-soft: #8a6a28;
+  --color-ruby: #8a2a3b;
+  --color-sand: #12151c;
+  --color-sand-dim: #3f3a32;
+  --color-teal: #1c2438;
+  --color-line: rgba(201, 162, 75, 0.4);
   --color-night: #0b0f1a;
+  /* Text/icons that sit on intentionally dark chrome (chat, sticky CTA, hero media) */
+  --color-on-dark: #efe6d0;
+  --color-on-dark-muted: #c9bfae;
   color-scheme: light;
 }
 
 html:not(.light) {
   color-scheme: dark;
+  --color-on-dark: #efe6d0;
+  --color-on-dark-muted: #b9b0a0;
+}
+
+html.light .shimmer {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: var(--color-gold-soft);
+  animation: none;
+}
+
+html.light ::selection {
+  background: var(--color-gold);
+  color: var(--color-night);
+}
+
+html.light a,
+html.light button {
+  cursor: pointer;
+}
+
+html.light .btn-outline,
+html.light header a[class*="border"],
+html.light header button {
+  border-color: color-mix(in oklab, var(--color-gold) 65%, transparent);
+}
+
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: var(--color-ink-2);
+  color: var(--color-sand);
+  border-color: color-mix(in oklab, var(--color-gold) 55%, transparent);
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: color-mix(in oklab, var(--color-sand-dim) 85%, transparent);
+  opacity: 1;
+}
+
+html.light .theme-scrim {
+  background: linear-gradient(
+    to top,
+    rgba(11, 15, 26, 0.88) 0%,
+    rgba(11, 15, 26, 0.45) 45%,
+    rgba(11, 15, 26, 0.25) 100%
+  ) !important;
+}
+
+html.light .theme-scrim-text {
+  color: #efe6d0 !important;
+}
+
+html.light .theme-scrim-muted {
+  color: #c9bfae !important;
+}
+
+html.light .theme-scrim-text .text-gold-soft,
+html.light .theme-scrim-muted.text-gold-soft,
+html.light p.theme-scrim-muted.uppercase {
+  color: #e4c878 !important;
+}
+
+/* Sticky / forced-dark chrome keeps light type in both themes */
+.lux-dark-chrome {
+  background-color: #0b101e;
+  color: var(--color-on-dark);
+}
+
+html.light .lux-dark-chrome {
+  background-color: #0b101e;
+  color: #efe6d0;
+}
+
+/* Glass panels that must stay readable on cream paper */
+html.light .lux-panel {
+  background-color: var(--color-ink-2) !important;
+  border-color: color-mix(in oklab, var(--color-gold) 38%, transparent) !important;
+  box-shadow: 0 18px 44px -30px rgba(18, 21, 28, 0.22) !important;
 }
 
 @layer base {
@@ -77,7 +175,7 @@ html:not(.light) {
 
   ::selection {
     background: var(--color-gold);
-    color: var(--color-ink);
+    color: var(--color-night);
   }
 
   /* Prefer-reduced-motion: skip scroll/reveal animations for a11y + LCP. */
@@ -147,19 +245,19 @@ html:not(.light) {
 @supports (animation-timeline: view()) {
   .reveal {
     opacity: 0;
-    transform: translateY(34px) scale(0.97);
-    filter: blur(6px);
+    transform: translateY(24px);
     animation: reveal-in linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover 30%;
+    /* Finish as soon as the block enters — bottom-of-page items never
+       reach cover/30% and otherwise stay faded/shaded forever. */
+    animation-range: entry 0% entry 55%;
   }
 }
 
 @keyframes reveal-in {
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
@@ -259,6 +357,29 @@ html:not(.light) {
   animation: sahra-bob 6s ease-in-out infinite;
 }
 
+@keyframes sahra-chat-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.chat-float {
+  animation: sahra-chat-float 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.chat-float-delay-1 {
+  animation-delay: 0.6s;
+}
+
+.chat-float-delay-2 {
+  animation-delay: 1.2s;
+}
+
 @keyframes sahra-marquee {
   from {
     transform: translateX(0);
@@ -355,8 +476,59 @@ html:not(.light) {
 }
 
 .lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 50px -30px rgba(201, 162, 75, 0.7);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -28px rgba(201, 162, 75, 0.55);
+}
+
+/* Floating nav gold underline */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 9999px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Chat typing dots */
+.typing-dot {
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  border-radius: 9999px;
+  background: #1c2438;
+  opacity: 0.35;
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -367,9 +539,11 @@ html:not(.light) {
   .shimmer,
   .live-dot,
   .bob,
+  .chat-float,
   .halo,
   .spin-slow,
-  .marquee-track {
+  .marquee-track,
+  .typing-dot {
     animation: none;
     opacity: 1;
     transform: none;

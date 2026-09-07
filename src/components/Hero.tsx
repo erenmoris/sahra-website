@@ -1,10 +1,58 @@
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { whatsappLink } from "@/i18n/dictionaries";
-import { ButtonLink, Eyebrow, Wrap, buttonClass } from "./ui";
+import { ButtonLink, Wrap, buttonClass } from "./ui";
 import TrackedLink from "./TrackedLink";
-import Spotlight from "./Spotlight";
 import PromoVideo from "./PromoVideo";
+import { WhatsAppIcon } from "./Icons";
+
+const TRUST_ICONS = ["shield", "clock", "globe", "calendar"] as const;
+
+function TrustSvg({ name }: { name: (typeof TRUST_ICONS)[number] }) {
+  const common = {
+    className: "h-6 w-6",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.7,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+
+  if (name === "shield") {
+    return (
+      <svg {...common}>
+        <path d="M12 3l8 3v6c0 5-3.4 8.4-8 9.5C7.4 20.4 4 17 4 12V6l8-3z" />
+        <path d="M9 12l2 2 4-4" />
+      </svg>
+    );
+  }
+  if (name === "clock") {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="8" />
+        <path d="M12 8v4l3 2" />
+      </svg>
+    );
+  }
+  if (name === "globe") {
+    return (
+      <svg {...common}>
+        <circle cx="12" cy="12" r="8" />
+        <path d="M4 12h16M12 4c2.5 2.5 2.5 13 0 16M12 4c-2.5 2.5-2.5 13 0 16" />
+      </svg>
+    );
+  }
+  return (
+    <svg {...common}>
+      <rect x="4" y="5" width="16" height="15" rx="2" />
+      <path d="M8 3v4M16 3v4M4 10h16" />
+    </svg>
+  );
+}
+
+const MESSAGE_TIMES = ["10:41", "10:42", "10:42", "10:43"];
 
 export default function Hero({
   t,
@@ -19,88 +67,78 @@ export default function Hero({
 }) {
   const { hero } = t;
   const showVideo = Boolean(videoSrc);
+  const trustItems = hero.trust.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden pt-[168px] pb-24">
-      <div className="lattice pointer-events-none absolute inset-x-0 top-0 h-[600px] opacity-50" />
-
+    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-14 sm:pb-24">
+      {/* Ambient luxury washes */}
       <div
-        aria-hidden="true"
-        className="orb start-[-8%] top-[-12%] h-[420px] w-[420px] bg-gold/25"
+        aria-hidden
+        className="pointer-events-none absolute -start-[10%] top-[-8%] h-[420px] w-[420px] rounded-full bg-gold/20 blur-[100px]"
       />
       <div
-        aria-hidden="true"
-        className="orb end-[-6%] top-[18%] h-[360px] w-[360px] bg-ruby/35"
-        style={{ animationDelay: "-6s", animationDuration: "24s" }}
+        aria-hidden
+        className="pointer-events-none absolute -end-[8%] top-[20%] h-[380px] w-[380px] rounded-full bg-ruby/25 blur-[110px]"
       />
       <div
-        aria-hidden="true"
-        className="orb start-[35%] bottom-[-18%] h-[320px] w-[320px] bg-teal/60"
-        style={{ animationDelay: "-12s", animationDuration: "30s" }}
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(ellipse_at_top,rgba(201,162,75,0.12),transparent_55%)]"
       />
 
-      <Spotlight />
+      <Wrap className="relative z-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        {/* Pitch column — first in DOM for RTL start (right in Arabic) */}
+        <div className="order-1">
+          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/35 bg-gold/10 px-3.5 py-1.5 text-[0.78rem] font-bold tracking-[0.04em] text-gold">
+            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-gold shadow-[0_0_12px_rgba(201,162,75,0.9)]" />
+            {hero.eyebrow}
+          </p>
 
-      <svg
-        viewBox="0 0 1200 500"
-        preserveAspectRatio="xMidYMax slice"
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full"
-      >
-        <g fill="none" stroke="#C9A24B" strokeWidth={1.1} opacity={0.28}>
-          <path d="M0 460 L60 460 L60 380 L100 380 L100 420 L150 420 L150 340 L190 340 L190 460 L240 460 L240 300 L260 300 L260 460 L320 460 L320 400 L360 400 L360 460" />
-          <g transform="translate(880,180)">
-            <path d="M0 0 L160 0 L80 100 L80 220" strokeLinejoin="round" strokeLinecap="round" />
-            <path d="M30 250 L130 250" strokeLinecap="round" />
-            <path d="M80 220 L80 250" strokeLinecap="round" />
-            <circle cx="118" cy="24" r="6" />
-            <path d="M100 18 L112 42 M136 18 L124 42" strokeWidth={0.9} />
-          </g>
-          <circle cx="200" cy="70" r="34" opacity={0.5} />
-        </g>
-      </svg>
-
-      <Wrap className="relative z-10 grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
-          <Eyebrow>{hero.eyebrow}</Eyebrow>
-          <h1 className="font-display text-[clamp(2.4rem,5vw,3.9rem)] leading-[1.22] font-semibold text-sand">
-            {hero.titleTop} <span className="shimmer font-medium">{hero.titleAccent}</span>
+          <h1 className="font-display text-[clamp(2.5rem,5.5vw,4.1rem)] leading-[1.15] font-bold text-sand">
+            {hero.titleTop}{" "}
+            <span className="bg-gradient-to-l from-gold via-[#e4c878] to-gold bg-clip-text text-transparent">
+              {hero.titleAccent}
+            </span>
             <br />
             {hero.titleBottom}
           </h1>
-          <p className="mt-6 max-w-[48ch] text-[1.12rem] leading-[1.85] text-sand-dim">
-            {hero.lede}
-          </p>
 
-          <div className="mt-9 flex flex-wrap gap-4">
+          <p className="mt-6 max-w-[46ch] text-[1.08rem] leading-[1.85] text-sand-dim">{hero.lede}</p>
+
+          <div className="mt-9 flex flex-wrap gap-3.5">
             <TrackedLink
               href={whatsappLink(t.whatsappMessage)}
               placement="hero-cta"
               locale={locale}
               t={t}
-              className={buttonClass("primary", "shine")}
+              className={buttonClass("primary", "min-w-[200px]")}
             >
+              <WhatsAppIcon className="h-5 w-5" />
               {hero.ctaPrimary}
             </TrackedLink>
-            <ButtonLink href="#reserve" variant="ghost">
+            <ButtonLink href="#reserve" variant="ghost" className="min-w-[160px]">
               {hero.ctaSecondary}
             </ButtonLink>
           </div>
 
-          <dl className="mt-11 flex flex-wrap gap-x-8 gap-y-4 text-[0.82rem] text-sand-dim">
-            {hero.trust.map((item) => (
-              <div key={item.value} className="flex items-baseline gap-2">
-                <dt className="font-display text-[1.05rem] font-semibold text-gold-soft">
-                  {item.value}
-                </dt>
-                <dd>{item.label}</dd>
-              </div>
+          <ul className="mt-12 grid gap-3 sm:grid-cols-3">
+            {trustItems.map((item, index) => (
+              <li
+                key={item.value}
+                className="rounded-2xl border border-gold/25 bg-ink-2/80 p-4 shadow-[0_10px_30px_-22px_rgba(0,0,0,0.55)] backdrop-blur-md"
+              >
+                <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-ink-3 text-gold">
+                  <TrustSvg name={TRUST_ICONS[index] ?? "shield"} />
+                </span>
+                <p className="text-[0.92rem] font-bold text-sand">{item.value}</p>
+                <p className="mt-1 text-[0.78rem] leading-snug text-sand-dim">{item.label}</p>
+              </li>
             ))}
-          </dl>
+          </ul>
         </div>
 
-        {showVideo ? (
-          <div className="mx-auto w-full max-w-[440px]">
+        {/* Chat / media column */}
+        <div className="order-2 mx-auto w-full max-w-[420px] lg:mx-0 lg:justify-self-end">
+          {showVideo ? (
             <PromoVideo
               src={videoSrc!}
               poster={videoPoster}
@@ -108,50 +146,97 @@ export default function Hero({
               t={t}
               compact
             />
-          </div>
-        ) : (
-          <div className="bob relative mx-auto w-full max-w-[380px] rounded-[22px] border border-gold/20 bg-gradient-to-b from-ink-3 to-ink-2 p-[18px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.7)]">
-            <div className="absolute -top-px left-1/2 h-[22px] w-[120px] -translate-x-1/2 rounded-b-[14px] bg-ink" />
-
-            <div className="flex items-center gap-2.5 border-b border-gold/20 px-2 pt-3.5 pb-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gold font-display font-bold text-night">
-                {hero.chat.name.charAt(0)}
-              </div>
-              <div>
-                <div className="text-[0.92rem] font-bold text-sand">{hero.chat.name}</div>
-                <div className="flex items-center gap-1.5 text-[0.72rem] text-[#7fbf9e]">
-                  <span className="live-dot" />
-                  {hero.chat.status.replace(/^●\s*/, "")}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex min-h-[300px] flex-col gap-2.5 px-1.5 pt-4 pb-1.5">
-              {hero.chat.messages.map((message, index) => (
-                <div
-                  key={message.text}
-                  className={`chat-bubble max-w-[82%] rounded-[14px] px-4 py-2.5 text-[0.88rem] leading-[1.6] ${
-                    message.side === "out"
-                      ? "self-end rounded-br-[3px] bg-[#1a4f52] text-[#e8f6f2]"
-                      : "self-start rounded-bl-[3px] bg-ink-3 text-sand"
-                  }`}
-                  style={{ animationDelay: `${0.3 + index * 0.8}s` }}
-                >
-                  {message.text}
-                </div>
-              ))}
+          ) : (
+            <article
+              className="relative overflow-hidden rounded-[28px] border border-gold/30 bg-ink-2/90 p-4 shadow-[0_40px_80px_-28px_rgba(0,0,0,0.75)] backdrop-blur-2xl sm:p-5"
+              aria-label={locale === "ar" ? "معاينة محادثة الحجز" : "Booking chat preview"}
+            >
               <div
-                className="chat-bubble max-w-[92%] self-start rounded-[14px] border border-gold/25 bg-gold/15 px-4 py-2.5 text-left font-mono text-[0.74rem] text-gold-soft"
-                dir="ltr"
-                style={{ animationDelay: `${0.3 + hero.chat.messages.length * 0.8}s` }}
-              >
-                {hero.chat.confirm.map((line) => (
-                  <div key={line}>{line}</div>
-                ))}
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-gradient-to-b from-gold/5 via-transparent to-black/30"
+              />
+
+              <div className="relative mb-3 flex items-center justify-between px-1">
+                <span className="text-[0.7rem] font-semibold text-sand">10:41</span>
+                <span className="mx-auto h-1.5 w-20 rounded-full bg-gold/25" />
+                <span className="text-[0.7rem] text-sand-dim">5G</span>
               </div>
-            </div>
-          </div>
-        )}
+
+              <header className="relative flex items-center gap-3 rounded-2xl border border-gold/20 bg-ink/50 px-3 py-3 backdrop-blur-md">
+                <div className="relative">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gold font-display text-lg font-bold text-night shadow-[0_0_20px_rgba(201,162,75,0.45)]">
+                    {hero.chat.name.charAt(0)}
+                  </div>
+                  <span className="absolute end-0 bottom-0 h-3 w-3 rounded-full border-2 border-ink-2 bg-[#7fbf9e]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h2 className="truncate text-[0.95rem] font-bold text-sand">{hero.chat.name}</h2>
+                  <p className="text-[0.72rem] text-[#7fbf9e]">
+                    {hero.chat.status.replace(/^●\s*/, "")}
+                  </p>
+                </div>
+              </header>
+
+              <div className="relative mt-4 flex min-h-[320px] flex-col gap-3 px-0.5 pb-2">
+                {hero.chat.messages.map((message, index) => {
+                  const outgoing = message.side === "out";
+                  return (
+                    <div
+                      key={`${message.text}-${index}`}
+                      className={`chat-bubble flex max-w-[88%] flex-col gap-1 ${
+                        outgoing ? "self-end items-end" : "self-start items-start"
+                      }`}
+                      style={{ animationDelay: `${0.25 + index * 0.55}s` }}
+                    >
+                      <div
+                        className={`rounded-[18px] px-3.5 py-2.5 text-[0.88rem] leading-[1.55] shadow-sm ${
+                          outgoing
+                            ? "rounded-se-md bg-ink-3 text-sand"
+                            : "rounded-ss-md bg-sand text-night"
+                        }`}
+                      >
+                        {message.text}
+                      </div>
+                      <time className="px-1 text-[0.65rem] text-sand-dim">
+                        {MESSAGE_TIMES[index] ?? "10:41"}
+                      </time>
+                    </div>
+                  );
+                })}
+
+                <div
+                  className="chat-bubble flex items-center gap-1 self-start rounded-[18px] rounded-ss-md bg-sand px-3.5 py-3"
+                  style={{ animationDelay: `${0.25 + hero.chat.messages.length * 0.55}s` }}
+                  aria-hidden
+                >
+                  <span className="typing-dot" />
+                  <span className="typing-dot" />
+                  <span className="typing-dot" />
+                </div>
+
+                <div
+                  className="chat-bubble mt-1 w-full overflow-hidden rounded-2xl border border-gold/45 bg-gradient-to-br from-ink-3 to-ink shadow-[0_12px_28px_-12px_rgba(201,162,75,0.35)]"
+                  style={{ animationDelay: `${0.45 + hero.chat.messages.length * 0.55}s` }}
+                  dir="ltr"
+                >
+                  <div className="flex items-center justify-between border-b border-dashed border-gold/35 bg-gold/15 px-4 py-2.5">
+                    <span className="text-[0.68rem] font-bold tracking-[0.14em] text-gold uppercase">
+                      Confirmed
+                    </span>
+                    <span className="rounded-full bg-gold px-2.5 py-0.5 text-[0.68rem] font-bold text-night">
+                      VIP
+                    </span>
+                  </div>
+                  <div className="space-y-1 px-4 py-3 font-mono text-[0.74rem] leading-relaxed text-sand">
+                    {hero.chat.confirm.map((line) => (
+                      <div key={line}>{line}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          )}
+        </div>
       </Wrap>
     </section>
   );

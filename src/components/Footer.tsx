@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { SNAPCHAT_URL, whatsappLink } from "@/i18n/dictionaries";
+import { whatsappLink } from "@/i18n/dictionaries";
 import Logo from "./Logo";
 import { WhatsAppIcon } from "./Icons";
 import TrackedLink from "./TrackedLink";
@@ -30,15 +30,6 @@ export default function Footer({
               className="transition-colors hover:text-gold-soft"
             >
               {t.footer.links.whatsapp}
-            </TrackedLink>
-            <TrackedLink
-              href={SNAPCHAT_URL}
-              placement="snapchat-footer"
-              locale={locale}
-              t={t}
-              className="transition-colors hover:text-gold-soft"
-            >
-              {t.footer.links.snapchat}
             </TrackedLink>
             <Link href={`/${locale}/venues`} className="transition-colors hover:text-gold-soft">
               {t.footer.links.venues}
