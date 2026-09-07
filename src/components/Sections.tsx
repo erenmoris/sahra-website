@@ -1,9 +1,8 @@
-import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import Reveal from "./Reveal";
 import VenueTicker from "./VenueTicker";
-import WhatsAppScreenshot from "./WhatsAppScreenshot";
+import TestimonialsSlider from "./TestimonialsSlider";
 import { TrustIcon, VenueIcon } from "./Icons";
 import { Accent, SectionHeading, Wrap } from "./ui";
 
@@ -250,9 +249,15 @@ export function Coverage({ t }: { t: Dictionary }) {
 export function Testimonials({
   t,
   locale = "ar",
+  compact = false,
+  limit,
 }: {
   t: Dictionary;
   locale?: Locale;
+  /** Tighter vertical rhythm for embedding on the homepage. */
+  compact?: boolean;
+  /** Optional max number of chat cards to render. */
+  limit?: number;
 }) {
   // Prefer HTML chat mockups; fall back to screenshot images.
   const messageItems = t.testimonials.items.filter(
@@ -261,11 +266,17 @@ export function Testimonials({
   const imageOnlyItems = t.testimonials.items.filter(
     (item) => item.image && !(item.messages && item.messages.length > 0),
   );
-  const items = [...messageItems, ...imageOnlyItems];
+  const items = [...messageItems, ...imageOnlyItems].slice(
+    0,
+    limit ?? Number.POSITIVE_INFINITY,
+  );
   if (items.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden py-24 md:py-28">
+    <section
+      id="testimonials"
+      className={`relative overflow-hidden ${compact ? "py-12 md:py-16" : "py-24 md:py-28"}`}
+    >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(16,185,129,0.06),transparent_50%),radial-gradient(ellipse_at_top,rgba(201,162,75,0.05),transparent_55%)]"
         aria-hidden
@@ -273,76 +284,14 @@ export function Testimonials({
       <Wrap className="relative">
         <Reveal>
           <SectionHeading eyebrow={t.testimonials.eyebrow} lede={t.testimonials.lede}>
-            {t.testimonials.title} <Accent>{t.testimonials.titleAccent}</Accent>{" "}
-            {t.testimonials.titleEnd}
+            {t.testimonials.title} <Accent>{t.testimonials.titleAccent}</Accent>
+            {t.testimonials.titleEnd ? <> {t.testimonials.titleEnd}</> : null}
           </SectionHeading>
         </Reveal>
 
-        <div className="grid items-end gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:gap-8">
-          {items.map((item, index) => {
-            const stagger =
-              index % 3 === 1
-                ? "lg:-translate-y-10"
-                : index % 3 === 0
-                  ? "lg:translate-y-3"
-                  : "lg:translate-y-6";
-            const floatDelay =
-              index % 3 === 0 ? "chat-float" : index % 3 === 1 ? "chat-float chat-float-delay-1" : "chat-float chat-float-delay-2";
-
-            return (
-              <Reveal key={`${item.contact ?? item.who ?? item.image}-${index}`} delay={(index % 3) * 80}>
-                <figure className={`flex flex-col ${stagger}`}>
-                  <div className={floatDelay}>
-                    {item.messages && item.messages.length > 0 ? (
-                      <WhatsAppScreenshot
-                        chat={{
-                          contact: item.contact ?? "عميل",
-                          messages: item.messages,
-                          clock: item.clock,
-                          battery: item.battery,
-                          signal: item.signal,
-                          lastSeen: item.lastSeen,
-                          dayLabel: item.dayLabel,
-                        }}
-                        caption={item.who}
-                        locale={locale}
-                      />
-                    ) : item.image ? (
-                      <div className="overflow-hidden rounded-[1.5rem] border border-gold/20 bg-ink-2/90 p-2 shadow-[0_28px_60px_-32px_rgba(0,0,0,0.9)] backdrop-blur-md">
-                        <div className="relative aspect-9/16 overflow-hidden rounded-[1.1rem] bg-[#0d1a1f]">
-                          <Image
-                            src={item.image}
-                            alt={
-                              item.name || item.who
-                                ? locale === "ar"
-                                  ? `واتساب — ${[item.name, item.who].filter(Boolean).join(" · ")}`
-                                  : `WhatsApp — ${[item.name, item.who].filter(Boolean).join(" · ")}`
-                                : locale === "ar"
-                                  ? "لقطة شات واتساب من عميل"
-                                  : "WhatsApp chat screenshot from a guest"
-                            }
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover object-top"
-                            loading={index < 3 ? "eager" : "lazy"}
-                            unoptimized={item.image.startsWith("http")}
-                          />
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                  {item.who ? (
-                    <figcaption className="mt-4 flex items-center justify-center gap-1.5 text-[0.82rem] text-sand-dim">
-                      <span className="text-[0.9rem] tracking-tighter text-[#53bdeb]">✓✓</span>
-                      {item.name ? <span className="text-sand">{item.name}</span> : null}
-                      {item.who}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              </Reveal>
-            );
-          })}
-        </div>
+        <Reveal>
+          <TestimonialsSlider items={items} locale={locale} />
+        </Reveal>
       </Wrap>
     </section>
   );

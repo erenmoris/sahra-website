@@ -28,7 +28,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "ticker", label: "الشريط المتحرك" },
   { id: "coverage", label: "دليل السهر والأسئلة" },
   { id: "chalets", label: "الشاليهات" },
-  { id: "testimonials", label: "سكرينات واتساب" },
+  { id: "testimonials", label: "آراء العملاء" },
   { id: "gallery", label: "معرض الصور" },
 ];
 
@@ -447,6 +447,7 @@ export default function ContentEditor({
               <div className="grid gap-4">
                 {(
                   [
+                    ["home", "تاب الرئيسية"],
                     ["how", "تاب طريقة الحجز"],
                     ["venues", "تاب سهرات"],
                     ["chalets", "تاب الشاليهات"],
@@ -742,7 +743,7 @@ export default function ContentEditor({
           <section className="border border-gold/20 bg-ink-2/40 p-6">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h2 className="font-display text-lg text-sand">سكرينات واتساب</h2>
+                <h2 className="font-display text-lg text-sand">آراء العملاء</h2>
                 <p className="mt-1 max-w-xl text-[0.85rem] leading-[1.7] text-sand-dim">
                   ارفع سكرينات حقيقية من شات العملاء (بعد إذنهم). الصفحة بتعرض الصور زي ما هي —
                   من غير رسائل مكتوبة يدوي.

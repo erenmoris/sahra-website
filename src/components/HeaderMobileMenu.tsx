@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+import LanguageSwitch from "./LanguageSwitch";
 import { buttonClass } from "./ui";
 
 type NavLink = { href: string; label: string };
@@ -35,12 +36,10 @@ export default function HeaderMobileMenu({
   locale,
   t,
   links,
-  other,
 }: {
   locale: Locale;
   t: Dictionary;
   links: NavLink[];
-  other: Locale;
 }) {
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
@@ -57,6 +56,10 @@ export default function HeaderMobileMenu({
       window.removeEventListener("keydown", onKey);
     };
   }, [open, close]);
+
+  const langClass =
+    "block rounded-full border-2 border-gold/60 bg-ink py-3.5 text-center text-[0.9rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold";
+  const other: Locale = locale === "ar" ? "en" : "ar";
 
   return (
     <div className="relative md:hidden">
@@ -114,13 +117,20 @@ export default function HeaderMobileMenu({
               >
                 {t.nav.reserve}
               </Link>
-              <Link
-                href={`/${other}`}
-                className="block rounded-full border-2 border-gold/60 bg-ink py-3.5 text-center text-[0.9rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold"
-                onClick={close}
+              <Suspense
+                fallback={
+                  <Link href={`/${other}`} className={langClass} onClick={close} hrefLang={other}>
+                    {t.langSwitch}
+                  </Link>
+                }
               >
-                {t.langSwitch}
-              </Link>
+                <LanguageSwitch
+                  locale={locale}
+                  label={t.langSwitch}
+                  className={langClass}
+                  onNavigate={close}
+                />
+              </Suspense>
             </div>
           </nav>
         </>

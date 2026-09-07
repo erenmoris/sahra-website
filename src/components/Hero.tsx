@@ -70,7 +70,7 @@ export default function Hero({
   const trustItems = hero.trust.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden pt-10 pb-20 sm:pt-14 sm:pb-24">
+    <section className="relative overflow-hidden pt-8 pb-10 sm:pt-10 sm:pb-12">
       {/* Ambient luxury washes */}
       <div
         aria-hidden
@@ -85,7 +85,7 @@ export default function Hero({
         className="pointer-events-none absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(ellipse_at_top,rgba(201,162,75,0.12),transparent_55%)]"
       />
 
-      <Wrap className="relative z-10 grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <Wrap className="relative z-10 grid items-center gap-8 lg:grid-cols-2 lg:gap-10">
         {/* Pitch column — first in DOM for RTL start (right in Arabic) */}
         <div className="order-1">
           <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold/35 bg-gold/10 px-3.5 py-1.5 text-[0.78rem] font-bold tracking-[0.04em] text-gold">
@@ -120,7 +120,7 @@ export default function Hero({
             </ButtonLink>
           </div>
 
-          <ul className="mt-12 grid gap-3 sm:grid-cols-3">
+          <ul className="mt-8 grid gap-3 sm:grid-cols-3">
             {trustItems.map((item, index) => (
               <li
                 key={item.value}

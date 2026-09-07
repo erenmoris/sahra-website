@@ -37,6 +37,7 @@ const ar = {
     businessName: "سهرة — كونسييرج السهر في مصر",
   },
   nav: {
+    home: "الرئيسية",
     how: "طريقة الحجز",
     venues: "سهرات",
     beaches: "الشواطئ",
@@ -271,10 +272,10 @@ const ar = {
   },
   testimonials: {
     eyebrow: "من واتساب",
-    title: "سكرينات",
-    titleAccent: "من الشات",
-    titleEnd: "بعد السهرة.",
-    lede: "رسايل وصلتنا على واتساب.",
+    title: "آراء",
+    titleAccent: "العملاء",
+    titleEnd: "",
+    lede: "رسايل حقيقية وصلتنا على واتساب بعد السهرة.",
     items: [
       {
         who: "عميل من الرياض",
@@ -738,6 +739,7 @@ const en = {
     businessName: "Sahra — Nightlife Concierge in Egypt",
   },
   nav: {
+    home: "Home",
     how: "How it works",
     venues: "Nights out",
     beaches: "Beaches",
@@ -965,10 +967,10 @@ const en = {
   },
   testimonials: {
     eyebrow: "From WhatsApp",
-    title: "Chat",
-    titleAccent: "screenshots",
-    titleEnd: "after the night.",
-    lede: "Messages that landed on our WhatsApp.",
+    title: "Guest",
+    titleAccent: "reviews",
+    titleEnd: "",
+    lede: "Real messages that landed on our WhatsApp after the night.",
     items: [
       {
         who: "Client from Riyadh",

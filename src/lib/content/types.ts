@@ -16,6 +16,7 @@ export type LocalizedString = {
 };
 
 export type NavOverrides = {
+  home?: LocalizedString;
   how?: LocalizedString;
   venues?: LocalizedString;
   beaches?: LocalizedString;
@@ -497,7 +498,7 @@ export const SECTION_LABELS: Record<SectionKey, string> = {
   venues: "سهرات",
   gallery: "معرض الصور",
   coverage: "قسم التغطية / SEO",
-  testimonials: "سكرينات واتساب",
+  testimonials: "آراء العملاء",
   reserve: "نموذج الحجز",
   promoVideo: "قسم الفيديو الدعائي",
 };

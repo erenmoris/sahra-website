@@ -4,7 +4,7 @@ import { isLocale, locales } from "@/i18n/config";
 import { getSiteConfig, getSiteDictionary } from "@/lib/content";
 import Header from "@/components/Header";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
-import { Coverage, Testimonials, Trust } from "@/components/Sections";
+import { Coverage, Trust } from "@/components/Sections";
 import ScrollProgress from "@/components/ScrollProgress";
 import { Divider, Wrap } from "@/components/ui";
 import { pageMetadata } from "@/lib/seo";
@@ -43,15 +43,7 @@ export default async function TrustPage({ params }: { params: Promise<{ locale: 
       <main className="pt-0">
         {sections.trust ? <Trust t={t} /> : null}
 
-        {sections.trust && sections.testimonials ? (
-          <Wrap>
-            <Divider />
-          </Wrap>
-        ) : null}
-
-        {sections.testimonials ? <Testimonials t={t} locale={locale} /> : null}
-
-        {sections.testimonials && sections.coverage ? (
+        {sections.trust && sections.coverage ? (
           <Wrap>
             <Divider />
           </Wrap>

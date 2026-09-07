@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import HeaderMobileMenu from "./HeaderMobileMenu";
+import LanguageSwitch from "./LanguageSwitch";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 import { Wrap, buttonClass } from "./ui";
@@ -10,11 +12,29 @@ type NavLink = { href: string; label: string };
 
 export function buildNavLinks(locale: Locale, t: Dictionary): NavLink[] {
   return [
+    { href: `/${locale}`, label: t.nav.home },
     { href: `/${locale}/venues`, label: t.nav.venues },
     { href: `/${locale}/beaches`, label: t.nav.beaches },
     { href: `/${locale}/chalets`, label: t.nav.chalets },
     { href: `/${locale}/trust`, label: t.nav.trust },
   ];
+}
+
+function LanguageSwitchFallback({
+  locale,
+  label,
+  className,
+}: {
+  locale: Locale;
+  label: string;
+  className?: string;
+}) {
+  const other: Locale = locale === "ar" ? "en" : "ar";
+  return (
+    <Link href={`/${other}`} className={className} hrefLang={other}>
+      {label}
+    </Link>
+  );
 }
 
 export default function Header({
@@ -26,8 +46,9 @@ export default function Header({
   t: Dictionary;
   logoSrc?: string;
 }) {
-  const other: Locale = locale === "ar" ? "en" : "ar";
   const links = buildNavLinks(locale, t);
+  const langClass =
+    "hidden rounded-full border-2 border-gold/60 bg-ink-2 px-3.5 py-2 text-[0.78rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold sm:inline-block";
 
   return (
     <header className="relative z-50 border-b border-gold/35 bg-ink/95">
@@ -52,12 +73,9 @@ export default function Header({
 
           <ThemeToggle locale={locale} />
 
-          <Link
-            href={`/${other}`}
-            className="hidden rounded-full border-2 border-gold/60 bg-ink-2 px-3.5 py-2 text-[0.78rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold sm:inline-block"
-          >
-            {t.langSwitch}
-          </Link>
+          <Suspense fallback={<LanguageSwitchFallback locale={locale} label={t.langSwitch} className={langClass} />}>
+            <LanguageSwitch locale={locale} label={t.langSwitch} className={langClass} />
+          </Suspense>
 
           <Link
             href={`/${locale}#reserve`}
@@ -66,7 +84,7 @@ export default function Header({
             {t.nav.reserve}
           </Link>
 
-          <HeaderMobileMenu locale={locale} t={t} links={links} other={other} />
+          <HeaderMobileMenu locale={locale} t={t} links={links} />
         </div>
       </Wrap>
     </header>

@@ -29,13 +29,13 @@ export function SectionHeading({
   lede?: string;
 }) {
   return (
-    <div className="mb-12 max-w-[640px]">
+    <div className="mb-8 max-w-[640px] md:mb-10">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="font-display text-[clamp(1.9rem,3.4vw,2.7rem)] leading-[1.3] font-semibold text-sand">
+      <h2 className="font-display text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.3] font-semibold text-sand">
         {children}
       </h2>
       <span className="grow-line mt-3 block h-1 w-14 rounded-[1px] bg-gold" />
-      {lede ? <p className="mt-4 text-[1.02rem] leading-[1.75] text-sand-dim">{lede}</p> : null}
+      {lede ? <p className="mt-3 text-[0.98rem] leading-[1.7] text-sand-dim">{lede}</p> : null}
     </div>
   );
 }
