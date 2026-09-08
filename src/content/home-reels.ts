@@ -9,6 +9,41 @@ export type HomeReel = {
 /** Short vertical clips cut from gallery videos for the homepage reels row. */
 export const homeReels: HomeReel[] = [
   {
+    id: "party",
+    src: "/home/reels/party.mp4",
+    poster: "/home/reels/party.jpg",
+    titleAr: "بارتي كلوب",
+    titleEn: "Party Club",
+  },
+  {
+    id: "vieena",
+    src: "/home/reels/vieena.mp4",
+    poster: "/home/reels/vieena.jpg",
+    titleAr: "فيينا كلوب",
+    titleEn: "Vieena Club",
+  },
+  {
+    id: "royal",
+    src: "/home/reels/royal.mp4",
+    poster: "/home/reels/royal.jpg",
+    titleAr: "رويال كينج",
+    titleEn: "Royal King",
+  },
+  {
+    id: "fox-nce",
+    src: "/home/reels/fox-nce.mp4",
+    poster: "/home/reels/fox-nce.jpg",
+    titleAr: "فوكس كلوب",
+    titleEn: "Fox Club",
+  },
+  {
+    id: "xo-nce",
+    src: "/home/reels/xo-nce.mp4",
+    poster: "/home/reels/xo-nce.jpg",
+    titleAr: "إكس أو كلوب",
+    titleEn: "XO Club",
+  },
+  {
     id: "stage",
     src: "/home/reels/stage.mp4",
     poster: "/home/reels/stage.jpg",

@@ -18,6 +18,18 @@ export type Nightclub = {
  */
 export const nightclubs: Nightclub[] = [
   {
+    slug: "party-club",
+    name: "Party Club",
+    nameAr: "بارتي كلوب",
+    area: "Giza",
+    areaAr: "الجيزة",
+    about:
+      "International DJs, VIP bottle service, and a polished nightlife room — we arrange your table privately on WhatsApp.",
+    aboutAr:
+      "موسيقى عالمية وخدمة زجاجات VIP وأجواء راقية. نرتّب ترابيزتك والدخول بهدوء عبر واتساب الكونسييرج.",
+    aliases: ["PARTY CLUB", "بارتي", "بارتي كلوب"],
+  },
+  {
     slug: "tango-club",
     name: "Tango Club",
     nameAr: "تانجو كلوب",

@@ -13,6 +13,9 @@ export type NightclubGalleryVideo = {
 
 /** Images for /gallery — sourced from nightclub listings (no prices). */
 export const nightclubGalleryImages: NightclubGalleryImage[] = [
+  { src: "/nightclub-gallery/images/party-club.webp", captionAr: "بارتي كلوب · الجيزة", captionEn: "Party Club · Giza" },
+  { src: "/nightclub-gallery/images/party-club-alt.png", captionAr: "بارتي كلوب", captionEn: "Party Club" },
+  { src: "/nightclub-gallery/images/party-club-alt-2.png", captionAr: "أجواء بارتي كلوب", captionEn: "Party Club atmosphere" },
   { src: "/nightclub-gallery/images/tango-club.jpg", captionAr: "تانجو كلوب · الجيزة", captionEn: "Tango Club · Giza" },
   { src: "/nightclub-gallery/images/vieena-club.webp", captionAr: "فيينا كلوب · العجوزة", captionEn: "Vieena Club · Agouza" },
   { src: "/nightclub-gallery/images/royal-king.webp", captionAr: "رويال كينج · كورنيش النيل", captionEn: "Royal King · Nile Corniche" },
@@ -48,6 +51,7 @@ export const nightclubGalleryImages: NightclubGalleryImage[] = [
 /** Curated homepage preview — atmospheric picks only. */
 export const homeGalleryPreview: NightclubGalleryImage[] = [
   { src: "/nightclub-gallery/images/promo-poster.jpeg", captionAr: "أجواء السهرة", captionEn: "Nightlife atmosphere" },
+  { src: "/nightclub-gallery/images/party-club.webp", captionAr: "بارتي كلوب · الجيزة", captionEn: "Party Club · Giza" },
   { src: "/nightclub-gallery/images/tango-club.jpg", captionAr: "تانجو كلوب · الجيزة", captionEn: "Tango Club · Giza" },
   { src: "/nightclub-gallery/images/volt-lounge.jpg", captionAr: "فولت لاونج · الدقي", captionEn: "Volt Lounge · Dokki" },
   { src: "/nightclub-gallery/images/fox-club.webp", captionAr: "فوكس كلوب · العجوزة", captionEn: "Fox Club · Agouza" },
@@ -63,6 +67,42 @@ export const nightclubGalleryVideos: NightclubGalleryVideo[] = [
     poster: "/nightclub-gallery/posters/nightclub-promo.jpeg",
     titleAr: "أفضل نايت كلوب في القاهرة",
     titleEn: "Best nightclubs in Cairo",
+  },
+  {
+    src: "/nightclub-gallery/videos/party-club.mp4",
+    poster: "/nightclub-gallery/posters/party-club.jpg",
+    titleAr: "بارتي كلوب · الجيزة",
+    titleEn: "Party Club · Giza",
+  },
+  {
+    src: "/nightclub-gallery/videos/vieena-club.mp4",
+    poster: "/nightclub-gallery/posters/vieena-club.jpg",
+    titleAr: "فيينا كلوب",
+    titleEn: "Vieena Club",
+  },
+  {
+    src: "/nightclub-gallery/videos/vieena-club-2.mp4",
+    poster: "/nightclub-gallery/posters/vieena-club-2.jpg",
+    titleAr: "أجواء فيينا كلوب",
+    titleEn: "Vieena Club vibe",
+  },
+  {
+    src: "/nightclub-gallery/videos/royal-king.mp4",
+    poster: "/nightclub-gallery/posters/royal-king.jpg",
+    titleAr: "رويال كينج",
+    titleEn: "Royal King",
+  },
+  {
+    src: "/nightclub-gallery/videos/fox-club.mp4",
+    poster: "/nightclub-gallery/posters/fox-club.jpg",
+    titleAr: "فوكس كلوب",
+    titleEn: "Fox Club",
+  },
+  {
+    src: "/nightclub-gallery/videos/xo-club-cairo.mp4",
+    poster: "/nightclub-gallery/posters/xo-club-cairo.jpg",
+    titleAr: "إكس أو كلوب القاهرة",
+    titleEn: "XO Club Cairo",
   },
   {
     src: "/nightclub-gallery/videos/stage-cairo-club.mp4",
