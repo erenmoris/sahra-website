@@ -36,6 +36,13 @@ export const nightclubGalleryImages: NightclubGalleryImage[] = [
   { src: "/nightclub-gallery/images/sahalal-club.jpg", captionAr: "صهله كلوب · شارع الهرم", captionEn: "Sahalal Club · Pyramid St" },
   { src: "/nightclub-gallery/images/kalije-night-club.jpg", captionAr: "خليجي نايت كلوب · الدقي", captionEn: "Kalije Night Club · Dokki" },
   { src: "/nightclub-gallery/images/promo-poster.jpeg", captionAr: "أجواء السهرة", captionEn: "Nightlife atmosphere" },
+  { src: "/nightclub-gallery/images/al-molouk-club.jpg", captionAr: "الملوك كلوب · المهندسين", captionEn: "Al Molouk Club · Mohandessin" },
+  { src: "/nightclub-gallery/images/aowtar-club.jpg", captionAr: "أوتار كلوب", captionEn: "Aowtar Club" },
+  { src: "/nightclub-gallery/images/as-one-club.jpg", captionAr: "أس وان كلوب", captionEn: "AS.ONE Club" },
+  { src: "/nightclub-gallery/images/el-maluonaerr-club.jpg", captionAr: "المليونير كلوب", captionEn: "El Maluonaerr Club" },
+  { src: "/nightclub-gallery/images/sess-after-party.webp", captionAr: "سيس أفتر بارتي", captionEn: "Sess After Party" },
+  { src: "/nightclub-gallery/images/dahabia-cash.webp", captionAr: "دهبية كاش", captionEn: "Dahabia Cash" },
+  { src: "/nightclub-gallery/images/xo-club.jpg", captionAr: "إكس أو كلوب", captionEn: "XO Club" },
 ];
 
 /** Curated homepage preview — atmospheric picks only. */
@@ -46,8 +53,8 @@ export const homeGalleryPreview: NightclubGalleryImage[] = [
   { src: "/nightclub-gallery/images/fox-club.webp", captionAr: "فوكس كلوب · العجوزة", captionEn: "Fox Club · Agouza" },
   { src: "/nightclub-gallery/images/peacock-club.jpg", captionAr: "بيكوك كلوب · الزمالك", captionEn: "Peacock Club · Zamalek" },
   { src: "/nightclub-gallery/images/stage-cairo-club.jpg", captionAr: "ستيج كايرو · القاهرة", captionEn: "Stage Cairo Club · Cairo" },
-  { src: "/nightclub-gallery/images/royal-king.webp", captionAr: "رويال كينج · كورنيش النيل", captionEn: "Royal King · Nile Corniche" },
-  { src: "/nightclub-gallery/images/kalije-night-club.jpg", captionAr: "خليجي نايت كلوب · الدقي", captionEn: "Kalije Night Club · Dokki" },
+  { src: "/nightclub-gallery/images/xo-club.jpg", captionAr: "إكس أو كلوب", captionEn: "XO Club" },
+  { src: "/nightclub-gallery/images/al-molouk-club.jpg", captionAr: "الملوك كلوب · المهندسين", captionEn: "Al Molouk Club · Mohandessin" },
 ];
 
 export const nightclubGalleryVideos: NightclubGalleryVideo[] = [
@@ -98,5 +105,41 @@ export const nightclubGalleryVideos: NightclubGalleryVideo[] = [
     poster: "/nightclub-gallery/posters/kalije-night-club.jpg",
     titleAr: "خليجي نايت كلوب",
     titleEn: "Kalije Night Club",
+  },
+  {
+    src: "/nightclub-gallery/videos/lounge-01.mp4",
+    poster: "/nightclub-gallery/posters/lounge-01.jpg",
+    titleAr: "جولة داخل المكان",
+    titleEn: "Inside the venue",
+  },
+  {
+    src: "/nightclub-gallery/videos/lounge-02.mp4",
+    poster: "/nightclub-gallery/posters/lounge-02.jpg",
+    titleAr: "أجواء السهرة",
+    titleEn: "Nightlife atmosphere",
+  },
+  {
+    src: "/nightclub-gallery/videos/lounge-03.mp4",
+    poster: "/nightclub-gallery/posters/lounge-03.jpg",
+    titleAr: "سهرة VIP",
+    titleEn: "VIP night",
+  },
+  {
+    src: "/nightclub-gallery/videos/lounge-04.mp4",
+    poster: "/nightclub-gallery/posters/lounge-04.jpg",
+    titleAr: "ديسكو ولاونج",
+    titleEn: "Disco & lounge",
+  },
+  {
+    src: "/nightclub-gallery/videos/lounge-05.mp4",
+    poster: "/nightclub-gallery/posters/lounge-05.jpg",
+    titleAr: "طاقة المكان",
+    titleEn: "Club energy",
+  },
+  {
+    src: "/nightclub-gallery/videos/lounge-07.mp4",
+    poster: "/nightclub-gallery/posters/lounge-07.jpg",
+    titleAr: "ليلة على النيل",
+    titleEn: "A night by the Nile",
   },
 ];

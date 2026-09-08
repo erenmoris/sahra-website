@@ -64,4 +64,32 @@ export const homeReels: HomeReel[] = [
     titleAr: "أجواء السهرة",
     titleEn: "Nightlife vibe",
   },
+  {
+    id: "lounge-01",
+    src: "/home/reels/lounge-01.mp4",
+    poster: "/home/reels/lounge-01.jpg",
+    titleAr: "جولة داخل المكان",
+    titleEn: "Inside the venue",
+  },
+  {
+    id: "lounge-02",
+    src: "/home/reels/lounge-02.mp4",
+    poster: "/home/reels/lounge-02.jpg",
+    titleAr: "أجواء اللاونج",
+    titleEn: "Lounge vibe",
+  },
+  {
+    id: "lounge-04",
+    src: "/home/reels/lounge-04.mp4",
+    poster: "/home/reels/lounge-04.jpg",
+    titleAr: "سهرة VIP",
+    titleEn: "VIP night",
+  },
+  {
+    id: "lounge-07",
+    src: "/home/reels/lounge-07.mp4",
+    poster: "/home/reels/lounge-07.jpg",
+    titleAr: "طاقة الديسكو",
+    titleEn: "Disco energy",
+  },
 ];
