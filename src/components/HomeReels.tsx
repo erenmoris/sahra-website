@@ -130,9 +130,6 @@ function ReelCard({
         className="absolute inset-0 bg-gradient-to-t from-night via-transparent to-night/25"
       />
       <div className="absolute inset-x-0 bottom-0 z-10 p-4">
-        <span className="mb-2 inline-flex rounded-full border border-gold/35 bg-night/50 px-2.5 py-1 text-[0.68rem] font-semibold tracking-wide text-gold-soft backdrop-blur-sm">
-          Reels
-        </span>
         <p className="font-display text-[1.05rem] font-semibold text-sand drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]">
           {title}
         </p>

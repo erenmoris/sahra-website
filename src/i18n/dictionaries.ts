@@ -267,7 +267,7 @@ const ar = {
     viewAll: "شوف المعرض الكامل",
   },
   reels: {
-    eyebrow: "ريلز",
+    eyebrow: "فيديوهات",
     title: "شوف الأجواء",
     titleAccent: "في ثواني.",
     lede: "مقاطع قصيرة من النوادي — اسحب وشوف قبل ما تحجز ترابيزتك.",
@@ -1112,7 +1112,7 @@ const en = {
     viewAll: "View full gallery",
   },
   reels: {
-    eyebrow: "Reels",
+    eyebrow: "Videos",
     title: "Feel the night",
     titleAccent: "in seconds.",
     lede: "Short clips from the clubs — swipe through before you book your table.",

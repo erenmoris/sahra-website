@@ -142,4 +142,40 @@ export const nightclubGalleryVideos: NightclubGalleryVideo[] = [
     titleAr: "ليلة على النيل",
     titleEn: "A night by the Nile",
   },
+  {
+    src: "/nightclub-gallery/videos/mrx-01.mp4",
+    poster: "/nightclub-gallery/posters/mrx-01.jpg",
+    titleAr: "سهرة من Mr X",
+    titleEn: "Mr X night out",
+  },
+  {
+    src: "/nightclub-gallery/videos/mrx-02.mp4",
+    poster: "/nightclub-gallery/posters/mrx-02.jpg",
+    titleAr: "أجواء النايت كلوب",
+    titleEn: "Nightclub atmosphere",
+  },
+  {
+    src: "/nightclub-gallery/videos/mrx-03.mp4",
+    poster: "/nightclub-gallery/posters/mrx-03.jpg",
+    titleAr: "حفلة VIP",
+    titleEn: "VIP party",
+  },
+  {
+    src: "/nightclub-gallery/videos/mrx-04.mp4",
+    poster: "/nightclub-gallery/posters/mrx-04.jpg",
+    titleAr: "ديسكو القاهرة",
+    titleEn: "Cairo disco",
+  },
+  {
+    src: "/nightclub-gallery/videos/mrx-05.mp4",
+    poster: "/nightclub-gallery/posters/mrx-05.jpg",
+    titleAr: "طاقة السهرة",
+    titleEn: "Party energy",
+  },
+  {
+    src: "/nightclub-gallery/videos/mrx-06.mp4",
+    poster: "/nightclub-gallery/posters/mrx-06.jpg",
+    titleAr: "ليلة مشتعلة",
+    titleEn: "A hot night",
+  },
 ];
