@@ -667,6 +667,43 @@ const ar = {
       "لسنا دليلًا عامًا — نحن كونسييرج خاص يخدم من يتوقعون صفر متاعب وخصوصية صارمة.",
     ],
     storyImageAlt: "تجربة ضيافة فاخرة على سطح يخت ليلي",
+    experienceEyebrow: "الخبرة والعلاقات",
+    experienceTitle: "نمتلك مفاتيح المدينة.",
+    experienceBody: [
+      "نمتلك مفاتيح المدينة. علاقاتنا الممتدة تضمن لك وصولاً حصرياً لأرقى الأماكن التي يصعب حجزها.",
+      "خبرتنا مش مجرد سنوات — هي شبكة علاقات راسخة في القاهرة والساحل الشمالي. ما بنحجزش ترابيزة وبس… بنفتح أبواباً غالباً ما تكون مغلقة.",
+    ],
+    experienceHighlights: [
+      "شبكة علاقات مباشرة في القاهرة والساحل",
+      "وصول لأماكن مكتملة الحجز",
+      "تنسيق هادئ يليق بضيوف الـ VIP",
+    ],
+    teamEyebrow: "فريق كبار الشخصيات",
+    teamTitle: "مديرو أسلوب الحياة… مش خدمة عملاء.",
+    teamLede:
+      "فريق سهرة يفهم ذوق المسافر الخليجي وكبار الشخصيات بدقة: سرية صارمة، حلول راقية تحت الضغط، وتنفيذ بلا ضوضاء.",
+    team: [
+      {
+        id: "lifestyle",
+        title: "مدير أسلوب الحياة",
+        body: "يصمّم ليلتك وفق ذوقك ومستواك — من الاختيار الأول حتى آخر تفصيلة، بهدوء يليق باسمك.",
+      },
+      {
+        id: "access",
+        title: "علاقات الأماكن والوصول",
+        body: "يفتح أبواب الغرف والمواقع المطلوبة عبر علاقات مباشرة — وصول حصري حينما يكون الحجز مستحيلاً للآخرين.",
+      },
+      {
+        id: "care",
+        title: "متابعة الضيف حتى الجلوس",
+        body: "يتابع طلبك من أول رسالة حتى جلوسك: تغييرات اللحظة الأخيرة، اللوجستيات، والتأكيد الأنظف.",
+      },
+    ],
+    availabilityEyebrow: "متاحون دائماً لأجلك",
+    availabilityTitle: "وقتك… هو جدولنا.",
+    availabilityBody:
+      "عملاء الـ VIP يتحركون على إيقاعهم. فريقنا جاهز على مدار الساعة لتنفيذ طلبات منتصف الليل، التغييرات المفاجئة، ولوجستيات السفر الخاص — بهدوء واحتراف.",
+    availabilityBadge: "24/7",
     valuesEyebrow: "قيمنا",
     valuesTitle: "ما لا نساوم عليه.",
     values: [
@@ -686,8 +723,8 @@ const ar = {
         body: "كل توصية تُفصَّل على ذوقك: الجو، المستوى، وعدد الضيوف — تجربة مصمّمة… مش قائمة جاهزة.",
       },
     ],
-    ctaTitle: "ابدأ رحلتك معنا",
-    ctaBody: "محادثة واحدة مع الكونسييرج… وليلة تليق باسمك.",
+    ctaTitle: "ابدأ تجربتك الخاصة",
+    ctaBody: "محادثة واحدة مع الكونسييرج… وتنسيق مخصص لليلة تليق باسمك.",
     ctaButton: "تواصل عبر واتساب",
     whatsappMessage: "مرحبًا، أود التعرف على خدمات سهرة وتنسيق تجربة خاصة",
   },
@@ -1512,6 +1549,43 @@ const en = {
       "We are not a public directory — we are a private concierge for those who expect zero hassle and strict privacy.",
     ],
     storyImageAlt: "Luxury hospitality on a yacht deck at night",
+    experienceEyebrow: "Experience & connections",
+    experienceTitle: "We hold the keys to the city.",
+    experienceBody: [
+      "We hold the keys to the city. Our extended network secures exclusive access to the hardest-to-book rooms.",
+      "Our experience is not measured in years alone — it is a rooted network across Cairo and the North Coast. We do not merely book tables; we open doors that are usually closed.",
+    ],
+    experienceHighlights: [
+      "Direct relationships in Cairo and the North Coast",
+      "Access when venues are fully booked",
+      "Quiet coordination worthy of VIP guests",
+    ],
+    teamEyebrow: "The elite team",
+    teamTitle: "Personal lifestyle managers — not customer service.",
+    teamLede:
+      "Sahra’s team understands Gulf and VIP taste with precision: absolute discretion, high-level problem solving under pressure, and execution without noise.",
+    team: [
+      {
+        id: "lifestyle",
+        title: "Lifestyle manager",
+        body: "Designs your night to your taste and level — from the first choice to the last detail, with composure worthy of your name.",
+      },
+      {
+        id: "access",
+        title: "Venue access & relations",
+        body: "Opens sought-after rooms through direct relationships — exclusive access when booking is impossible for others.",
+      },
+      {
+        id: "care",
+        title: "Guest follow-through",
+        body: "Stays with your request from first message to seated arrival: last-minute changes, logistics, and the cleanest confirmation.",
+      },
+    ],
+    availabilityEyebrow: "Always available for you",
+    availabilityTitle: "Your timing is our schedule.",
+    availabilityBody:
+      "VIP clients move on their own clock. Our team is ready around the clock to execute late-night requests, sudden changes, and private-travel logistics — calmly and professionally.",
+    availabilityBadge: "24/7",
     valuesEyebrow: "Our values",
     valuesTitle: "What we never compromise.",
     values: [
@@ -1531,8 +1605,8 @@ const en = {
         body: "Every recommendation is tailored to your taste: vibe, level, and party size — a designed experience, not a generic list.",
       },
     ],
-    ctaTitle: "Begin your journey with us",
-    ctaBody: "One conversation with the concierge… a night worthy of your name.",
+    ctaTitle: "Begin your private experience",
+    ctaBody: "One conversation with the concierge… bespoke coordination for a night worthy of your name.",
     ctaButton: "Message on WhatsApp",
     whatsappMessage: "Hi, I’d like to learn about Sahra and arrange a private experience",
   },
