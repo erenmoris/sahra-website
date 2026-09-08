@@ -3,14 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { Locale } from "@/i18n/config";
-import { cairoVenues, sahelVenues, venueLogoKey, venueName, type Venue } from "@/content/venues";
+import { sahelVenues, venueLogoKey, venueName, type Venue } from "@/content/venues";
 
 type Props = {
   locale: Locale;
   venueLogos: Record<string, string>;
   labels: {
     sahel: string;
-    cairo: string;
   };
 };
 
@@ -105,35 +104,20 @@ function withLogos(venues: Venue[], venueLogos: Record<string, string>) {
   return venues.filter((v) => venueLogos[venueLogoKey(v)]);
 }
 
-/** Scrolling strips of North Coast and Cairo venue logos. */
+/** Scrolling strip of North Coast venue logos. */
 export default function VenueTicker({ locale, venueLogos, labels }: Props) {
   const sahelItems = withLogos(sahelVenues, venueLogos);
-  const cairoItems = withLogos(cairoVenues, venueLogos);
+
+  if (sahelItems.length === 0) return null;
 
   return (
     <div className="space-y-6" dir="ltr">
-      {sahelItems.length > 0 ? (
-        <div>
-          <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
-            {labels.sahel}
-          </p>
-          <TickerStrip items={sahelItems} locale={locale} venueLogos={venueLogos} />
-        </div>
-      ) : null}
-
-      {cairoItems.length > 0 ? (
-        <div>
-          <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
-            {labels.cairo}
-          </p>
-          <TickerStrip
-            items={cairoItems}
-            reverse
-            locale={locale}
-            venueLogos={venueLogos}
-          />
-        </div>
-      ) : null}
+      <div>
+        <p className="mb-3 text-[0.72rem] font-semibold tracking-[0.12em] text-gold/80 uppercase">
+          {labels.sahel}
+        </p>
+        <TickerStrip items={sahelItems} locale={locale} venueLogos={venueLogos} />
+      </div>
     </div>
   );
 }

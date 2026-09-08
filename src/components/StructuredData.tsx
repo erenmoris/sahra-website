@@ -142,12 +142,24 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
         {
           "@type": "ListItem",
           position: 3,
+          name: locale === "ar" ? "نايت كلوب" : "Night clubs",
+          item: absoluteUrl(`/${locale}/nightclubs`),
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
           name: locale === "ar" ? "الشواطئ" : "Beaches",
           item: absoluteUrl(`/${locale}/beaches`),
         },
         {
           "@type": "ListItem",
-          position: 4,
+          position: 5,
+          name: locale === "ar" ? "المعرض" : "Gallery",
+          item: absoluteUrl(`/${locale}/gallery`),
+        },
+        {
+          "@type": "ListItem",
+          position: 6,
           name: locale === "ar" ? "شاليهات" : "Chalets",
           item: absoluteUrl(`/${locale}/chalets`),
         },

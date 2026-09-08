@@ -1,10 +1,10 @@
-export type VenueRegion = "sahel" | "cairo";
+export type VenueRegion = "sahel";
 
 export type Venue = {
   slug: string;
   name: string;
   nameAr: string;
-  /** Where this venue appears in logo tickers (a brand may span both). */
+  /** Where this venue appears in logo tickers. */
   regions: VenueRegion[];
   /** Area line shown on venue cards, e.g. "Marassi · North Coast". */
   area: string;
@@ -275,172 +275,19 @@ export const venues: Venue[] = [
     area: "Telal · North Coast",
     areaAr: "تلال · الساحل الشمالي",
   },
-
-  // ── Cairo ───────────────────────────────────────────────────────────────────
-  {
-    slug: "moon-deck",
-    name: "Moon Deck",
-    nameAr: "مون ديك",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["MoonDeck", "The Moon Deck"],
-  },
-  {
-    slug: "ava",
-    name: "Ava",
-    nameAr: "آفا",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Club Ava"],
-  },
-  {
-    slug: "esca-cueva",
-    name: "Esca Cueva",
-    nameAr: "إسكا كويفا",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Esca Cairo"],
-  },
-  {
-    slug: "the-origin",
-    name: "The Origin",
-    nameAr: "ذا أوريجين",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Origin", "The Origins"],
-  },
-  {
-    slug: "rovi",
-    name: "Rovi",
-    nameAr: "روفي",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-  },
-  {
-    slug: "me-bar",
-    name: "Me Bar",
-    nameAr: "مي بار",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["ME Bar"],
-  },
-  {
-    slug: "sangria",
-    name: "Sangria",
-    nameAr: "سانجريا",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-  },
-  {
-    slug: "idol",
-    name: "Idol",
-    nameAr: "أيدول",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-  },
-  {
-    slug: "outdoor",
-    name: "Outdoor",
-    nameAr: "أوت دور",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Out Door"],
-  },
-  {
-    slug: "mood-bar",
-    name: "Mood Bar",
-    nameAr: "مود بار",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Moodbar"],
-  },
-  {
-    slug: "anzu-rooftop",
-    name: "Anzu Rooftop",
-    nameAr: "أنزو روفتوب",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Anzu", "أنزو"],
-  },
-  {
-    slug: "tap-east",
-    name: "Tap East",
-    nameAr: "تاب إيست",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-  },
-  {
-    slug: "opia",
-    name: "Opia",
-    nameAr: "أوبيا",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-  },
-  {
-    slug: "little-lexies",
-    name: "Little Lexie's",
-    nameAr: "ليتل ليكسيز",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Lexies", "ليكسيز"],
-  },
-  {
-    slug: "kazoku",
-    name: "Kazoku",
-    nameAr: "كازوكو",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-  },
-  {
-    slug: "riverside",
-    name: "Riverside",
-    nameAr: "ريفرسايد",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Riverside Cairo"],
-  },
-  {
-    slug: "lucida-cairo",
-    name: "Lucida Cairo",
-    nameAr: "لوسيدا القاهرة",
-    regions: ["cairo"],
-    area: "Cairo",
-    areaAr: "القاهرة",
-    aliases: ["Lucida", "لوسيدا"],
-    logoSlug: "lucida",
-  },
   {
     slug: "sachi",
     name: "Sachi",
     nameAr: "ساشي",
-    regions: ["cairo", "sahel"],
-    area: "Cairo · North Coast",
-    areaAr: "القاهرة · الساحل الشمالي",
+    regions: ["sahel"],
+    area: "North Coast",
+    areaAr: "الساحل الشمالي",
     aliases: ["Satchi", "ساتشي"],
   },
 ];
 
 /** North Coast venues — used for the Sahel scrolling logo strip on the home page. */
 export const sahelVenues: Venue[] = venues.filter((v) => v.regions.includes("sahel"));
-
-/** Cairo venues — used for the Cairo scrolling logo strip on the home page. */
-export const cairoVenues: Venue[] = venues.filter((v) => v.regions.includes("cairo"));
 
 export function venueName(venue: Venue, locale: string): string {
   return locale === "ar" ? venue.nameAr : venue.name;

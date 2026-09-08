@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/config";
 import { getAllBeachSlugs } from "@/content/beaches";
+import { getAllNightclubSlugs } from "@/content/nightclubs";
 import { getAllVenueSlugs } from "@/content/venues";
 import { getAllChaletSlugs } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
@@ -10,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const chaletSlugs = await getAllChaletSlugs();
   const venueSlugs = getAllVenueSlugs();
   const beachSlugs = getAllBeachSlugs();
+  const nightclubSlugs = getAllNightclubSlugs();
 
   return locales.flatMap((locale) => [
     {
@@ -31,10 +33,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
+      url: absoluteUrl(`/${locale}/nightclubs`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    },
+    {
       url: absoluteUrl(`/${locale}/beaches`),
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.85,
+    },
+    {
+      url: absoluteUrl(`/${locale}/gallery`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
     },
     {
       url: absoluteUrl(`/${locale}/trust`),
@@ -68,6 +82,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...venueSlugs.map((slug) => ({
       url: absoluteUrl(`/${locale}/venues/${slug}`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
+    ...nightclubSlugs.map((slug) => ({
+      url: absoluteUrl(`/${locale}/nightclubs/${slug}`),
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.7,

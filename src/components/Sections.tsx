@@ -118,7 +118,6 @@ export function Venues({
               venueLogos={venueLogos}
               labels={{
                 sahel: t.venues.tickerSahel,
-                cairo: t.venues.tickerCairo,
               }}
             />
             <p className="mt-5 max-w-[760px] text-[0.82rem] leading-[1.9] text-sand-dim">

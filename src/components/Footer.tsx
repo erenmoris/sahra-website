@@ -68,11 +68,29 @@ export default function Footer({
               </li>
               <li>
                 <Link
+                  href={`/${locale}/nightclubs`}
+                  data-testid="footer-link-nightclubs"
+                  className={linkClass}
+                >
+                  {t.footer.links.nightclubs}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={`/${locale}/beaches`}
                   data-testid="footer-link-beaches"
                   className={linkClass}
                 >
                   {t.footer.links.beaches}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${locale}/gallery`}
+                  data-testid="footer-link-gallery"
+                  className={linkClass}
+                >
+                  {t.footer.links.gallery}
                 </Link>
               </li>
               <li>
