@@ -6,7 +6,6 @@ import { createPortal } from "react-dom";
 import type { Locale } from "@/i18n/config";
 import {
   SNAPCHAT_URL,
-  whatsappLink,
   type Dictionary,
 } from "@/i18n/dictionaries";
 import LanguageSwitch from "./LanguageSwitch";
@@ -133,18 +132,7 @@ export default function HeaderMobileMenu({
         </nav>
 
         <div className="px-6 pb-10 pt-4 sm:px-8">
-          <TrackedLink
-            href={whatsappLink(t.whatsappMessage)}
-            placement="mobile-menu-whatsapp"
-            locale={locale}
-            t={t}
-            testId="mobile-whatsapp-btn"
-            className="flex w-full items-center justify-center rounded-full bg-gold px-6 py-4 text-[1rem] font-bold text-night shadow-[0_12px_40px_-16px_rgba(201,162,75,0.7)] transition-transform duration-300 hover:scale-[1.01] hover:bg-gold-soft"
-          >
-            {t.footer.bookWhatsapp}
-          </TrackedLink>
-
-          <div className="mt-6 flex items-center justify-center gap-5">
+          <div className="flex items-center justify-center gap-5">
             <TrackedLink
               href={SNAPCHAT_URL}
               placement="mobile-menu-snapchat"
