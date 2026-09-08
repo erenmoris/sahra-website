@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import type { Locale } from "@/i18n/config";
 
 const VIDEO_SRC = "/venues/entrance.mp4";
+const VIDEO_POSTER = "/venues/entrance-poster.jpg";
 
 export default function VenuesEntrance({
   locale,
@@ -21,6 +22,7 @@ export default function VenuesEntrance({
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
+    if (!el.getAttribute("src")) el.setAttribute("src", VIDEO_SRC);
     el.muted = true;
     void el.play().catch(() => undefined);
   }, []);
@@ -33,14 +35,14 @@ export default function VenuesEntrance({
     <section className="relative h-[min(92vh,920px)] min-h-[480px] w-full overflow-hidden bg-ink">
       <video
         ref={videoRef}
-        src={VIDEO_SRC}
+        poster={VIDEO_POSTER}
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
-        aria-label={locale === "ar" ? "فيديو تقديمي للسهرات" : "Nights intro video"}
+        preload="none"
+        aria-hidden
       />
       <div
         className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25 theme-scrim"

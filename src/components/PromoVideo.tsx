@@ -27,7 +27,7 @@ export default function PromoVideo({
     <div className="overflow-hidden border border-gold/25 bg-ink-2 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.7)]">
       <video
         src={src}
-        poster={poster}
+        poster={poster || "/brand/entrance-teaser-poster.jpg"}
         controls
         playsInline
         preload="none"

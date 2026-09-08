@@ -7,7 +7,16 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/admin", "/api", "/admin/content", "/admin/login"],
+        disallow: [
+          "/admin",
+          "/api",
+          "/admin/content",
+          "/admin/login",
+          // Decorative entrance loops — not watch pages; keep out of video indexing.
+          "/venues/entrance.mp4",
+          "/chalets/entrance.mp4",
+          "/brand/entrance-teaser.mp4",
+        ],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

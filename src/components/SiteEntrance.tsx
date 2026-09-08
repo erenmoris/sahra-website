@@ -7,6 +7,7 @@ import type { Dictionary } from "@/i18n/dictionaries";
 export const ENTRANCE_STORAGE_KEY = "sahra:entrance-load-v2";
 const LOAD_MS = 4200;
 const TEASER_SRC = "/brand/entrance-teaser.mp4";
+const TEASER_POSTER = "/brand/entrance-teaser-poster.jpg";
 const GATE_CLASS = "sahra-gate";
 
 function clearGate() {
@@ -51,6 +52,7 @@ export default function SiteEntrance({
     if (!open) return;
     const el = videoRef.current;
     if (!el) return;
+    if (!el.getAttribute("src")) el.setAttribute("src", TEASER_SRC);
     el.muted = true;
     void el.play().catch(() => undefined);
   }, [open]);
@@ -118,13 +120,13 @@ export default function SiteEntrance({
     >
       <video
         ref={videoRef}
-        src={TEASER_SRC}
+        poster={TEASER_POSTER}
         className="absolute inset-0 h-full w-full scale-105 object-cover"
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
         aria-hidden
       />
       <div className="absolute inset-0 bg-ink/40" aria-hidden />
