@@ -23,11 +23,13 @@ export default function LanguageSwitch({
   label,
   className,
   onNavigate,
+  testId,
 }: {
   locale: Locale;
   label: string;
   className?: string;
   onNavigate?: () => void;
+  testId?: string;
 }) {
   const pathname = usePathname() || `/${locale}`;
   const searchParams = useSearchParams();
@@ -36,7 +38,13 @@ export default function LanguageSwitch({
   const href = localeSiblingHref(pathname, other, search ? `?${search}` : "");
 
   return (
-    <Link href={href} className={className} onClick={onNavigate} hrefLang={other}>
+    <Link
+      href={href}
+      className={className}
+      onClick={onNavigate}
+      hrefLang={other}
+      data-testid={testId}
+    >
       {label}
     </Link>
   );
