@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import HomeTeaser from "@/components/HomeTeaser";
 import HomeGallery from "@/components/HomeGallery";
+import HomeReels from "@/components/HomeReels";
 import PromoTicker from "@/components/PromoTicker";
 import PromoVideo from "@/components/PromoVideo";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -81,15 +82,18 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         {/* 3 — Category bento */}
         <HomeTeaser t={t} locale={locale} />
 
-        {/* 4 — Gallery preview from nightclub photos */}
+        {/* 4 — Vertical reels cut from club videos */}
+        <HomeReels locale={locale} t={t} />
+
+        {/* 5 — Gallery preview from nightclub photos */}
         {sections.gallery ? <HomeGallery locale={locale} t={t} /> : null}
 
-        {/* 5 — WhatsApp testimonials */}
+        {/* 6 — WhatsApp testimonials */}
         {sections.testimonials ? (
           <Testimonials t={t} locale={locale} compact />
         ) : null}
 
-        {/* 6 — Reserve CTA */}
+        {/* 7 — Reserve CTA */}
         {sections.reserve ? (
           <section id="reserve" className="relative scroll-mt-8 overflow-hidden py-12 sm:py-16">
             <div

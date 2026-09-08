@@ -17,6 +17,7 @@ export default function robots(): MetadataRoute.Robots {
           "/chalets/entrance.mp4",
           "/brand/entrance-teaser.mp4",
           "/nightclub-gallery/videos/",
+          "/home/reels/",
         ],
       },
     ],

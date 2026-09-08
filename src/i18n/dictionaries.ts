@@ -266,6 +266,13 @@ const ar = {
     fallbackAlt: "سهرة من تنظيم كونسييرج سهرة في مصر",
     viewAll: "شوف المعرض الكامل",
   },
+  reels: {
+    eyebrow: "ريلز",
+    title: "شوف الأجواء",
+    titleAccent: "في ثواني.",
+    lede: "مقاطع قصيرة من النوادي — اسحب وشوف قبل ما تحجز ترابيزتك.",
+    viewGallery: "كل الفيديوهات",
+  },
   galleryPage: {
     eyebrow: "المعرض",
     title: "صور وفيديوهات",
@@ -1103,6 +1110,13 @@ const en = {
     lede: "Stills from Cairo and Giza clubs — rooms, lighting, and VIP tables before you book.",
     fallbackAlt: "A night arranged by Sahra concierge in Egypt",
     viewAll: "View full gallery",
+  },
+  reels: {
+    eyebrow: "Reels",
+    title: "Feel the night",
+    titleAccent: "in seconds.",
+    lede: "Short clips from the clubs — swipe through before you book your table.",
+    viewGallery: "All videos",
   },
   galleryPage: {
     eyebrow: "Gallery",
