@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Dictionary } from "@/i18n/dictionaries";
 import {
   loadContactCapture,
@@ -53,6 +54,8 @@ export default function TrackedLink({
   testId,
   children,
 }: Props) {
+  const titleId = useId();
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -76,11 +79,29 @@ export default function TrackedLink({
     phonePlaceholder:
       t?.form.fields.phonePlaceholder ?? (ar ? "+20 أو +966…" : "+20 or +966…"),
     submit: t?.modal.submit ?? (ar ? "إرسال" : "Send"),
-    cancel: t?.modal.close ?? (ar ? "إلغاء" : "Close"),
+    cancel: t?.modal.close ?? (ar ? "إغلاق" : "Close"),
     requiredName: t?.modal.requiredName ?? (ar ? "اسمك مطلوب" : "Name is required"),
     requiredPhone:
       t?.modal.requiredPhone ?? (ar ? "رقم الواتساب مطلوب" : "Phone is required"),
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   async function submitWithRedirect(nextName: string, nextPhone: string) {
     const trimmedName = nextName.trim();
@@ -97,7 +118,6 @@ export default function TrackedLink({
 
     saveContactCapture({ name: trimmedName, phone: trimmedPhone });
 
-    // Record the click, then redirect. Prefer await so the row lands first.
     const page = window.location.pathname + window.location.hash;
     const payload = {
       placement,
@@ -115,7 +135,6 @@ export default function TrackedLink({
         keepalive: true,
       });
     } catch {
-      // Fall back to beacon if the fetch fails.
       track(payload);
     }
 
@@ -127,7 +146,6 @@ export default function TrackedLink({
     event.preventDefault();
     setError("");
 
-    // Returning visitors (or form re-fill) skip the modal.
     const cached = loadContactCapture();
     if (cached) {
       void submitWithRedirect(cached.name, cached.phone);
@@ -149,6 +167,95 @@ export default function TrackedLink({
     }
   }
 
+  const modal =
+    open && mounted
+      ? createPortal(
+          <div
+            className="fixed inset-0 z-[200] flex items-end justify-center p-4 sm:items-center sm:p-6"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            data-testid="contact-capture-modal"
+          >
+            <button
+              type="button"
+              aria-label={copy.cancel}
+              className="absolute inset-0 bg-[#0B101E]/75 backdrop-blur-md"
+              onClick={() => setOpen(false)}
+            />
+
+            <div className="relative z-10 w-full max-w-md overflow-hidden rounded-2xl border border-gold/30 bg-gradient-to-b from-ink-2 to-[#0B101E] p-6 text-start shadow-[0_32px_80px_-24px_rgba(0,0,0,0.85)] sm:p-8">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -end-10 top-0 h-40 w-40 rounded-full bg-gold/15 blur-[70px]"
+              />
+
+              <div className="relative overflow-hidden">
+                <h2
+                  id={titleId}
+                  className="font-display text-[1.25rem] leading-[1.45] font-bold text-gold sm:text-[1.35rem]"
+                >
+                  {copy.title}
+                </h2>
+                <p className="mt-3 text-[0.9rem] leading-[1.8] text-sand-dim">{copy.body}</p>
+
+                <div className="mt-6 space-y-4">
+                  <div>
+                    <label className="mb-2 block text-[0.72rem] font-semibold tracking-[0.14em] text-gold/90 uppercase">
+                      {copy.name}
+                    </label>
+                    <input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
+                      placeholder={copy.namePlaceholder}
+                      className="w-full rounded-md border border-gold/25 bg-[#0B101E]/80 px-4 py-3.5 text-start text-[0.95rem] text-sand placeholder:text-sand-dim/50 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[0.72rem] font-semibold tracking-[0.14em] text-gold/90 uppercase">
+                      {copy.phone}
+                    </label>
+                    <input
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      dir="ltr"
+                      autoComplete="tel"
+                      placeholder={copy.phonePlaceholder}
+                      className="w-full rounded-md border border-gold/25 bg-[#0B101E]/80 px-4 py-3.5 text-start text-[0.95rem] text-sand placeholder:text-sand-dim/50 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold/40"
+                    />
+                  </div>
+                </div>
+
+                {error ? (
+                  <p className="mt-4 text-start text-[0.85rem] text-[#e2857f]">{error}</p>
+                ) : null}
+
+                <div className="mt-7 flex gap-3">
+                  <button
+                    type="button"
+                    onClick={submitCapture}
+                    disabled={busy}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3.5 text-[0.92rem] font-bold text-night shadow-[0_0_32px_-8px_rgba(201,162,75,0.85)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4ae55] hover:shadow-[0_0_40px_-6px_rgba(201,162,75,0.95)] disabled:opacity-60"
+                  >
+                    {busy ? "…" : copy.submit}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="flex-1 rounded-md border border-gold/35 bg-transparent px-5 py-3.5 text-[0.92rem] font-semibold text-sand transition-colors hover:border-gold hover:bg-gold/10"
+                  >
+                    {copy.cancel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      : null;
+
   return (
     <>
       <a
@@ -163,63 +270,7 @@ export default function TrackedLink({
       >
         {children}
       </a>
-
-      {open ? (
-        <div
-          className="fixed inset-0 z-70 flex items-end justify-center bg-black/60 p-4 sm:items-center"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="contact-capture-title"
-        >
-          <div className="w-full max-w-md rounded-sm border border-gold/25 bg-ink p-5 text-sand shadow-2xl">
-            <h2 id="contact-capture-title" className="mb-2 font-display text-lg text-gold-soft">
-              {copy.title}
-            </h2>
-            <p className="mb-4 text-[0.85rem] leading-[1.7] text-sand-dim">
-              {copy.body}
-            </p>
-
-            <label className="mb-1 block text-[0.8rem] text-gold-soft">{copy.name}</label>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              autoComplete="name"
-              placeholder={copy.namePlaceholder}
-              className="mb-3 w-full rounded-sm border border-gold/25 bg-ink-2 px-3.5 py-2.5 text-[0.94rem] text-sand focus:border-gold focus:outline-none"
-            />
-
-            <label className="mb-1 block text-[0.8rem] text-gold-soft">{copy.phone}</label>
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              dir="ltr"
-              autoComplete="tel"
-              placeholder={copy.phonePlaceholder}
-              className="mb-3 w-full rounded-sm border border-gold/25 bg-ink-2 px-3.5 py-2.5 text-[0.94rem] text-sand focus:border-gold focus:outline-none"
-            />
-
-            {error ? <p className="mb-3 text-[0.85rem] text-[#e2857f]">{error}</p> : null}
-
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="flex-1 rounded-sm border border-gold/25 px-4 py-2.5 text-[0.9rem] text-sand-dim hover:border-gold/50"
-              >
-                {copy.cancel}
-              </button>
-              <button
-                type="button"
-                onClick={submitCapture}
-                disabled={busy}
-                className="flex-1 rounded-sm bg-gold px-4 py-2.5 text-[0.9rem] font-semibold text-night hover:bg-gold/90 disabled:opacity-60"
-              >
-                {busy ? (t?.modal.submit ?? "…") : copy.submit}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {modal}
     </>
   );
 }

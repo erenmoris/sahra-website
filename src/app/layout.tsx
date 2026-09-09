@@ -100,7 +100,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID?.trim() || undefined;
 
   return (
-    <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
+    <html lang={locale} dir={dir(locale)} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

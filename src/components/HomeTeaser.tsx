@@ -10,6 +10,7 @@ const BENTO_LAYOUT: Record<string, string> = {
   nightclubs: "md:col-span-2 min-h-[180px]",
   beaches: "md:col-span-2 min-h-[160px]",
   chalets: "md:col-span-2 min-h-[160px]",
+  cars: "md:col-span-2 min-h-[160px]",
   trust: "md:col-span-2 min-h-[160px]",
 };
 
@@ -18,6 +19,7 @@ const BENTO_IMAGE: Record<string, { src: string; sizes: string }> = {
   nightclubs: { src: "/home/bento-nightclubs.jpg", sizes: "(max-width: 768px) 100vw, 50vw" },
   beaches: { src: "/home/bento-beaches.png", sizes: "(max-width: 768px) 100vw, 50vw" },
   chalets: { src: "/home/bento-chalets.png", sizes: "(max-width: 768px) 100vw, 25vw" },
+  cars: { src: "/home/bento-cars.jpg", sizes: "(max-width: 768px) 100vw, 50vw" },
   trust: { src: "/home/bento-trust.png", sizes: "(max-width: 768px) 100vw, 25vw" },
 };
 

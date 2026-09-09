@@ -104,6 +104,15 @@ export default function Footer({
               </li>
               <li>
                 <Link
+                  href={`/${locale}/cars`}
+                  data-testid="footer-link-cars"
+                  className={linkClass}
+                >
+                  {t.footer.links.cars}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={`/${locale}/about`}
                   data-testid="footer-link-about"
                   className={linkClass}

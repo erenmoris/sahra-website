@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/config";
 import { getAllBeachSlugs } from "@/content/beaches";
+import { getAllVipCarSlugs } from "@/content/cars";
 import { getAllNightclubSlugs } from "@/content/nightclubs";
 import { getAllVenueSlugs } from "@/content/venues";
 import { getAllChaletSlugs } from "@/lib/content";
@@ -12,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const venueSlugs = getAllVenueSlugs();
   const beachSlugs = getAllBeachSlugs();
   const nightclubSlugs = getAllNightclubSlugs();
+  const carSlugs = getAllVipCarSlugs();
 
   return locales.flatMap((locale) => [
     {
@@ -63,6 +65,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.75,
     },
     {
+      url: absoluteUrl(`/${locale}/cars`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+    {
       url: absoluteUrl(`/${locale}/privacy`),
       lastModified,
       changeFrequency: "yearly" as const,
@@ -97,6 +105,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified,
       changeFrequency: "weekly" as const,
       priority: 0.7,
+    })),
+    ...carSlugs.map((slug) => ({
+      url: absoluteUrl(`/${locale}/cars/${slug}`),
+      lastModified,
+      changeFrequency: "weekly" as const,
+      priority: 0.75,
     })),
   ]);
 }

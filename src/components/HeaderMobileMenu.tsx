@@ -42,6 +42,7 @@ const NAV_TESTIDS: Record<string, string> = {
   venues: "mobile-nav-nightlife",
   beaches: "mobile-nav-beaches",
   chalets: "mobile-nav-accommodation",
+  cars: "mobile-nav-cars",
   about: "mobile-nav-about",
   trust: "mobile-nav-trust",
 };

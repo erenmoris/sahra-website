@@ -3,6 +3,7 @@ import { isLocale, locales } from "@/i18n/config";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import HomeTeaser from "@/components/HomeTeaser";
+import HomeExclusiveAccess from "@/components/HomeExclusiveAccess";
 import HomeGallery from "@/components/HomeGallery";
 import HomeReels from "@/components/HomeReels";
 import PromoTicker from "@/components/PromoTicker";
@@ -82,18 +83,21 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         {/* 3 — Category bento */}
         <HomeTeaser t={t} locale={locale} />
 
-        {/* 4 — Vertical reels cut from club videos */}
+        {/* 4 — Exclusive access USP */}
+        <HomeExclusiveAccess t={t} locale={locale} />
+
+        {/* 5 — Vertical reels cut from club videos */}
         <HomeReels locale={locale} t={t} />
 
-        {/* 5 — Gallery preview from nightclub photos */}
+        {/* 6 — Gallery preview from nightclub photos */}
         {sections.gallery ? <HomeGallery locale={locale} t={t} /> : null}
 
-        {/* 6 — WhatsApp testimonials */}
+        {/* 7 — WhatsApp testimonials */}
         {sections.testimonials ? (
           <Testimonials t={t} locale={locale} compact />
         ) : null}
 
-        {/* 7 — Reserve CTA */}
+        {/* 8 — Reserve CTA */}
         {sections.reserve ? (
           <section id="reserve" className="relative scroll-mt-8 overflow-hidden py-12 sm:py-16">
             <div
