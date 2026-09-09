@@ -104,7 +104,7 @@ export default function HeaderMobileMenu({
                 <Link
                   href={`/${other}`}
                   data-testid="mobile-lang-switch"
-                  className="inline-flex h-11 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 px-4 text-[0.82rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold"
+                  className="inline-flex h-11 items-center justify-center rounded-full border-2 border-gold bg-gold/10 px-4 text-[0.82rem] font-semibold text-gold transition-colors hover:bg-gold/20"
                   onClick={close}
                   hrefLang={other}
                 >
@@ -116,7 +116,7 @@ export default function HeaderMobileMenu({
                 locale={locale}
                 label={t.langSwitch}
                 testId="mobile-lang-switch"
-                className="inline-flex h-11 items-center justify-center rounded-full border-2 border-gold/60 bg-ink-2 px-4 text-[0.82rem] font-semibold text-sand transition-colors hover:border-gold hover:text-gold"
+                className="inline-flex h-11 items-center justify-center rounded-full border-2 border-gold bg-gold/10 px-4 text-[0.82rem] font-semibold text-gold transition-colors hover:bg-gold/20"
                 onNavigate={close}
               />
             </Suspense>
@@ -167,30 +167,6 @@ export default function HeaderMobileMenu({
             >
               <SnapchatIcon className="h-5 w-5" />
             </TrackedLink>
-          </div>
-
-          <div className="mt-5 flex justify-center">
-            <Suspense
-              fallback={
-                <Link
-                  href={`/${other}`}
-                  data-testid="mobile-lang-switch-footer"
-                  className="inline-flex min-h-11 min-w-[8.5rem] items-center justify-center rounded-full border-2 border-gold bg-gold/10 px-6 text-[0.9rem] font-semibold text-gold transition-colors hover:bg-gold/20"
-                  onClick={close}
-                  hrefLang={other}
-                >
-                  {t.langSwitch}
-                </Link>
-              }
-            >
-              <LanguageSwitch
-                locale={locale}
-                label={t.langSwitch}
-                testId="mobile-lang-switch-footer"
-                className="inline-flex min-h-11 min-w-[8.5rem] items-center justify-center rounded-full border-2 border-gold bg-gold/10 px-6 text-[0.9rem] font-semibold text-gold transition-colors hover:bg-gold/20"
-                onNavigate={close}
-              />
-            </Suspense>
           </div>
         </div>
       </div>
