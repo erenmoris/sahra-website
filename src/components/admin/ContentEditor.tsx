@@ -40,7 +40,12 @@ import {
   SOCIAL_COPY_FIELDS,
   TRUST_META_FIELDS,
 } from "@/lib/content/page-copy";
-import { FlatCopyFields, LocaleLinesEditor, LocalizedPairFields } from "@/components/admin/FlatCopyFields";
+import {
+  FlatCopyFields,
+  LocaleLinesEditor,
+  LocalizedPairFields,
+  dictStringDefaults,
+} from "@/components/admin/FlatCopyFields";
 
 type Tab =
   | "sections"
@@ -138,6 +143,8 @@ export default function ContentEditor({
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+
+  const dict = getDictionary(locale);
 
   const sections = useMemo(
     () => ({ ...DEFAULT_SECTIONS, ...content.sections }),
@@ -570,6 +577,7 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={HOME_COPY_FIELDS}
                 value={content.homeCopy}
+                defaults={dictStringDefaults(dict.home as Record<string, unknown>, HOME_COPY_FIELDS)}
                 locale={locale}
                 onChange={(homeCopy) => update({ homeCopy })}
               />
@@ -581,6 +589,7 @@ export default function ContentEditor({
                 {HOME_CARD_HREFS.map((href) => {
                   const card =
                     content.homeCards?.find((item) => item.href === href) ?? { href };
+                  const defaultCard = dict.home.cards.find((item) => item.href === href);
                   return (
                     <div key={href} className="border border-gold/15 bg-ink p-4">
                       <p className="mb-3 text-[0.82rem] font-semibold text-gold">{href}</p>
@@ -599,6 +608,7 @@ export default function ContentEditor({
                             locale={locale}
                             multiline={key === "body"}
                             value={card[key]}
+                            defaultValue={defaultCard?.[key]}
                             onChange={(next) => {
                               const list = [...(content.homeCards ?? [])];
                               const index = list.findIndex((item) => item.href === href);
@@ -621,6 +631,10 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={EXCLUSIVE_COPY_FIELDS}
                 value={content.exclusiveCopy}
+                defaults={dictStringDefaults(
+                  dict.home?.exclusive as Record<string, unknown>,
+                  EXCLUSIVE_COPY_FIELDS,
+                )}
                 locale={locale}
                 onChange={(exclusiveCopy) => update({ exclusiveCopy })}
               />
@@ -628,6 +642,7 @@ export default function ContentEditor({
                 {EXCLUSIVE_VENUE_IDS.map((id) => {
                   const venue =
                     content.exclusiveVenues?.find((item) => item.id === id) ?? { id };
+                  const defaultVenue = dict.home.exclusive.venues.find((item) => item.id === id);
                   return (
                     <div key={id} className="border border-gold/15 bg-ink p-4">
                       <p className="mb-3 text-[0.82rem] font-semibold text-gold">{id}</p>
@@ -636,6 +651,7 @@ export default function ContentEditor({
                           label="الاسم"
                           locale={locale}
                           value={venue.name}
+                          defaultValue={defaultVenue?.name}
                           onChange={(name) => {
                             const list = [...(content.exclusiveVenues ?? [])];
                             const index = list.findIndex((item) => item.id === id);
@@ -650,6 +666,7 @@ export default function ContentEditor({
                           locale={locale}
                           multiline
                           value={venue.body}
+                          defaultValue={defaultVenue?.body}
                           onChange={(body) => {
                             const list = [...(content.exclusiveVenues ?? [])];
                             const index = list.findIndex((item) => item.id === id);
@@ -671,6 +688,7 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={REELS_COPY_FIELDS}
                 value={content.reelsCopy}
+                defaults={dictStringDefaults(dict.reels as Record<string, unknown>, REELS_COPY_FIELDS)}
                 locale={locale}
                 onChange={(reelsCopy) => update({ reelsCopy })}
               />
@@ -681,6 +699,10 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={GALLERY_HOME_FIELDS}
                 value={content.galleryCopy}
+                defaults={dictStringDefaults(
+                  dict.gallery as Record<string, unknown>,
+                  GALLERY_HOME_FIELDS,
+                )}
                 locale={locale}
                 onChange={(galleryCopy) => update({ galleryCopy })}
               />
@@ -700,6 +722,10 @@ export default function ContentEditor({
                   <FlatCopyFields
                     fields={SECTION_HEADER_FIELDS}
                     value={content[key] as FlatCopy | undefined}
+                    defaults={dictStringDefaults(
+                      dict[key] as Record<string, unknown>,
+                      SECTION_HEADER_FIELDS,
+                    )}
                     locale={locale}
                     onChange={(next) => update({ [key]: next })}
                   />
@@ -726,6 +752,14 @@ export default function ContentEditor({
                     ? content.nightclubsCopy
                     : content.beachesCopy
               }
+              defaults={dictStringDefaults(
+                (tab === "venues"
+                  ? dict.venues
+                  : tab === "nightclubs"
+                    ? dict.nightclubs
+                    : dict.beaches) as Record<string, unknown>,
+                DIRECTORY_COPY_FIELDS,
+              )}
               locale={locale}
               onChange={(next) =>
                 update(
@@ -746,6 +780,10 @@ export default function ContentEditor({
             <FlatCopyFields
               fields={GALLERY_PAGE_FIELDS}
               value={content.galleryPageCopy}
+              defaults={dictStringDefaults(
+                dict.galleryPage as Record<string, unknown>,
+                GALLERY_PAGE_FIELDS,
+              )}
               locale={locale}
               onChange={(galleryPageCopy) => update({ galleryPageCopy })}
             />
@@ -755,10 +793,14 @@ export default function ContentEditor({
         {tab === "about" ? (
           <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
             <div>
-              <h2 className="mb-4 font-display text-lg text-sand">نصوص صفحة عن سهرة</h2>
+              <h2 className="mb-2 font-display text-lg text-sand">نصوص صفحة عن سهرة</h2>
+              <p className="mb-4 text-[0.85rem] text-sand-dim">
+                الحقول بتعرض نص الموقع الحالي. عدّل اللي تحتاجه واضغط حفظ — الباقي يفضل زي ما هو.
+              </p>
               <FlatCopyFields
                 fields={ABOUT_COPY_FIELDS}
                 value={content.aboutCopy}
+                defaults={dictStringDefaults(dict.about as Record<string, unknown>, ABOUT_COPY_FIELDS)}
                 locale={locale}
                 onChange={(aboutCopy) => update({ aboutCopy })}
               />
@@ -766,7 +808,11 @@ export default function ContentEditor({
             <div className="border-t border-gold/15 pt-6">
               <LocaleLinesEditor
                 label="فقرات القصة"
-                lines={content.aboutStoryBody?.[locale] ?? []}
+                lines={
+                  content.aboutStoryBody?.[locale] !== undefined
+                    ? (content.aboutStoryBody[locale] as string[])
+                    : [...dict.about.storyBody]
+                }
                 onChange={(lines) =>
                   update({
                     aboutStoryBody: { ...content.aboutStoryBody, [locale]: lines },
@@ -777,7 +823,11 @@ export default function ContentEditor({
             <div className="border-t border-gold/15 pt-6">
               <LocaleLinesEditor
                 label="فقرات الخبرة"
-                lines={content.aboutExperienceBody?.[locale] ?? []}
+                lines={
+                  content.aboutExperienceBody?.[locale] !== undefined
+                    ? (content.aboutExperienceBody[locale] as string[])
+                    : [...dict.about.experienceBody]
+                }
                 onChange={(lines) =>
                   update({
                     aboutExperienceBody: {
@@ -791,7 +841,11 @@ export default function ContentEditor({
             <div className="border-t border-gold/15 pt-6">
               <LocaleLinesEditor
                 label="نقاط الخبرة"
-                lines={content.aboutExperienceHighlights?.[locale] ?? []}
+                lines={
+                  content.aboutExperienceHighlights?.[locale] !== undefined
+                    ? (content.aboutExperienceHighlights[locale] as string[])
+                    : [...dict.about.experienceHighlights]
+                }
                 onChange={(lines) =>
                   update({
                     aboutExperienceHighlights: {
@@ -812,6 +866,10 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={[...SECTION_HEADER_FIELDS, ...TRUST_META_FIELDS]}
                 value={{ ...(content.trust ?? {}), ...(content.trustMeta ?? {}) }}
+                defaults={dictStringDefaults(dict.trust as Record<string, unknown>, [
+                  ...SECTION_HEADER_FIELDS,
+                  ...TRUST_META_FIELDS,
+                ])}
                 locale={locale}
                 onChange={(next) => {
                   const trust: FlatCopy = {};
@@ -835,6 +893,7 @@ export default function ContentEditor({
             <FlatCopyFields
               fields={FORM_COPY_FIELDS}
               value={content.formCopy}
+              defaults={dictStringDefaults(dict.form as Record<string, unknown>, FORM_COPY_FIELDS)}
               locale={locale}
               onChange={(formCopy) => update({ formCopy })}
             />
@@ -848,6 +907,10 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={FOOTER_COPY_FIELDS}
                 value={content.footerCopy}
+                defaults={dictStringDefaults(
+                  dict.footer as Record<string, unknown>,
+                  FOOTER_COPY_FIELDS,
+                )}
                 locale={locale}
                 onChange={(footerCopy) => update({ footerCopy })}
               />
@@ -857,6 +920,10 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={SOCIAL_COPY_FIELDS}
                 value={content.socialCopy}
+                defaults={dictStringDefaults(
+                  dict.social as Record<string, unknown>,
+                  SOCIAL_COPY_FIELDS,
+                )}
                 locale={locale}
                 onChange={(socialCopy) => update({ socialCopy })}
               />
@@ -1249,6 +1316,10 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={CHALETS_COPY_FIELDS}
                 value={content.chaletsCopy}
+                defaults={dictStringDefaults(
+                  dict.chalets as Record<string, unknown>,
+                  CHALETS_COPY_FIELDS,
+                )}
                 locale={locale}
                 onChange={(chaletsCopy) => update({ chaletsCopy })}
               />
@@ -1602,6 +1673,7 @@ export default function ContentEditor({
               <FlatCopyFields
                 fields={CARS_COPY_FIELDS}
                 value={content.carsCopy}
+                defaults={dictStringDefaults(dict.cars as Record<string, unknown>, CARS_COPY_FIELDS)}
                 locale={locale}
                 onChange={(carsCopy) => update({ carsCopy })}
               />
