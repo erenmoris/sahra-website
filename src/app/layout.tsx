@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import Script from "next/script";
 import { Cairo, El_Messiri, IBM_Plex_Mono } from "next/font/google";
 import { defaultLocale, dir, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -101,22 +102,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale} dir={dir(locale)} data-scroll-behavior="smooth" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(localStorage.getItem("sahra:theme")!=="dark")document.documentElement.classList.add("light")}catch(e){}})();`,
-          }}
-        />
-        {/* Covers the homepage before React hydrates so content never flashes first. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=location.pathname.replace(/\\/+$/,"")||"/";if(p!=="/ar"&&p!=="/en"&&p!=="/")return;if(sessionStorage.getItem("sahra:entrance-load-v2"))return;document.documentElement.classList.add("sahra-gate");setTimeout(function(){document.documentElement.classList.remove("sahra-gate")},9000)}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body
         className={`${elMessiri.variable} ${cairo.variable} ${plexMono.variable} bg-ink text-sand antialiased`}
+        suppressHydrationWarning
       >
+        {/* beforeInteractive avoids manual <head> scripts that clash with extensions during hydrate */}
+        <Script id="sahra-theme" strategy="beforeInteractive">
+          {`(function(){try{if(localStorage.getItem("sahra:theme")!=="dark")document.documentElement.classList.add("light")}catch(e){}})();`}
+        </Script>
+        <Script id="sahra-gate" strategy="beforeInteractive">
+          {`(function(){try{var p=location.pathname.replace(/\\/+$/,"")||"/";if(p!=="/ar"&&p!=="/en"&&p!=="/")return;if(sessionStorage.getItem("sahra:entrance-load-v2"))return;document.documentElement.classList.add("sahra-gate");setTimeout(function(){document.documentElement.classList.remove("sahra-gate")},9000)}catch(e){}})();`}
+        </Script>
         <StructuredData locale={locale} t={t} />
         <Analytics gaId={gaId} fbPixelId={fbPixelId} />
         {children}

@@ -11,6 +11,7 @@ import {
   type ChaletListing,
   type GalleryMediaItem,
   type FaqItem,
+  type FlatCopy,
   type LocalizedString,
   type SectionKey,
   type SiteContent,
@@ -19,17 +20,67 @@ import {
 import { buttonClass } from "@/components/ui";
 import { getDictionary } from "@/i18n/dictionaries";
 import type { Locale } from "@/i18n/config";
+import { vipCars } from "@/content/cars";
+import { SITE_PAGES } from "@/lib/admin/placements";
+import {
+  ABOUT_COPY_FIELDS,
+  CARS_COPY_FIELDS,
+  CHALETS_COPY_FIELDS,
+  DIRECTORY_COPY_FIELDS,
+  EXCLUSIVE_COPY_FIELDS,
+  EXCLUSIVE_VENUE_IDS,
+  FORM_COPY_FIELDS,
+  FOOTER_COPY_FIELDS,
+  GALLERY_HOME_FIELDS,
+  GALLERY_PAGE_FIELDS,
+  HOME_CARD_HREFS,
+  HOME_COPY_FIELDS,
+  REELS_COPY_FIELDS,
+  SECTION_HEADER_FIELDS,
+  SOCIAL_COPY_FIELDS,
+  TRUST_META_FIELDS,
+} from "@/lib/content/page-copy";
+import { FlatCopyFields, LocaleLinesEditor, LocalizedPairFields } from "@/components/admin/FlatCopyFields";
 
-type Tab = "sections" | "hero" | "ticker" | "coverage" | "testimonials" | "gallery" | "chalets";
+type Tab =
+  | "sections"
+  | "hero"
+  | "home"
+  | "ticker"
+  | "coverage"
+  | "venues"
+  | "nightclubs"
+  | "beaches"
+  | "galleryPage"
+  | "testimonials"
+  | "gallery"
+  | "chalets"
+  | "cars"
+  | "about"
+  | "trustPage"
+  | "form"
+  | "footer"
+  | "pages";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "sections", label: "الأقسام" },
   { id: "hero", label: "الهيرو والهيدر" },
+  { id: "home", label: "الرئيسية" },
   { id: "ticker", label: "الشريط المتحرك" },
   { id: "coverage", label: "دليل السهر والأسئلة" },
+  { id: "venues", label: "سهرات" },
+  { id: "nightclubs", label: "نايت كلوب" },
+  { id: "beaches", label: "الشواطئ" },
+  { id: "galleryPage", label: "نصوص المعرض" },
   { id: "chalets", label: "الشاليهات" },
+  { id: "cars", label: "عربيات VIP" },
+  { id: "about", label: "عن سهرة" },
+  { id: "trustPage", label: "ليه تختارنا" },
+  { id: "form", label: "نموذج الحجز" },
+  { id: "footer", label: "الفوتر" },
   { id: "testimonials", label: "آراء العملاء" },
-  { id: "gallery", label: "معرض الصور" },
+  { id: "gallery", label: "صور المعرض" },
+  { id: "pages", label: "خريطة الصفحات" },
 ];
 
 function fieldClass(extra = "") {
@@ -277,6 +328,12 @@ export default function ContentEditor({
               الحجوزات
             </Link>
             <Link
+              href="/admin/whatsapp"
+              className="border border-gold/40 bg-gold/10 px-3 py-2 text-[0.78rem] text-gold-soft transition-colors hover:border-gold hover:bg-gold/15"
+            >
+              إرسال واتساب
+            </Link>
+            <Link
               href="/ar"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
@@ -360,7 +417,8 @@ export default function ContentEditor({
           <section className="border border-gold/20 bg-ink-2/40 p-6">
             <h2 className="mb-2 font-display text-lg text-sand">إظهار / إخفاء الأقسام</h2>
             <p className="mb-6 text-[0.85rem] text-sand-dim">
-              الأقسام المخفية بتختفي من الصفحة الرئيسية فور الحفظ.
+              الأقسام المخفية بتختفي من الصفحة الرئيسية فور الحفظ. كمان تقدر تتحكم في
+              بطاقات الأقسام، الدخول الحصري، والريلز.
             </p>
             <ul className="grid gap-3 sm:grid-cols-2">
               {(Object.keys(DEFAULT_SECTIONS) as SectionKey[]).map((key) => (
@@ -442,16 +500,20 @@ export default function ContentEditor({
             <div className="border-t border-gold/15 pt-6">
               <h2 className="mb-2 font-display text-lg text-sand">تابات الهيدر</h2>
               <p className="mb-4 text-[0.85rem] text-sand-dim">
-                الأسماء دي بتظهر في الهيدر وقائمة الموبايل.
+                الأسماء دي بتظهر في الهيدر وقائمة الموبايل — بنفس ترتيب الموقع الحالي.
               </p>
               <div className="grid gap-4">
                 {(
                   [
-                    ["home", "تاب الرئيسية"],
-                    ["how", "تاب طريقة الحجز"],
-                    ["venues", "تاب سهرات"],
-                    ["chalets", "تاب الشاليهات"],
-                    ["trust", "تاب ليه تختارنا"],
+                    ["home", "الرئيسية"],
+                    ["venues", "سهرات"],
+                    ["nightclubs", "نايت كلوب"],
+                    ["beaches", "الشواطئ"],
+                    ["gallery", "المعرض"],
+                    ["chalets", "الشاليهات"],
+                    ["cars", "السيارات"],
+                    ["about", "عن سهرة"],
+                    ["trust", "ليه تختارنا"],
                     ["reserve", "زر احجز مكانك"],
                   ] as const
                 ).map(([key, label]) => (
@@ -497,6 +559,307 @@ export default function ContentEditor({
               <p className="mt-3 text-[0.75rem] text-sand-dim">
                 سيب الحقل فاضي عشان يفضل النص الافتراضي. على اليمين في الموقع بيظهر محادثة الواتساب — مش بيتعدّل من هنا.
               </p>
+            </div>
+          </section>
+        ) : null}
+
+        {tab === "home" ? (
+          <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
+            <div>
+              <h2 className="mb-2 font-display text-lg text-sand">بطاقات الأقسام</h2>
+              <FlatCopyFields
+                fields={HOME_COPY_FIELDS}
+                value={content.homeCopy}
+                locale={locale}
+                onChange={(homeCopy) => update({ homeCopy })}
+              />
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">نصوص كل كارت</h2>
+              <div className="space-y-6">
+                {HOME_CARD_HREFS.map((href) => {
+                  const card =
+                    content.homeCards?.find((item) => item.href === href) ?? { href };
+                  return (
+                    <div key={href} className="border border-gold/15 bg-ink p-4">
+                      <p className="mb-3 text-[0.82rem] font-semibold text-gold">{href}</p>
+                      <div className="grid gap-3">
+                        {(
+                          [
+                            ["tag", "الوسم"],
+                            ["title", "العنوان"],
+                            ["body", "الوصف"],
+                            ["cta", "الزر"],
+                          ] as const
+                        ).map(([key, label]) => (
+                          <LocalizedPairFields
+                            key={key}
+                            label={label}
+                            locale={locale}
+                            multiline={key === "body"}
+                            value={card[key]}
+                            onChange={(next) => {
+                              const list = [...(content.homeCards ?? [])];
+                              const index = list.findIndex((item) => item.href === href);
+                              const merged = { ...(index >= 0 ? list[index] : { href }), [key]: next };
+                              if (index >= 0) list[index] = merged;
+                              else list.push(merged);
+                              update({ homeCards: list });
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">الدخول الحصري</h2>
+              <FlatCopyFields
+                fields={EXCLUSIVE_COPY_FIELDS}
+                value={content.exclusiveCopy}
+                locale={locale}
+                onChange={(exclusiveCopy) => update({ exclusiveCopy })}
+              />
+              <div className="mt-6 space-y-4">
+                {EXCLUSIVE_VENUE_IDS.map((id) => {
+                  const venue =
+                    content.exclusiveVenues?.find((item) => item.id === id) ?? { id };
+                  return (
+                    <div key={id} className="border border-gold/15 bg-ink p-4">
+                      <p className="mb-3 text-[0.82rem] font-semibold text-gold">{id}</p>
+                      <div className="grid gap-3">
+                        <LocalizedPairFields
+                          label="الاسم"
+                          locale={locale}
+                          value={venue.name}
+                          onChange={(name) => {
+                            const list = [...(content.exclusiveVenues ?? [])];
+                            const index = list.findIndex((item) => item.id === id);
+                            const merged = { ...(index >= 0 ? list[index] : { id }), name };
+                            if (index >= 0) list[index] = merged;
+                            else list.push(merged);
+                            update({ exclusiveVenues: list });
+                          }}
+                        />
+                        <LocalizedPairFields
+                          label="الوصف"
+                          locale={locale}
+                          multiline
+                          value={venue.body}
+                          onChange={(body) => {
+                            const list = [...(content.exclusiveVenues ?? [])];
+                            const index = list.findIndex((item) => item.id === id);
+                            const merged = { ...(index >= 0 ? list[index] : { id }), body };
+                            if (index >= 0) list[index] = merged;
+                            else list.push(merged);
+                            update({ exclusiveVenues: list });
+                          }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">الريلز</h2>
+              <FlatCopyFields
+                fields={REELS_COPY_FIELDS}
+                value={content.reelsCopy}
+                locale={locale}
+                onChange={(reelsCopy) => update({ reelsCopy })}
+              />
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">معاينة المعرض في الرئيسية</h2>
+              <FlatCopyFields
+                fields={GALLERY_HOME_FIELDS}
+                value={content.galleryCopy}
+                locale={locale}
+                onChange={(galleryCopy) => update({ galleryCopy })}
+              />
+            </div>
+
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">عناوين أقسام إضافية</h2>
+              {(
+                [
+                  ["how", "طريقة الحجز"],
+                  ["trust", "ليه تختارنا"],
+                  ["testimonials", "آراء العملاء"],
+                ] as const
+              ).map(([key, label]) => (
+                <div key={key} className="mb-6 border border-gold/15 bg-ink p-4">
+                  <p className="mb-3 text-[0.82rem] font-semibold text-gold">{label}</p>
+                  <FlatCopyFields
+                    fields={SECTION_HEADER_FIELDS}
+                    value={content[key] as FlatCopy | undefined}
+                    locale={locale}
+                    onChange={(next) => update({ [key]: next })}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {tab === "venues" || tab === "nightclubs" || tab === "beaches" ? (
+          <section className="border border-gold/20 bg-ink-2/40 p-6">
+            <h2 className="mb-2 font-display text-lg text-sand">
+              {tab === "venues" ? "نصوص صفحة السهرات" : tab === "nightclubs" ? "نصوص النايت كلوب" : "نصوص الشواطئ"}
+            </h2>
+            <p className="mb-6 text-[0.85rem] text-sand-dim">
+              ده نص الصفحة والعناوين والأزرار — مش قائمة الأماكن نفسها.
+            </p>
+            <FlatCopyFields
+              fields={DIRECTORY_COPY_FIELDS}
+              value={
+                tab === "venues"
+                  ? content.venuesCopy
+                  : tab === "nightclubs"
+                    ? content.nightclubsCopy
+                    : content.beachesCopy
+              }
+              locale={locale}
+              onChange={(next) =>
+                update(
+                  tab === "venues"
+                    ? { venuesCopy: next }
+                    : tab === "nightclubs"
+                      ? { nightclubsCopy: next }
+                      : { beachesCopy: next },
+                )
+              }
+            />
+          </section>
+        ) : null}
+
+        {tab === "galleryPage" ? (
+          <section className="border border-gold/20 bg-ink-2/40 p-6">
+            <h2 className="mb-2 font-display text-lg text-sand">نصوص صفحة المعرض</h2>
+            <FlatCopyFields
+              fields={GALLERY_PAGE_FIELDS}
+              value={content.galleryPageCopy}
+              locale={locale}
+              onChange={(galleryPageCopy) => update({ galleryPageCopy })}
+            />
+          </section>
+        ) : null}
+
+        {tab === "about" ? (
+          <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
+            <div>
+              <h2 className="mb-4 font-display text-lg text-sand">نصوص صفحة عن سهرة</h2>
+              <FlatCopyFields
+                fields={ABOUT_COPY_FIELDS}
+                value={content.aboutCopy}
+                locale={locale}
+                onChange={(aboutCopy) => update({ aboutCopy })}
+              />
+            </div>
+            <div className="border-t border-gold/15 pt-6">
+              <LocaleLinesEditor
+                label="فقرات القصة"
+                lines={content.aboutStoryBody?.[locale] ?? []}
+                onChange={(lines) =>
+                  update({
+                    aboutStoryBody: { ...content.aboutStoryBody, [locale]: lines },
+                  })
+                }
+              />
+            </div>
+            <div className="border-t border-gold/15 pt-6">
+              <LocaleLinesEditor
+                label="فقرات الخبرة"
+                lines={content.aboutExperienceBody?.[locale] ?? []}
+                onChange={(lines) =>
+                  update({
+                    aboutExperienceBody: {
+                      ...content.aboutExperienceBody,
+                      [locale]: lines,
+                    },
+                  })
+                }
+              />
+            </div>
+            <div className="border-t border-gold/15 pt-6">
+              <LocaleLinesEditor
+                label="نقاط الخبرة"
+                lines={content.aboutExperienceHighlights?.[locale] ?? []}
+                onChange={(lines) =>
+                  update({
+                    aboutExperienceHighlights: {
+                      ...content.aboutExperienceHighlights,
+                      [locale]: lines,
+                    },
+                  })
+                }
+              />
+            </div>
+          </section>
+        ) : null}
+
+        {tab === "trustPage" ? (
+          <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
+            <div>
+              <h2 className="mb-4 font-display text-lg text-sand">نصوص ليه تختارنا</h2>
+              <FlatCopyFields
+                fields={[...SECTION_HEADER_FIELDS, ...TRUST_META_FIELDS]}
+                value={{ ...(content.trust ?? {}), ...(content.trustMeta ?? {}) }}
+                locale={locale}
+                onChange={(next) => {
+                  const trust: FlatCopy = {};
+                  const trustMeta: FlatCopy = {};
+                  for (const field of SECTION_HEADER_FIELDS) {
+                    if (next[field.key]) trust[field.key] = next[field.key];
+                  }
+                  for (const field of TRUST_META_FIELDS) {
+                    if (next[field.key]) trustMeta[field.key] = next[field.key];
+                  }
+                  update({ trust, trustMeta });
+                }}
+              />
+            </div>
+          </section>
+        ) : null}
+
+        {tab === "form" ? (
+          <section className="border border-gold/20 bg-ink-2/40 p-6">
+            <h2 className="mb-2 font-display text-lg text-sand">نموذج الحجز</h2>
+            <FlatCopyFields
+              fields={FORM_COPY_FIELDS}
+              value={content.formCopy}
+              locale={locale}
+              onChange={(formCopy) => update({ formCopy })}
+            />
+          </section>
+        ) : null}
+
+        {tab === "footer" ? (
+          <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
+            <div>
+              <h2 className="mb-4 font-display text-lg text-sand">الفوتر</h2>
+              <FlatCopyFields
+                fields={FOOTER_COPY_FIELDS}
+                value={content.footerCopy}
+                locale={locale}
+                onChange={(footerCopy) => update({ footerCopy })}
+              />
+            </div>
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="mb-4 font-display text-lg text-sand">سوشيال</h2>
+              <FlatCopyFields
+                fields={SOCIAL_COPY_FIELDS}
+                value={content.socialCopy}
+                locale={locale}
+                onChange={(socialCopy) => update({ socialCopy })}
+              />
             </div>
           </section>
         ) : null}
@@ -881,6 +1244,15 @@ export default function ContentEditor({
 
         {tab === "chalets" ? (
           <section className="border border-gold/20 bg-ink-2/40 p-6">
+            <div className="mb-8 border-b border-gold/15 pb-8">
+              <h2 className="mb-2 font-display text-lg text-sand">نصوص صفحة الشاليهات</h2>
+              <FlatCopyFields
+                fields={CHALETS_COPY_FIELDS}
+                value={content.chaletsCopy}
+                locale={locale}
+                onChange={(chaletsCopy) => update({ chaletsCopy })}
+              />
+            </div>
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className="font-display text-lg text-sand">الشاليهات للإيجار</h2>
@@ -1217,6 +1589,86 @@ export default function ContentEditor({
                 ابدأ التعديل (نسخ الافتراضي)
               </button>
             ) : null}
+          </section>
+        ) : null}
+
+        {tab === "cars" ? (
+          <section className="space-y-8 border border-gold/20 bg-ink-2/40 p-6">
+            <div>
+              <h2 className="font-display text-lg text-sand">نصوص صفحة العربيات</h2>
+              <p className="mt-1 mb-4 text-[0.85rem] leading-[1.7] text-sand-dim">
+                عدّل عناوين ووصف صفحة الأسطول من هنا.
+              </p>
+              <FlatCopyFields
+                fields={CARS_COPY_FIELDS}
+                value={content.carsCopy}
+                locale={locale}
+                onChange={(carsCopy) => update({ carsCopy })}
+              />
+            </div>
+            <div className="border-t border-gold/15 pt-6">
+              <h2 className="font-display text-lg text-sand">أسطول عربيات VIP</h2>
+              <p className="mt-1 text-[0.85rem] leading-[1.7] text-sand-dim">
+                العربيات ظاهرة على{" "}
+                <Link href="/ar/cars" className="text-gold-soft underline underline-offset-2">
+                  /ar/cars
+                </Link>
+                . مواصفات كل عربية لسه من الكود — القائمة دي للمتابعة.
+              </p>
+            </div>
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {vipCars.map((car) => (
+                <li
+                  key={car.slug}
+                  className="flex items-center gap-4 border border-gold/15 bg-ink p-3"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={car.image}
+                    alt=""
+                    className="h-16 w-20 shrink-0 rounded-md object-cover"
+                  />
+                  <div className="min-w-0 flex-1 text-start">
+                    <p className="truncate text-[0.95rem] font-semibold text-sand">
+                      {car.nameAr}
+                    </p>
+                    <p className="mt-0.5 text-[0.78rem] text-sand-dim">
+                      {car.categoryAr} · {car.passengers} ركاب
+                    </p>
+                    <Link
+                      href={`/ar/cars/${car.slug}`}
+                      className="mt-1 inline-block text-[0.78rem] text-gold-soft hover:underline"
+                    >
+                      فتح الصفحة ←
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        {tab === "pages" ? (
+          <section className="border border-gold/20 bg-ink-2/40 p-6">
+            <h2 className="mb-2 font-display text-lg text-sand">خريطة صفحات الموقع</h2>
+            <p className="mb-6 text-[0.85rem] leading-[1.7] text-sand-dim">
+              كل الصفحات العامة الحالية — افتح أي صفحة للمراجعة أو راجع الضغطات من لوحة الحجوزات.
+            </p>
+            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {SITE_PAGES.map((page) => (
+                <li key={page.href}>
+                  <Link
+                    href={page.href}
+                    className="flex items-center justify-between border border-gold/15 bg-ink px-4 py-3 text-[0.92rem] text-sand transition-colors hover:border-gold/40 hover:text-gold-soft"
+                  >
+                    <span>{page.label}</span>
+                    <span className="font-mono text-[0.72rem] text-sand-dim" dir="ltr">
+                      {page.href}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
         ) : null}
 

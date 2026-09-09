@@ -1,6 +1,9 @@
 export type SectionKey =
   | "hero"
   | "promoTicker"
+  | "homeTeaser"
+  | "homeExclusive"
+  | "homeReels"
   | "how"
   | "trust"
   | "venues"
@@ -15,14 +18,42 @@ export type LocalizedString = {
   en?: string;
 };
 
+/** Flat AR/EN overrides for dictionary string fields. */
+export type FlatCopy = Partial<Record<string, LocalizedString>>;
+
+export type HomeCardOverride = {
+  href: string;
+  tag?: LocalizedString;
+  title?: LocalizedString;
+  body?: LocalizedString;
+  cta?: LocalizedString;
+};
+
+export type ExclusiveVenueOverride = {
+  id: string;
+  name?: LocalizedString;
+  body?: LocalizedString;
+};
+
+export type IdTitleBodyOverride = {
+  id: string;
+  title?: LocalizedString;
+  body?: LocalizedString;
+  visible?: boolean;
+};
+
 export type NavOverrides = {
   home?: LocalizedString;
   how?: LocalizedString;
   venues?: LocalizedString;
+  nightclubs?: LocalizedString;
   beaches?: LocalizedString;
+  gallery?: LocalizedString;
+  chalets?: LocalizedString;
+  cars?: LocalizedString;
+  about?: LocalizedString;
   trust?: LocalizedString;
   reserve?: LocalizedString;
-  chalets?: LocalizedString;
 };
 
 export type ChaletListing = {
@@ -109,7 +140,7 @@ export type SiteContent = {
   sections?: Partial<Record<SectionKey, boolean>>;
   /** Custom logo URL — falls back to /brand/logo-header.png */
   logoUrl?: string;
-  /** Header navigation labels (how, venues, trust, reserve). */
+  /** Header navigation labels (matches live header tabs). */
   nav?: NavOverrides;
   hero?: HeroOverrides;
   how?: SectionCopyOverrides;
@@ -129,6 +160,32 @@ export type SiteContent = {
   faqItems?: FaqItem[];
   /** Chalet rental listings. When empty/undefined, seed defaults are used. */
   chalets?: ChaletListing[];
+
+  /** Homepage + shared page chrome (CMS editable). */
+  homeCopy?: FlatCopy;
+  homeCards?: HomeCardOverride[];
+  exclusiveCopy?: FlatCopy;
+  exclusiveVenues?: ExclusiveVenueOverride[];
+  reelsCopy?: FlatCopy;
+  galleryCopy?: FlatCopy;
+  galleryPageCopy?: FlatCopy;
+  carsCopy?: FlatCopy;
+  venuesCopy?: FlatCopy;
+  beachesCopy?: FlatCopy;
+  nightclubsCopy?: FlatCopy;
+  chaletsCopy?: FlatCopy;
+  aboutCopy?: FlatCopy;
+  aboutStoryBody?: { ar?: string[]; en?: string[] };
+  aboutExperienceBody?: { ar?: string[]; en?: string[] };
+  aboutExperienceHighlights?: { ar?: string[]; en?: string[] };
+  aboutTeam?: IdTitleBodyOverride[];
+  aboutValues?: IdTitleBodyOverride[];
+  formCopy?: FlatCopy;
+  footerCopy?: FlatCopy;
+  socialCopy?: FlatCopy;
+  trustMeta?: FlatCopy;
+  trustItems?: IdTitleBodyOverride[];
+
   updatedAt?: string;
 };
 
@@ -480,6 +537,9 @@ export const DEFAULT_CHALETS: ChaletListing[] = [
 export const DEFAULT_SECTIONS: Record<SectionKey, boolean> = {
   hero: true,
   promoTicker: true,
+  homeTeaser: true,
+  homeExclusive: true,
+  homeReels: true,
   how: false,
   trust: true,
   venues: true,
@@ -493,10 +553,13 @@ export const DEFAULT_SECTIONS: Record<SectionKey, boolean> = {
 export const SECTION_LABELS: Record<SectionKey, string> = {
   hero: "الهيرو (أعلى الصفحة)",
   promoTicker: "الشريط المتحرك",
-  how: "طريقة الحجز",
-  trust: "ليه تختارنا",
-  venues: "سهرات",
-  gallery: "معرض الصور",
+  homeTeaser: "بطاقات الأقسام (سهرات · شواطئ · شاليهات · عربيات)",
+  homeExclusive: "الدخول الحصري للأماكن",
+  homeReels: "ريلز النايت كلوب",
+  how: "طريقة الحجز (غير ظاهر حاليًا)",
+  trust: "صفحة ليه تختارنا",
+  venues: "صفحة السهرات",
+  gallery: "معرض الصور (معاينة الرئيسية)",
   coverage: "قسم التغطية / SEO",
   testimonials: "آراء العملاء",
   reserve: "نموذج الحجز",

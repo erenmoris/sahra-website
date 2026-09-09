@@ -12,6 +12,14 @@ import {
 } from "@/lib/types";
 import { buttonClass } from "@/components/ui";
 import { WhatsAppIcon } from "@/components/Icons";
+import {
+  PLACEMENT_GROUP_LABELS,
+  SITE_PAGES,
+  placementGroup,
+  placementLabel,
+  type PlacementGroup,
+} from "@/lib/admin/placements";
+import { vipCars } from "@/content/cars";
 
 const statusStyles: Record<ReservationStatus, string> = {
   new: "border-gold/40 bg-gold/15 text-gold-soft",
@@ -66,8 +74,9 @@ export default function Dashboard({
   const router = useRouter();
   const [reservations, setReservations] = useState(initialReservations);
   const [clicks, setClicks] = useState(initialClicks);
-  const [tab, setTab] = useState<"requests" | "clicks">("requests");
+  const [tab, setTab] = useState<"requests" | "clicks" | "site">("requests");
   const [filter, setFilter] = useState<ReservationStatus | "all">("all");
+  const [clickGroup, setClickGroup] = useState<PlacementGroup | "all">("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Reservation | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -109,6 +118,27 @@ export default function Dashboard({
       clicksTotal: clicks.length,
     };
   }, [reservations, clicks]);
+
+  const clickRollup = useMemo(() => {
+    const counts: Partial<Record<PlacementGroup, number>> = {};
+    for (const click of clicks) {
+      const group = placementGroup(click.placement);
+      counts[group] = (counts[group] ?? 0) + 1;
+    }
+    return (Object.keys(PLACEMENT_GROUP_LABELS) as PlacementGroup[])
+      .map((group) => ({
+        group,
+        label: PLACEMENT_GROUP_LABELS[group],
+        count: counts[group] ?? 0,
+      }))
+      .filter((row) => row.count > 0)
+      .sort((a, b) => b.count - a.count);
+  }, [clicks]);
+
+  const visibleClicks = useMemo(() => {
+    if (clickGroup === "all") return clicks;
+    return clicks.filter((click) => placementGroup(click.placement) === clickGroup);
+  }, [clicks, clickGroup]);
 
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -201,6 +231,12 @@ export default function Dashboard({
               إدارة المحتوى
             </Link>
             <Link
+              href="/admin/whatsapp"
+              className="border border-gold/40 bg-gold/10 px-3 py-2 text-[0.78rem] text-gold-soft transition-colors hover:border-gold hover:bg-gold/15"
+            >
+              إرسال واتساب
+            </Link>
+            <Link
               href="/ar"
               className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
             >
@@ -262,11 +298,12 @@ export default function Dashboard({
           ))}
         </div>
 
-        <div className="mt-8 flex gap-2 border-b border-gold/20">
+        <div className="mt-8 flex flex-wrap gap-2 border-b border-gold/20">
           {(
             [
               ["requests", `طلبات الحجز (${reservations.length})`],
               ["clicks", `ضغطات واتساب وسناب (${stats.clicksTotal})`],
+              ["site", "خريطة الموقع والأسطول"],
             ] as const
           ).map(([value, label]) => (
             <button
@@ -284,12 +321,118 @@ export default function Dashboard({
           ))}
         </div>
 
+        {tab === "site" ? (
+          <div className="mt-6 space-y-8">
+            <section>
+              <h2 className="mb-3 font-display text-lg text-sand">صفحات الموقع الحالية</h2>
+              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {SITE_PAGES.map((page) => (
+                  <li key={page.href}>
+                    <Link
+                      href={page.href}
+                      className="flex items-center justify-between border border-gold/20 bg-ink-2 px-4 py-3 text-[0.9rem] text-sand transition-colors hover:border-gold/45 hover:text-gold-soft"
+                    >
+                      <span>{page.label}</span>
+                      <span className="font-mono text-[0.72rem] text-sand-dim" dir="ltr">
+                        {page.href}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <div className="mb-3 flex flex-wrap items-end justify-between gap-3">
+                <div>
+                  <h2 className="font-display text-lg text-sand">أسطول عربيات VIP</h2>
+                  <p className="mt-1 text-[0.82rem] text-sand-dim">
+                    {vipCars.length} عربيات ظاهرة على الموقع
+                  </p>
+                </div>
+                <Link
+                  href="/admin/content"
+                  className="border border-gold/25 px-3 py-2 text-[0.78rem] text-sand-dim transition-colors hover:border-gold hover:text-gold-soft"
+                >
+                  إدارة المحتوى ←
+                </Link>
+              </div>
+              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {vipCars.map((car) => (
+                  <li
+                    key={car.slug}
+                    className="flex items-center gap-3 border border-gold/20 bg-ink-2 p-3"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={car.image}
+                      alt=""
+                      className="h-14 w-20 shrink-0 rounded object-cover"
+                    />
+                    <div className="min-w-0 flex-1 text-start">
+                      <p className="truncate text-[0.9rem] font-semibold text-sand">
+                        {car.nameAr}
+                      </p>
+                      <p className="text-[0.75rem] text-sand-dim">
+                        {car.passengers} ركاب · {car.categoryAr}
+                      </p>
+                      <Link
+                        href={`/ar/cars/${car.slug}`}
+                        className="text-[0.75rem] text-gold-soft hover:underline"
+                      >
+                        فتح ←
+                      </Link>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        ) : null}
+
         {tab === "clicks" ? (
           <>
             <p className="mt-5 text-[0.85rem] leading-[1.7] text-sand-dim">
-              When a visitor taps WhatsApp or Snapchat, a form opens first so we can reply with their
-              name and number. Returning visitors with a saved form skip the modal.
+              كل ضغطة واتساب أو سناب بتتسجل بالمصدر (هيرو، عربيات، سهرات…). رجّع فلتر القسم عشان
+              تشوف أنهي جزء في الموقع بيجيب تواصل أكتر.
             </p>
+
+            {clickRollup.length > 0 ? (
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {clickRollup.map((row) => (
+                  <button
+                    key={row.group}
+                    type="button"
+                    onClick={() =>
+                      setClickGroup((prev) => (prev === row.group ? "all" : row.group))
+                    }
+                    className={`cursor-pointer border px-4 py-3 text-start transition-colors ${
+                      clickGroup === row.group
+                        ? "border-gold bg-gold/15"
+                        : "border-gold/20 bg-ink-2 hover:border-gold/40"
+                    }`}
+                  >
+                    <div className="text-[0.75rem] text-sand-dim">{row.label}</div>
+                    <div className="mt-1 font-display text-2xl text-gold-soft">{row.count}</div>
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => setClickGroup("all")}
+                className={`cursor-pointer border px-3 py-2 text-[0.78rem] ${
+                  clickGroup === "all"
+                    ? "border-gold bg-gold/15 text-gold-soft"
+                    : "border-gold/20 text-sand-dim"
+                }`}
+              >
+                كل المصادر
+              </button>
+            </div>
+
             <div className="mt-4 overflow-x-auto border border-gold/20">
               <table className="w-full min-w-[720px] border-collapse text-[0.88rem]">
                 <thead>
@@ -297,21 +440,21 @@ export default function Dashboard({
                     <th className="px-4 py-3 font-medium">الوقت</th>
                     <th className="px-4 py-3 font-medium">الاسم</th>
                     <th className="px-4 py-3 font-medium">رقم الواتساب</th>
-                    <th className="px-4 py-3 font-medium">الزر</th>
+                    <th className="px-4 py-3 font-medium">المصدر</th>
                     <th className="px-4 py-3 font-medium">الصفحة</th>
                     <th className="px-4 py-3 font-medium">اللغة</th>
                     <th className="px-4 py-3 font-medium">الدولة</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {clicks.length === 0 ? (
+                  {visibleClicks.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="px-4 py-14 text-center text-sand-dim">
-                        لسه مفيش ضغطات مسجّلة.
+                        لسه مفيش ضغطات مسجّلة{clickGroup !== "all" ? " في الفلتر ده" : ""}.
                       </td>
                     </tr>
                   ) : (
-                    clicks.map((click) => (
+                    visibleClicks.map((click) => (
                       <tr key={click.id} className="border-t border-gold/15 hover:bg-ink-2/60">
                         <td className="px-4 py-3 whitespace-nowrap text-sand-dim">
                           {formatDateTime(click.createdAt)}
@@ -322,7 +465,12 @@ export default function Dashboard({
                         <td className="px-4 py-3 font-mono text-[0.8rem] text-sand-dim">
                           {click.phone?.trim() ? click.phone : "—"}
                         </td>
-                        <td className="px-4 py-3 text-sand">{click.placement}</td>
+                        <td className="px-4 py-3 text-sand">
+                          <div>{placementLabel(click.placement)}</div>
+                          <div className="mt-0.5 font-mono text-[0.7rem] text-sand-dim" dir="ltr">
+                            {click.placement}
+                          </div>
+                        </td>
                         <td className="px-4 py-3 font-mono text-[0.8rem] text-sand-dim">
                           {click.page}
                         </td>
@@ -335,7 +483,9 @@ export default function Dashboard({
               </table>
             </div>
           </>
-        ) : (
+        ) : null}
+
+        {tab === "requests" ? (
           <>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <div className="flex flex-wrap gap-2">
@@ -463,7 +613,7 @@ export default function Dashboard({
               </table>
             </div>
           </>
-        )}
+        ) : null}
       </main>
 
       {selected ? (

@@ -11,6 +11,7 @@ export default function robots(): MetadataRoute.Robots {
           "/admin",
           "/api",
           "/admin/content",
+          "/admin/whatsapp",
           "/admin/login",
           // Decorative entrance loops — not watch pages; keep out of video indexing.
           "/venues/entrance.mp4",

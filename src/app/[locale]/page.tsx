@@ -81,13 +81,15 @@ export default async function LandingPage({ params }: { params: Promise<{ locale
         {sections.promoTicker ? <PromoTicker t={t} locale={locale} /> : null}
 
         {/* 3 — Category bento */}
-        <HomeTeaser t={t} locale={locale} />
+        {sections.homeTeaser ? <HomeTeaser t={t} locale={locale} /> : null}
 
         {/* 4 — Exclusive access USP */}
-        <HomeExclusiveAccess t={t} locale={locale} />
+        {sections.homeExclusive ? (
+          <HomeExclusiveAccess t={t} locale={locale} />
+        ) : null}
 
         {/* 5 — Vertical reels cut from club videos */}
-        <HomeReels locale={locale} t={t} />
+        {sections.homeReels ? <HomeReels locale={locale} t={t} /> : null}
 
         {/* 6 — Gallery preview from nightclub photos */}
         {sections.gallery ? <HomeGallery locale={locale} t={t} /> : null}

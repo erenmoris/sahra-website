@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, locales } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { getSiteConfig, getSiteDictionary } from "@/lib/content";
 import Header from "@/components/Header";
 import Footer, { WhatsAppFloat } from "@/components/Footer";
 import AboutPageContent from "@/components/AboutPageContent";
@@ -19,7 +19,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale);
+  const t = await getSiteDictionary(locale);
 
   return pageMetadata({
     locale,
@@ -33,16 +33,16 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const t = getDictionary(locale);
+  const [t, config] = await Promise.all([getSiteDictionary(locale), getSiteConfig()]);
 
   return (
     <>
       <ScrollProgress />
-      <Header locale={locale} t={t} />
+      <Header locale={locale} t={t} logoSrc={config.logoUrl} />
       <main data-testid="about-page">
         <AboutPageContent t={t} locale={locale} />
       </main>
-      <Footer locale={locale} t={t} />
+      <Footer locale={locale} t={t} logoSrc={config.logoUrl} />
       <WhatsAppFloat t={t} locale={locale} />
     </>
   );
