@@ -167,49 +167,82 @@ export default function StructuredData({ locale, t }: { locale: Locale; t: Dicti
     },
   ];
 
-  // Event + Reservation for rich snippets (bookings / parties).
-  const event = {
+  // Season window for Event rich results (Google requires startDate + location).
+  const seasonStart = "2026-05-01T18:00:00+03:00";
+  const seasonEnd = "2026-10-31T04:00:00+03:00";
+  const eventImage = `${siteUrl}/brand/logo-horizontal.png`;
+  const organizer = {
+    "@type": "Organization",
+    "@id": businessId,
+    name: t.meta.businessName,
+    url,
+  };
+  const eventLocation = {
+    "@type": "Place",
+    name: locale === "ar" ? "القاهرة والساحل الشمالي، مصر" : "Cairo & North Coast, Egypt",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: locale === "ar" ? "القاهرة" : "Cairo",
+      addressRegion: locale === "ar" ? "القاهرة" : "Cairo Governorate",
+      addressCountry: "EG",
+    },
+  };
+  const eventOffers = {
+    "@type": "Offer",
+    url: `${url}#reserve`,
+    price: "0",
+    priceCurrency: "EGP",
+    availability: "https://schema.org/InStock",
+    validFrom: seasonStart,
+    description: locale === "ar" ? "حجز عبر واتساب الكونسييرج" : "Book via WhatsApp concierge",
+  };
+
+  // Primary Event — complete required + recommended fields for Search Console.
+  graph.push({
     "@type": "Event",
     "@id": `${url}#event`,
     name: locale === "ar" ? "حجز سهرات في مصر" : "Book nightlife in Egypt",
     description: t.meta.description,
-    startDate: "2026-01-01",
-    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+    startDate: seasonStart,
+    endDate: seasonEnd,
+    eventAttendanceMode: "https://schema.org/MixedEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
-    organizer: { "@id": businessId },
-    location: {
-      "@type": "Place",
-      name: locale === "ar" ? "القاهرة · الساحل الشمالي" : "Cairo · North Coast",
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "EG",
-        addressRegion: locale === "ar" ? "مصر" : "Egypt",
+    image: [eventImage],
+    url: `${url}#reserve`,
+    organizer,
+    performer: {
+      "@type": "PerformingGroup",
+      name: t.meta.businessName,
+    },
+    location: [
+      eventLocation,
+      {
+        "@type": "VirtualLocation",
+        url: `${url}#reserve`,
       },
-    },
-    offers: {
-      "@type": "Offer",
-      url: `${url}#reserve`,
-      price: "0",
-      priceCurrency: "EGP",
-      availability: "https://schema.org/InStock",
-      description: locale === "ar" ? "حجز على الواتساب" : "Book on WhatsApp",
-    },
-  };
-  graph.push(event);
+    ],
+    offers: eventOffers,
+  });
 
-  const reservation = {
+  // Reservation must NOT nest an incomplete Event (that caused GSC invalid items).
+  graph.push({
     "@type": "Reservation",
     "@id": `${url}#reservation`,
-    name: locale === "ar" ? "حجز حجز" : "Reservation",
+    name: locale === "ar" ? "طلب حجز سهرة" : "Nightlife reservation request",
     url: `${url}#reserve`,
+    reservationStatus: "https://schema.org/ReservationPending",
     provider: { "@id": businessId },
-    result: {
-      "@type": "Event",
+    underName: {
+      "@type": "Organization",
+      name: t.meta.businessName,
+    },
+    reservationFor: {
+      "@type": "Service",
       name: t.form.title,
       description: t.form.lede,
+      provider: { "@id": businessId },
     },
-  };
-  graph.push(reservation);
+  });
 
   return (
     <script
