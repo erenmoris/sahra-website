@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
         destination: "/ar",
         permanent: true,
       },
+      // /guide was a thin duplicate of /trust — consolidate canonicals for GSC.
+      {
+        source: "/:locale(ar|en)/guide",
+        destination: "/:locale/trust",
+        permanent: true,
+      },
     ];
   },
   images: {

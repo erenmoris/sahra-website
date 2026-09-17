@@ -35,6 +35,14 @@ export default function proxy(request: NextRequest) {
     return NextResponse.redirect(url, { status: 308 });
   }
 
+  // Legacy guide URL duplicated /trust content — send Google to one canonical.
+  const guideMatch = pathname.match(/^\/(ar|en)\/guide\/?$/i);
+  if (guideMatch) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/${guideMatch[1].toLowerCase()}/trust`;
+    return NextResponse.redirect(url, { status: 308 });
+  }
+
   const headers = new Headers(request.headers);
   headers.set("x-pathname", pathname);
   return NextResponse.next({ request: { headers } });

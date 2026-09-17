@@ -42,17 +42,21 @@ export function pageMetadata(options: {
   const arPath = `/ar${siblingPath}`;
   const enPath = `/en${siblingPath}`;
 
+  const languages = {
+    "ar-EG": absoluteUrl(arPath),
+    ar: absoluteUrl(arPath),
+    "en-US": absoluteUrl(enPath),
+    en: absoluteUrl(enPath),
+    "x-default": absoluteUrl(arPath),
+  };
+
   return {
     title,
     description,
     keywords: [...keywords],
     alternates: {
       canonical: url,
-      languages: {
-        ar: absoluteUrl(arPath),
-        en: absoluteUrl(enPath),
-        "x-default": absoluteUrl(arPath),
-      },
+      languages,
     },
     openGraph: {
       title,

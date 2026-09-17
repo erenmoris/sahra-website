@@ -8,6 +8,11 @@
       "source": "/",
       "destination": "/ar",
       "permanent": true
+    },
+    {
+      "source": "/:locale(ar|en)/guide",
+      "destination": "/:locale/trust",
+      "permanent": true
     }
   ]
 }

@@ -5,7 +5,7 @@ import { Cairo, El_Messiri, IBM_Plex_Mono } from "next/font/google";
 import { defaultLocale, dir, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { venueKeywords } from "@/content/venues";
-import { absoluteOgImage, absoluteUrl, siteUrl } from "@/lib/seo";
+import { absoluteOgImage, siteUrl } from "@/lib/seo";
 import StructuredData from "@/components/StructuredData";
 import Analytics from "@/components/Analytics";
 import "./globals.css";
@@ -55,13 +55,13 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     keywords: [...t.meta.keywords, ...venueKeywords],
     robots: { index: true, follow: true },
-    // Canonical + hreflang live ONLY on each page (pageMetadata) so Google
-    // does not see duplicate conflicting tags from the root layout.
+    // Canonical + hreflang + og:url live ONLY on each page (pageMetadata).
+    // Root must not set og:url to the homepage or Google may ignore page
+    // canonicals ("Duplicate, Google chose different canonical").
     openGraph: {
       title,
       description,
       type: "website",
-      url,
       locale: locale === "ar" ? "ar_EG" : "en_US",
       siteName: "Sahra",
       images: [
