@@ -43,7 +43,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = getDictionary(locale);
   const title = t.meta.title;
   const description = t.meta.description;
-  const url = absoluteUrl(`/${locale}`);
   const image = absoluteOgImage(locale);
 
   return {
