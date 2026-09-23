@@ -20,12 +20,15 @@ export default function proxy(request: NextRequest) {
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
 
-  // Arabic is the primary locale. Prefer 308 (permanent) — Next/Vercel often
-  // force 307 on "/" in middleware alone; vercel.json + next.config also redirect.
+  // Serve Arabic at "/" with HTTP 200 (rewrite), not a 308 redirect.
+  // Search Console was flagging "/" as "Page with redirect" and not indexing it.
+  // Canonical + sitemap still point at /ar so Google consolidates there.
   if (!hasLocale && (pathname === "/" || pathname === "")) {
     const url = request.nextUrl.clone();
     url.pathname = `/${defaultLocale}`;
-    return NextResponse.redirect(url, { status: 308 });
+    const headers = new Headers(request.headers);
+    headers.set("x-pathname", `/${defaultLocale}`);
+    return NextResponse.rewrite(url, { request: { headers } });
   }
 
   // Collapse trailing-slash duplicates: /ar/ → /ar

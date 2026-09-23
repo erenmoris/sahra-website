@@ -1,15 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Permanent redirects (308) so Google consolidates / into /ar.
-  // Middleware alone can still emit 307 on the homepage on Vercel.
+  // Keep only true consolidations here. Do NOT 308 "/" → "/ar":
+  // that made Search Console report "Page with redirect" for the site root.
+  // Root is rewritten to Arabic in src/proxy.ts (HTTP 200).
   async redirects() {
     return [
-      {
-        source: "/",
-        destination: "/ar",
-        permanent: true,
-      },
       // /guide was a thin duplicate of /trust — consolidate canonicals for GSC.
       {
         source: "/:locale(ar|en)/guide",
