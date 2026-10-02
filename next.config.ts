@@ -5,14 +5,7 @@ const nextConfig: NextConfig = {
   // that made Search Console report "Page with redirect" for the site root.
   // Root is rewritten to Arabic in src/proxy.ts (HTTP 200).
   async redirects() {
-    return [
-      // /guide was a thin duplicate of /trust — consolidate canonicals for GSC.
-      {
-        source: "/:locale(ar|en)/guide",
-        destination: "/:locale/trust",
-        permanent: true,
-      },
-    ];
+    return [];
   },
   images: {
     remotePatterns: [

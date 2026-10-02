@@ -588,7 +588,7 @@ const ar = {
   privacy: {
     eyebrow: "التزام قانوني",
     title: "سياسة الخصوصية",
-    updated: "سارية من أغسطس ٢٠٢٦",
+    updated: "سارية من أكتوبر ٢٠٢٦",
     controller: "سهرة · كونسييرج مستقل",
     intro:
       "ثقتك هي أغلى ما نملك. تعرّف على كيفية حماية بياناتك كعميل VIP — بحد أدنى من الجمع، واستخدام صارم للحجز فقط، بلا تسويق ولا بيع.",
@@ -620,7 +620,12 @@ const ar = {
       {
         id: "what-we-dont-do",
         title: "ما لا نقوم به",
-        body: "لا نبيع بياناتك، ولا نشاركها للتسويق، ولا نرسل رسائل دعائية، ولا قوائم بريدية، ولا ملفات تعريف ارتباط للتتبع الإعلاني على الموقع.",
+        body: "لا نبيع بيانات الحجز، ولا نشاركها مع وسطاء تسويق، ولا نرسل قوائم بريدية. اسمك ورقم واتسابك يبقيان لتنسيق الحجز فقط.",
+      },
+      {
+        id: "advertising",
+        title: "الإعلانات وملفات الارتباط",
+        body: "قد يعرض الموقع إعلانات عبر Google AdSense لتمويل تشغيله. تستخدم Google ملفات ارتباط لعرض إعلانات وقياسها، وقد تربطها بزيارتك لمواقع أخرى. هذا منفصل عن بيانات الحجز: لا نبيع اسمك أو رقمك للمعلنين. يمكنك إدارة إعلانات Google أو إيقاف التخصيص من إعدادات الإعلانات في Google.",
       },
       {
         id: "retention",
@@ -728,6 +733,45 @@ const ar = {
     ctaBody: "محادثة واحدة مع الكونسييرج… وتنسيق مخصص لليلة تليق باسمك.",
     ctaButton: "تواصل عبر واتساب",
     whatsappMessage: "مرحبًا، أود التعرف على خدمات سهرة وتنسيق تجربة خاصة",
+  },
+  guide: {
+    metaTitle: "دليل الحجز والسهر في مصر | سهرة",
+    metaDescription:
+      "شرح عملي لكيفية حجز سهرة أو نايت كلوب أو شاليه أو عربية في القاهرة والساحل عبر كونسييرج سهرة: ماذا نحتاج، ماذا نتولى، وما الذي يبقى على المكان.",
+    eyebrow: "دليل الضيف",
+    title: "كيف تُرتَّب ليلتك مع سهرة",
+    lede:
+      "سهرة كونسييرج حجز في مصر، مش دليل منسوخ عن الأماكن. الصفحة دي بتوضح إيه اللي بنعمله فعلًا، وإيه المعلومات اللي بتخلّي الطلب يتأكد أسرع، وإيه حدود الخدمة.",
+    sections: [
+      {
+        title: "إيه اللي بنرتّبه",
+        body: "نرتّب سهرات ونايت كلوب في القاهرة والجيزة، بيتش كلوب وشواطئ في الساحل الشمالي خلال الموسم، شاليهات للإقامة، وعربيات بسائق للاستقبال والتنقل. الاختيار بيتم حسب التاريخ وعدد الضيوف والمنطقة، مش من قائمة عشوائية. التأكيد النهائي بييجي من المكان بعد ما نراجع التوفر معاك.",
+      },
+      {
+        title: "البيانات اللي بنحتاجها قبل الترشيح",
+        body: "ابعت التاريخ، عدد الضيوف، المدينة أو المنطقة، ونوع الليلة: سهرة هادية، نايت كلوب، شاطئ، شاليه، أو عربية. لو عندك اسم مكان محدد قوله. من غير التاريخ والعدد بنقدر نشرح الخيارات، لكن مش بنقدر نثبّت ترابيزة. الاسم ورقم الواتساب بنستخدمهم للرد عليك فقط.",
+      },
+      {
+        title: "القاهرة والساحل مش نفس التجربة",
+        body: "في القاهرة الطلب غالبًا روفتوب أو مركب أو نايت كلوب في نفس الليلة أو اليوم اللي بعده. في الساحل الشمالي الموسم بيضغط على البيتش كلوب والشاليهات، والحجز المبكر بيفرق خصوصًا في عطلة نهاية الأسبوع. قولنا إذا كنت في القاهرة ولا نازل الساحل، عشان الترشيح يبقى على أماكن تقدر توصلها فعلًا.",
+      },
+      {
+        title: "الأسعار ليه مش مكتوبة على الموقع",
+        body: "الحد الأدنى للصرف، الدخول، وتكلفة الشاليه بتتغير حسب اليوم وعدد الضيوف وسياسة المكان. عرض رقم ثابت على الصفحة بيبقى غير دقيق. بعد ما نفهم طلبك بنرجّع لك الشروط المتاحة على واتساب، ومفيش تثبيت قبل موافقتك. ما بنطلبش بيانات بطاقة على الموقع.",
+      },
+      {
+        title: "من الرسالة لحد الجلوس",
+        body: "بتبعت الطلب، بنرجّع خيارين أو ثلاثة تناسب المستوى والمنطقة، وبتختار. بعد كده بنأكد مع المكان ونبعتلك التأكيد. لو المكان اكتمل بنقول كده ونقترح بديل بنفس المستوى بدل ما نسيبك على باب مقفول. متابعة التغييرات اللحظية بتتم على نفس محادثة الواتساب.",
+      },
+      {
+        title: "الشاليهات والعربيات",
+        body: "الشاليه بيحتاج مدة الإقامة وعدد الغرف وإذا كانت الإقامة عائلات فقط. العربية بتحتاج نقطة التحرك والوصول وعدد الركاب، واستقبال المطار بيتظبط من صالة الوصول أو كبار الزوار. الصور والمواصفات على الموقع للمقارنة، والعرض النهائي حسب التوفر في التاريخ المطلوب.",
+      },
+      {
+        title: "قواعد الدخول والضيوف",
+        body: "كل مكان ليه سن دخول وقواعد لباس وحد صرف. سهرة بتنقل الشروط اللي يبلّغنا بيها المكان، والالتزام بيها مسؤولية الضيوف. لو المجموعة مختلطة أو فيها ضيوف من خارج مصر، قولنا من الأول عشان الترشيح يراعي لغة التواصل وقواعد الدخول.",
+      },
+    ],
   },
   footer: {
     slogan: "ليلتك متظبطة قبل ما توصل.",
@@ -1558,7 +1602,7 @@ const en = {
   privacy: {
     eyebrow: "Legal commitment",
     title: "Privacy Policy",
-    updated: "Effective August 2026",
+    updated: "Effective October 2026",
     controller: "Sahra · Independent concierge",
     intro:
       "Your trust is our most valuable asset. See how we protect VIP client data — minimal collection, booking-only use, never sold, never spammed.",
@@ -1590,7 +1634,12 @@ const en = {
       {
         id: "what-we-dont-do",
         title: "What we never do",
-        body: "We do not sell or share your data for marketing, send promotional messages, add you to mailing lists, or use advertising / tracking cookies on the site.",
+        body: "We do not sell booking details or share them with marketing brokers, and we do not add you to mailing lists. Your name and WhatsApp number stay for coordinating the reservation only.",
+      },
+      {
+        id: "advertising",
+        title: "Advertising and cookies",
+        body: "The site may show ads through Google AdSense to help fund it. Google uses cookies to serve and measure ads, and may associate them with visits to other sites. That is separate from your booking data: we do not sell your name or number to advertisers. You can manage or turn off personalized Google ads in Google’s ad settings.",
       },
       {
         id: "retention",
@@ -1698,6 +1747,45 @@ const en = {
     ctaBody: "One conversation with the concierge… bespoke coordination for a night worthy of your name.",
     ctaButton: "Message on WhatsApp",
     whatsappMessage: "Hi, I’d like to learn about Sahra and arrange a private experience",
+  },
+  guide: {
+    metaTitle: "How to book nightlife in Egypt | Sahra",
+    metaDescription:
+      "A practical guide to booking a night out, nightclub, chalet, or chauffeur in Cairo and the North Coast with Sahra: what we need, what we arrange, and what stays with the venue.",
+    eyebrow: "Guest guide",
+    title: "How a night with Sahra is arranged",
+    lede:
+      "Sahra is a booking concierge in Egypt, not a copied venue directory. This page explains what we actually do, which details make a request confirm faster, and where the service stops.",
+    sections: [
+      {
+        title: "What we arrange",
+        body: "We arrange nights and nightclubs in Cairo and Giza, beach clubs on the North Coast in season, chalets for stays, and cars with a driver for airport pickup and city transfers. The shortlist depends on the date, party size, and area. Final confirmation comes from the venue after we check availability with you.",
+      },
+      {
+        title: "What we need before suggesting a place",
+        body: "Send the date, number of guests, city or area, and the kind of night: a quieter venue, a nightclub, a beach, a chalet, or a car. If you already have a venue in mind, name it. Without a date and headcount we can explain options, but we cannot hold a table. Your name and WhatsApp number are used only to reply to you.",
+      },
+      {
+        title: "Cairo and the coast are different nights",
+        body: "In Cairo the request is usually a rooftop, a boat, or a nightclub for the same night or the next day. On the North Coast, peak season fills beach clubs and chalets, and booking earlier matters on weekends. Tell us whether you are in Cairo or heading to the coast so the suggestion is a place you can actually reach.",
+      },
+      {
+        title: "Why prices are not printed on the site",
+        body: "Minimum spend, entry, and chalet rates change with the day, the group size, and the venue’s own policy. A fixed number on a page would be wrong. After we understand the request we send the available terms on WhatsApp, and nothing is held before you agree. We do not ask for card details on the website.",
+      },
+      {
+        title: "From the first message to being seated",
+        body: "You send the request, we come back with two or three options that fit the level and the area, and you choose. We then confirm with the venue and send you the confirmation. If a place is full we say so and offer a similar alternative instead of leaving you at a closed door. Last-minute changes stay on the same WhatsApp thread.",
+      },
+      {
+        title: "Chalets and cars",
+        body: "A chalet needs the length of stay, the number of rooms, and whether the unit is families only. A car needs the pickup and drop-off and the number of passengers. Airport meet-and-greet is arranged from arrivals or the VIP hall. Photos and specs on the site are for comparison; the final offer depends on availability for your dates.",
+      },
+      {
+        title: "Entry rules and guests",
+        body: "Each venue sets its own age, dress, and spend rules. Sahra passes on the conditions the venue gives us, and guests are responsible for following them. If the group is mixed or includes visitors from outside Egypt, say so at the start so the suggestion matches the language and the door policy.",
+      },
+    ],
   },
   footer: {
     slogan: "Your night is handled before you land.",

@@ -130,6 +130,15 @@ export default function Footer({
             <ul className="flex flex-col gap-3.5">
               <li>
                 <Link
+                  href={`/${locale}/guide`}
+                  data-testid="footer-link-guide"
+                  className={linkClass}
+                >
+                  {t.footer.links.guide}
+                </Link>
+              </li>
+              <li>
+                <Link
                   href={`/${locale}/privacy`}
                   data-testid="footer-link-privacy"
                   className={linkClass}
